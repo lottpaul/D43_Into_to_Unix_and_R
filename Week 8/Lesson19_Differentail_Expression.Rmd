@@ -1,0 +1,32 @@
+---
+title: "DESeq2 Quick Intro"
+output: html_notebook
+---
+
+```{r}
+library(DESeq2)
+library(tidyverse)
+library(ggplot2)
+library(airway)
+```
+
+```{r}
+counts_data <- read.csv('airway_rawcounts.csv')
+head(counts_data)
+```
+
+```{r}
+countsName <- "http://bioconnector.org/workshops/data/airway_scaledcounts.csv"
+download.file(countsName, destfile = "airway_scaledcounts.csv", method = "auto")
+
+countData <- read.csv('airway_scaledcounts.csv', header = TRUE, sep = ",")
+head(countData)
+```
+
+```{r}
+metaDataName <- "http://bioconnector.org/workshops/data/airway_metadata.csv"
+download.file(metaDataName, destfile = "airway_metadata.csv", method = "auto")
+
+metaData <- read.csv('airway_metadata.csv', header = TRUE, sep = ",")
+metaData
+```

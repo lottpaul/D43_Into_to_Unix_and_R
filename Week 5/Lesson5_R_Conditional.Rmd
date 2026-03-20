@@ -1,0 +1,139 @@
+---
+title: "Lesson10_R_Conditionals"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Conditionals
+
+A conditional statement test the validity of a statement. Such as 10 is less than 11.
+
+In R, there is only `if` and `else`. `if` tests the condition, if the condition is `TRUE` then we execute code in the `{block}`. If the condition evaluates to FALSE, then it evaluates the next conditional below or `else` statement If we need multiple tests not just `if` and `else`, then we use `else if`.
+
+**Usage:**
+
+```         
+if (conditional){
+   <code>  # Code executes if the condition is TRUE
+} else if ( conditional) {
+   <code>  # Code executes if the first was FALSE and this conditional is TRUE
+} else {  
+   <code>   #This code is only evaluated if all the conditions above are FALSE
+}
+```
+
+**Notice:** In conditionals the first statement that evaluates to TRUE gets executed, the rest are skipped. Even if there are multiple TRUE conditional statements at different levels -only the first will get executed. You should take care when writing your conditionals. It's also a good idea to test your conditional statements to make certain all the necessary conditions are handled appropriately.
+
+```{r}
+x = "Gastric"
+y = "H.pylori"
+
+if (x=="Gastric" && y=="H.pylori"){
+  print("Patient we're interested in")
+} 
+```
+
+We already reviewed the mathematical operators "`>`", "`>=`", "`<`", "`<=`", "`==`". They test an expression and return TRUE or FALSE depending on the mathematical comparison between the value on the left and the value on the right. We'll use them to write an example conditional statement.
+
+```{r}
+x <- 210
+if (x>200){
+  if(x%%2==0){
+    print("It's greater than 200 and even.")
+  } else if (x%%3==0){
+    print("It's greater than 200, odd, and divisible by 3")
+  } else {
+    print("It's greater than 200 and odd")
+  }
+} else if (x==210){
+  print("X is equal to 210")  #Doesnt get run because the statement above evaluated to TRUE
+} else {
+  print("It's less than 200")
+}
+```
+
+### Logical Operators
+
+Provide the ability to combine multiple comparisons.
+
+| R Operator | Name                              |
+|------------|-----------------------------------|
+| &          | Element-wise Logical AND operator |
+| &&         | Logical AND operator              |
+| \|         | Element-wise OR operator          |
+| \|\|       | Logical OR operator               |
+| !          | Logical NOT                       |
+
+Recall, the logical operators `&&` (**AND**), `||` (**OR**), and `!` (**NOT**)
+
+```{r}
+x = 10
+y = 12
+
+if (x>=10 && y<10){
+  print("x is greater than or equal to 10 and y is less than 10")
+} else if (x>=10 && y>10){
+  print("x is greater than or equal to 10 and y is greater than 10")
+} else {
+  print("Not either of the two above")
+}
+```
+
+Sometimes, you'll need to make a lot of comparisons and need to group certain comparisons. To ensure you're grouping is correctly executed, use parenthesis `()` to group
+
+```{r}
+x = 10
+y = 12
+
+if ((x>10 && y<10) || (x==10 && y ==12)){
+  print("x is greater than 10 and y is less than 10")
+  print(" or x is equal to 10 and y is equal to 12")
+} else if (x>=10 && y>10){
+  print("x is greater than or equal to 10 and y is greater than 10")
+} else {
+  print("Not either of the two above") 
+}
+```
+
+### Negating Expression
+
+```{r}
+x = 10
+y = 12
+
+if (!x>10 && !y<10) {
+  print("x is not greater than 10 and y is not less than 10")
+} else if (x>=10 && y>10){
+  print("x is greater than or equal to 10 and y is greater than 10")
+} else {
+  print("Not either of the two above") 
+}
+```
+
+## Nesting Conditionals
+
+You can nest conditionals inside of other conditionals. This is often done to give fine control of each
+
+```{r}
+x = 10
+y = 12
+
+if (!x>10 ){
+  if (!y<10){
+    print("x is not greater than 10 and y is not less than 10")
+  } else{
+    print("x is not greater than 10 and y is not less than 10")
+  }
+} else if (x>=10 && y>10){
+  print("x is greater than or equal to 10 and y is greater than 10")
+} else {
+  print("Not either of the two above") 
+}
+```

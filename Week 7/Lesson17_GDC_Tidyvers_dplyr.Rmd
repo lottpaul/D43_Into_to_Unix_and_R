@@ -1,0 +1,483 @@
+---
+title: "Lesson17_GDC_Tidyverse_dplyr.Rmd"
+output:
+  html_document: default
+  pdf_document: default
+date: "2025-05-06"
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+**Importing Example Datasets**
+
+```{r}
+library(tidyverse)
+clinical = read_tsv('clinical.tsv', na=c("", "NA", "'--"))
+head(clinical)
+```
+
+```{r}
+library(dplyr)
+penguins = read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv")
+head(penguins)
+```
+
+Using what we have learned about data frame and accessing columns. How might we change the coding of `sex` from MALE/FEMALE in Palmers Penguins to M/F?
+
+First, thought was to try using `replace` function, but it requires we get the indices first and then specify what to change them to. Which is a few more steps that we want to take.
+
+```{r eval=FALSE}
+replace(penguins$sex, <indices> , <value>)  # Doesn't work because it replaces specific index
+```
+
+Dplyr provides a `recode` function that gives you a simple function to select how you want to recode your vector/column.
+
+```{r}
+penguins$sex |> recode( MALE = "M", FEMALE = "F")
+```
+
+`recode()` has been superseded in favor of `case_match()`
+
+```{r}
+penguins$sex |> case_match("MALE" ~ 'M',
+                           "FEMALE" ~ 'F'
+                           )
+```
+
+```{r}
+penguins$sex |> case_match(c("Male", "MALE") ~ 'M',
+                           c("Female", "FEMALE") ~ 'F'
+                           )
+```
+
+Optional method uses `str_replace_all`, which replaces all the matching string in the vector. Issue: MALE is a substring of FEMALE. This means that we need to use the REGEX `^` to denote the start of the word begins with. This prevents FEMALE being changed to FEM.
+
+```{r}
+library(stringr)
+
+penguins$sex = str_replace_all(penguins$sex, c("^MALE"='M', "^FEMALE"='F'))
+penguins
+```
+
+## Using Dplyr to Arrange, Manipulate, and Mutate Data Frames
+
+dplyr provides functions to manipulate data. The common syntax of `dplyr` is:
+
+1.  First argument is always the data frame that you want to manipulate
+
+2.  Subsequent arguments describe which columns you want to manipulate and how you want to manipulate them.
+
+3.  The result will always be a new data frame
+
+**dplyr** will never modify an input dataset - but will always return a new tibble data frame.
+
+**dplyr** verbs are organized into 4 group based upon operating on: **rows**, **columns**, **groups**, or **tables**
+
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Group      | dplyr Function | Description                                                                                                                                                                                                  |
++============+================+==============================================================================================================================================================================================================+
+|            | \|\>, %\>%     | Pipe operator. Inserts the left-hand side as the first argument in the right-hand side call. [Small differences exist between \|\> and %\>%.](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/) |
+|            |                |                                                                                                                                                                                                              |
+|            |                | Note: `|>` was only added in R version 4.10                                                                                                                                                                  |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | %in%           | Checks presence of element exists in a vector or list                                                                                                                                                        |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **ROW**    | filter()       | Allows you to keep rows based on the values of a column                                                                                                                                                      |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | arrange()      | Changes the order of the rows based on the values of the columns                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | distinct()     | Finds all the unique rows in a dataset                                                                                                                                                                       |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | count()        | Returns the count of unique items                                                                                                                                                                            |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **COLUMN** | mutate()       | Add new columns that are calculated from the existing columns                                                                                                                                                |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | select()       | Easily select variables by name in the dataframe                                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | rename()       | Allows you to rename a few variables                                                                                                                                                                         |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | relocate()     | Move variables around                                                                                                                                                                                        |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **GROUP**  | group_by()     | Divide your dataset into groups meaningful for your analysis                                                                                                                                                 |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | summarize()    | Calculate a single summary statistic, reduces the data frame to have a single row for each group                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | slice\_        | Allows you extract specific rows within each group                                                                                                                                                           |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_head(n=n)` Takes the first n rows from each group                                                                                                                                                 |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_tail(n=n)` Takes the last n rows from each group                                                                                                                                                  |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_min(x, n=n)` Takes n rows with the smallest value of column x                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_max(x, n=n)` Takes n rows with the largest value of columns x                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_sample(n=n)` Gets n random rows                                                                                                                                                                   |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | .by            | Group arguments and works with all previous functions()                                                                                                                                                      |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | ungroup()      | Remove grouping from data frame                                                                                                                                                                              |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **TABLE**  | \_join()       | Combine multiple datasets X and Y using \_join functionality. See <https://r4ds.hadley.nz/joins> for examples and information about performing:                                                              |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   left_join() - Keeps observations in X - adds columns to current rows                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   inner_join() - Only keeps observations from X that have matching key in Y                                                                                                                                |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   right_join() - Only keeps observations in Y                                                                                                                                                              |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   full_join() - Keeps all observations in X and Y (adds columns and rows)                                                                                                                                  |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   semi_join() - Returns rows in X that have a match in Y                                                                                                                                                   |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   anti_join() - Returns rows in X that don't have a match in Y                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+There are some small differences between `|>` and `%>%`. The `|>` is the simpler of the two, while `%>%` provides additional options. <https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/>
+
+------------------------------------------------------------------------
+
+If we use the pipe `|>` argument, the first argument (table variable) is filled in automatically.
+
+**Note:** `|>` was introduced in 4.1, and is equivalent to `%>%`. You'll see many older tutorials using the old `%>%` operator instead of the newer `|>` R native pipe operator.
+
+### Row Functions
+
+#### distinct()
+
+`distinct()` will return unique rows in the dataset. If you supply a single column it'll return the unique column entries. If you supply multiple columns, it'll find only the unique column pairs. If you want to keep the other columns, you can add the argument `.keep_all=TRUE`
+
+```{r}
+distinct(penguins, species, island, sex, .keep_all=TRUE)
+```
+
+```{r}
+penguins |> distinct(species, island)
+```
+
+```{r}
+penguins |> distinct(species, island, .keep_all=TRUE)
+```
+
+```{r}
+clinical |> distinct(cases.case_id)
+```
+
+```{r}
+(clinical_uniq = clinical |> distinct(cases.case_id, .keep_all=TRUE))
+```
+
+------------------------------------------------------------------------
+
+#### filter(df, conditions ...)
+
+| Operator | Description |
+|----|----|
+| \<, \<=, \>, \>=, == | Mathematical comparison operators |
+| \| | OR |
+| & | AND |
+| xor() | Exclusive OR (Excludes things in both) |
+| %in% | Checks left value/argument is in the right value/argument |
+| is.na(), !is.na() | Is NA or is not NA() |
+| ! | Negates expression |
+
+The `condition...` can be one or more conditional statements that evaluate the values in one or more columns. The output from `filter()` is a new `tibble` data frame.
+
+```{r}
+penguins = read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv")
+(adelie = penguins |> filter(species=='Adelie' & island=='Dream' & sex=='MALE' & body_mass_g>4000 ))
+```
+
+The conditionals can be combined using the logical operator `&` (AND) or `|` (OR). If you separate the conditions using commas, `filter()` will interpret them as AND operators.
+
+In addition to the standard comparison operators, **dplyr** accepts the `%in%` operator, which allows you to search from a list or vector of items.
+
+```{r}
+adelie = penguins |> filter(species=='Adelie', island %in% c('Dream','Biscoe'), sex=='MALE')
+adelie
+```
+
+```{r}
+clinical_uniq |> distinct(demographic.gender)
+```
+
+```{r}
+(male = clinical_uniq |> filter(demographic.gender=='male'))
+
+```
+
+------------------------------------------------------------------------
+
+#### arrange()
+
+`arrange()` sorts the rows based on the values in a column(s). By providing multiple columns you can perform more complicated sorting. If you want to sort a column in descending order, you surround the column name with `desc()` function.
+
+```{r}
+(adelie_sorted = adelie |> arrange(body_mass_g, desc(bill_depth_mm)))
+
+```
+
+------------------------------------------------------------------------
+
+#### count()
+
+`count()` will return the number of unique rows or columns pairs as a new column **n**
+
+```{r}
+adelie |> count(species, island)
+```
+
+```{r}
+(clinical_uniq |> count(demographic.gender))
+```
+
+```{r}
+(clinical_uniq |> count(demographic.race))
+```
+
+```{r}
+(clinical_uniq |> count(demographic.age_at_index))
+```
+
+------------------------------------------------------------------------
+
+### Column Functions
+
+#### mutate() - create a new column based upon the values of the other columns
+
+`mutate()` adds one or more new columns to the the right-hand side of the dataset.
+
+```{r}
+penguins |> mutate(weight_lbs = body_mass_g/454,
+                   weight_kg = body_mass_g/1000
+                   )
+```
+
+You can modify the placement of the new columns using the `.before=` or `.after` arguments in mutate. They will either take the indices of the columns, or columns name.
+
+```{r}
+penguins |> mutate(weight_lbs = body_mass_g/454,
+                   weight_kg = body_mass_g/1000,
+                   .after=body_mass_g
+                   )
+```
+
+You select a subset of columns to be kept in the output dataset using the `.keep` argument. The `.keep` argument will take the following options
+
+-   `"all"` retains all columns from `.data`. This is the default.
+
+-   `"used"` retains only the columns used in `...` to create new columns. This is useful for checking your work, as it displays inputs and outputs side-by-side.
+
+-   `"unused"` retains only the columns *not* used in `...` to create new columns. This is useful if you generate new columns, but no longer need the columns used to generate them.
+
+-   `"none"` doesn't retain any extra columns from `.data`. Only the grouping variables and columns created by `...` are kept.
+
+```{r}
+penguins |> mutate(weight_lbs = body_mass_g/454,
+                   weight_kg = body_mass_g/1000,
+                   .keep="used"
+                   )
+```
+
+```{r}
+penguins |> mutate(weight_lbs = body_mass_g/454,
+                   weight_kg = body_mass_g/1000,
+                   .keep="unused"
+                   )
+```
+
+#### select() - subset data frame based on column names or matches
+
+```{r}
+penguins |> select(species, island, sex)
+```
+
+You can also use the `:` operator to select a set of columns `from:to` . By prefixing the `from:to` with an exclamation point, like `!from:to` you can specify that you want to exclude those columns.
+
+```{r}
+penguins |> select(!bill_length_mm:flipper_length_mm)
+```
+
+Using `where()` function within the `select()` you can select columns based on their attributes, such as character datatypes.
+
+Only select the columns that are *character* datatypes
+
+```{r}
+penguins |> select(where(is.character))
+```
+
+Select columns that start with *cases* or *demographics*
+
+```{r}
+library(stringr)
+(clinical_subset = clinical_uniq |> select(contains("cases.") | contains('demographic.')))
+```
+
+------------------------------------------------------------------------
+
+### Group Functions
+
+#### group_by() - divide your dataset into meaningful groups
+
+`group_by()` doesn't changed the data, but will add a **Groups** attribute which shows how the data is now grouped. The power of grouping comes in downstream functions - because you can now summarize or analyze them by the grouping.
+
+```{r}
+penguins |> group_by(sex)
+```
+
+```{r}
+clinical_uniq |> group_by(demographic.gender)
+```
+
+#### summarize(...) - Calculates a single summary statistic for each group.
+
+Resulting in a row of summary statistic for every grouping.
+
+```{r}
+penguins |> group_by(sex) |> summarize(average_weight=mean(body_mass_g))
+```
+
+```{r}
+clinical_uniq |> group_by(demographic.gender) |> summarize(avg_age = mean(demographic.age_at_index))
+```
+
+NA's in the data may cause issues when performing analysis. If you need to remove NA values, you can add the options `na.rm=TRUE` in `mean()` and other summary statistic function to remove NA values before calculating.
+
+Finally, `summarize()` can take multiple arguments, so you can have multiple descriptive statistics. Along with the `mean()`, we might want to additional information.
+
+| R Function | Description |
+|----|----|
+| min() | Minimum value |
+| max() | Maximum value |
+| mean() | Mean value |
+| median() | Median value |
+| quartile(data, fraction) | Quartile value for fraction of data: 0.25 = 1st Quartile, 0.75 = 3rd Quartile |
+| IQR() | Interquartile Range |
+| sd() | Standard Deviation |
+| var() | Variance |
+| n() | Number of entries or rows |
+
+```{r}
+penguins |> group_by(sex) |> summarize(average_weight=mean(body_mass_g), STDEV=sd(body_mass_g), N=n())
+```
+
+You may get an warning message, when more than one group is being used. This is because function behaviour peels off the last grouping. See <https://r4ds.hadley.nz/data-transform#grouping-by-multiple-variables> for more information.
+
+```{r}
+penguins |> group_by(species, sex) |> summarize(average_weight=mean(body_mass_g))
+```
+
+------------------------------------------------------------------------
+
+# Exercise: Find the average and max age_of_index by country_of_residence_at_enrollment and gender
+
+Get the `mean()` and `max()` age of index for the clinical data grouping by country of residence and gender.
+
+```{r}
+clinical_uniq |> group_by(demographic.country_of_residence_at_enrollment, demographic.gender) |> summarize(average_age = mean(demographic.age_at_index), max_age=max(demographic.age_at_index), n=n())
+```
+
+```{r}
+clinical_uniq |> select(demographic.age_at_index)
+```
+
+------------------------------------------------------------------------
+
+#### ungroup() - removes the grouping from the Tibble data frame
+
+If you need to remove the grouping from a data set, you can pass it to `ungroup()`. The changes will be visible by the **Groups** attribute being removed from the dataset.
+
+```{r}
+x = penguins |> group_by(sex) |> slice_sample(prop=0.1)
+head(x)
+```
+
+```{r}
+x |> ungroup()
+```
+
+Notice that the **Groups** attribute has been removed by `ungroup()`
+
+Now that we've seen some examples of how to modify, and mutate, summarize, and group datasets. Let's move onto plotting the dataset.
+
+------------------------------------------------------------------------
+
+#### slice\_ Functions - extract specific rows from a grouping
+
+```         
+df |> slice_head(n = 1) takes the first row from each group.
+df |> slice_tail(n = 1) takes the last row in each group.
+df |> slice_min(x, n = 1) takes the row with the smallest value of column x.
+df |> slice_max(x, n = 1) takes the row with the largest value of column x.
+df |> slice_sample(n = 1) takes one random row.
+```
+
+The `slice_` function have an alternative argument- instead of including `n=` for a specific number of rows, you can use `prop=<fraction>` where it'll return the specified fraction of rows.
+
+```{r}
+penguins |> slice_max(body_mass_g, n=3)
+```
+
+```{r}
+penguins |> slice_sample(prop=0.23)
+```
+
+------------------------------------------------------------------------
+
+## Combining/Merging Tables
+
+**Column-wise Merging Tables**
+
+Remember, we saw `cbind()` used to combine to tables by columns. **dplyr** provides some additional functions that give you fine control on how the columns are combined.
+
+| Function | Description |
+|----|----|
+| `bind_cols()` | Paste/Joins columns into a single data frame. Rows must align |
+| `left_join(x,y, by=...)` | Joins matching values in Y to X |
+| `right_join(x,y, by=...)` | Joins matching values in X to Y |
+| `inner_join(x,y, by=...)` | Joins data - but only retains rows that match between x and y |
+| `full_join(x,y, by=...)` | Joins data and retrains all the rows regardless if they were in both. |
+
+**Parameters/Arguments:**
+
+-   `by=...` : To specify one or more columns to match based on the same name provide a vector of column names c("col1", "col2")
+
+-   `by=...` : To specify one or more columns to match based on different column names provide a named vector. c("col1"="V1", "col2"="V2")
+
+-   `suffix=...` : If columns of same names are present in both data frames, provide a list of suffix to use in the combined table. c("\_*x", "*\_y") This will add the suffix to the column of same names, so you can tell where they came from.
+
+```{r}
+#untar('clinical.project-tcga-brca.2025-05-06.tar.gz', files='pathology_detail.tsv')
+(pathology = read_tsv("pathology_detail.tsv", na=c("", "NA", "'--")))
+
+```
+
+```{r eval=FALSE}
+(bind_cols(clinical_uniq, pathology))
+```
+
+```{r}
+(combined = left_join(clinical_subset, pathology, by=c('cases.case_id'), suffix=c("", "_patho")))
+```
+
+```{r}
+names(combined)
+```
+
+------------------------------------------------------------------------
+
+**Row-wise Merging Tables**
+
+Remember, we saw `rbind()` used to combine to tables by rows. **dplyr** provides some additional functions that give you fine control on how the columns are combined.
+
+| Function | Description |
+|----|----|
+| bind_rows() | Paste/Joins rows from 2 tables into a single data frame. Columns must align |
+| intersect(x,y,...) | Return rows that appear in both X and Y |
+| setdiff(x,y,...) | Return rows in X but not in Y |
+| union(x,y,...) | Joins X and Y but only unique rows (duplicate rows removed |
+| union_all(x,y,...) | Joins X and Y duplicates are included |
+| semi_join(x,y,by=...) | Returns rows of X that have a match in Y |
+| anti_join(x,y, by=...) | Returns rows in X that don't have a match in Y |

@@ -1,0 +1,108 @@
+---
+title: "Lesson6_R_Lists"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Lists
+
+A `list` in R is a data structure that is similar to `vector`, however, they can store different datatypes. Recall, `vectors` are atomic - meaning they can only store a single datatype.
+
+Lists on the other hand can contain any different datatype or datastructure - so you can have a list containing numbers, strings, vectors, factors, lists, matrices,...
+
+## Creating a List
+
+You can create a list using the `list()` function.
+
+```{r}
+my_list = list("Hello", c(1,2,3), 1:20, TRUE, 2L)
+print(my_list)
+```
+
+## Accessing Elements from a List
+
+We can access the elements from the list using `[]` operator. But remember, that even basic datatypes are stored in R as a vector, so what you're actually getting from the list is a `vector` of your datatype.
+
+```{r}
+print(my_list[1])
+```
+
+To actually access the character string, we need to use the `[[]]` double brackets
+
+```{r}
+my_list[[1]]
+```
+
+## Changing List Elements
+
+You can make assignment to the list or change items in the list by assigning to a position within the list.
+
+```{r}
+my_list[1] = "Goodbye"
+print(my_list)
+```
+
+## Combining Lists
+
+To combine lists, we create a vector of lists
+
+```{r}
+list1 = list("A", "B", "C")
+list2 = list(1, 2 ,3)
+
+combined_list = c(list1, list2)
+print(combined_list)
+```
+
+## Converting a List to a Vector
+
+To convert a list to a vector, we can use the `unlist()` function
+
+```{r}
+list1 = list("A", "B", "C")
+list2 = list(1, "2" ,3)
+
+print(list2)
+
+print(unlist(list2))
+```
+
+## Named Lists
+
+Just like Named Vectors, we can create named Lists where a value is associated with a name. But unlike `named vectors` we're not limited to a single datatype of `value`.
+
+```{r}
+# Create a list containing a vector, a matrix and a list.
+list_data <- list(c("Jan","Feb","Mar"), matrix(c(3,9,5,1,-2,8), nrow = 2), list("green",12.3))
+
+# Give names to the elements in the list.
+names(list_data) <- c("1st Quarter", "A_Matrix", "A Inner list")
+
+# Show the list.
+print(list_data)
+```
+
+### Accessing Element in Named List
+
+Like named vectors we can access by name `[]` or `[[]]` but, we can also access the items using `$` operator
+
+```{r}
+print(list_data[1])
+
+print(list_data['1st Quarter'])
+
+print(list_data[['1st Quarter']])
+
+print(list_data$'1st Quarter')
+
+print(list_data$A_Matrix)
+```
+
+Notice that the `$` operator functions similarly to `[[]]`

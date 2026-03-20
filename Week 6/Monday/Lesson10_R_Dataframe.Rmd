@@ -1,0 +1,294 @@
+---
+title: "Lesson9_R_DataFrame"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Dataframes
+
+Data Frames are similar to Python Pandas Dataframes, where each column can contain a different type of data. R Data Frames are a mix between a matrix and a list. They are one of the fundamental data structures used by most R software.
+
+## Creating Data Frames
+
+To create a data frame, you'll use `data.frame()` constructor.
+
+**Usage:**
+
+```{r eval=FALSE}
+data.frame(..., row.names = NULL, check.rows = FALSE,
+           check.names = TRUE, fix.empty.names = TRUE,
+           stringsAsFactors = FALSE)
+```
+
+`...` in data.frame is either a value/vector or a tagging name and value/vector. If a tag name is used, the tag name will be used as the column name. If tag names are not used, then the columns are named will be taken from the first element of vector or value.
+
+```{r}
+df = data.frame(FirstName=c("John", "Travis", "Reese"),
+                LastNames=c("Hurst", "Villegas", "Moran"),
+                Age=c(21, 35, 48),
+                Include=c(TRUE, FALSE, TRUE),
+                Date=c("2023-02-22", "2022-04-13", "2024-1-2")
+                )
+df
+```
+
+## Reading & Writing a data.frame or matrix
+
+You can write a data.frame or matrix using the `write.table()` function and read them using `read.table()`
+
+#### Syntax:
+
+```         
+x = read.table(file, header=<TRUE/FALSE>, sep="",...)
+x = read.csv(file, header=<TRUE/FALSE>, sep=",", ...)
+x = read.csv2(file, header=<TRUE/FALSE>, sep=";", ...)
+x = read.delim(file, header=<TRUE/FALSE>, sep="\t", ...)
+
+write.table(x, file="", sep=" ", row.names=<TRUE/FALSE>, col.names=<TRUE/FALSE>, ...)
+write.csv(...)
+write.csv2(...)
+```
+
+```{r}
+x = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
+#head(x)
+tail(x)
+```
+
+```{r}
+write.csv(x, file="Penguins.csv", row.names=FALSE)
+```
+
+## Summarize Dataframe
+
+`summary()` gives a summary of the dataframe, similar to Pandas .describe() function. If the columns values are numeric, it'll provide the Min, Max, Quartiles, Mean and Median values.
+
+```{r}
+summary(x)
+```
+
+## Accessing Items
+
+You can access items in the data.frame by using either:
+
+1.  **Single Brackets `[]`**
+
+    -   Single Columns by Indices
+
+```{r}
+df
+```
+
+1.  
+
+    ```{r}
+    print(df[1])
+    ```
+
+    -   Element by Row and Columns
+
+    ```{r}
+    print(df[1,2])
+    ```
+
+    -   Column by indices
+
+    ```{r}
+    print(df[,1])
+    ```
+
+    -   Row by Indices
+
+    ```{r}
+    df[1,]
+    ```
+
+2.  **Double Brackets `[[]]` :** Access the corresponding column by name
+
+    ```{r}
+    df[['Age']]
+    ```
+
+3.  **Dollar Sign: `$`** To access column by columns Name
+
+```{r}
+print(df$Age)
+
+```
+
+## Adding a Column or Columns
+
+Recall using Matrices, we could use `cbind()` to add new columns to the matrix. However, that column had to be the same datatype as the matrix. With data.frames, we can also add columns using `cbind()` but that column can be any R Datatype.
+
+Let's add Case/Controls status to the data.frame as a Factor. We'll first create a vector that corresponds to each row and then create a factor from the vector.
+
+Finally, we'll use `cbind()` to add our new columns called `Case_Control` to the `df` and assign the new data.frame to a variable called `new_df`
+
+```{r}
+df
+```
+
+```{r}
+ccs = c("Case", "Control", "Control")
+ccs_f = factor(ccs)
+
+new_df = cbind(df, 'Case/Control'=ccs_f)
+print(new_df)
+```
+
+If we're adding multiple columns to the dataset, we can also use `cbind()` similar to how we did with Matrices. But we need to ensure that the amount of rows are equal.
+
+## Adding a Row or Rows
+
+To add a row or rows to a data.frame, we use `rbind()` . We can add either a single row or another data.frame. If we're adding rows, we need to make certain that the number of elements in the new rows match our given dataframe.
+
+------------------------------------------------------------------------
+
+### In-class Exercise:
+
+Run the two exercise code blocks below. What are the differences between the two different. Explain the difference between the two resulting data.frame. If you can't spot any differences, use `summary()` to check for additional differences.
+
+**Exercise Block 1:**
+
+```{r}
+new_entry = list("John", "Anderson", 48, TRUE, "2024-5-20", "Case")
+
+newer_df1 = rbind(new_df, new_entry)
+print(newer_df1)
+```
+
+```{r}
+summary(newer_df1)
+```
+
+**Exercise Block 2:**
+
+```{r}
+new_entry = c("John", "Anderson", 48, TRUE, "2024-5-20", "Case")
+
+newer_df2 = rbind(new_df, new_entry)
+print(newer_df2)
+```
+
+```{r}
+summary(newer_df2)
+```
+
+------------------------------------------------------------------------
+
+If the amount of elements doesn't match the number of columns. It will be trimmed to match. (Note: the result is missing the value 1899)
+
+```{r}
+new_entry = list("John", "Anderson", 48, TRUE, "2024-5-20", "Case", 1899)
+unequal_cols = rbind(new_df, new_entry)
+print(unequal_cols)
+```
+
+If you use a Named List, whose names match the column names then order of items doesn't matter.
+
+```{r}
+new_entry = list( LastNames="Anderson", Age=48, Date="2024-5-20", 'Case/Control'="Case", FirstName="John", Include=TRUE)
+equal_cols = rbind(new_df, new_entry)
+print(equal_cols)
+```
+
+However, if you try to include a *name* that isn't in the table, you'll get an error.
+
+```{r, error=TRUE}
+new_entry = list( LastNames="Anderson", Age=48, Date="2024-5-20", Case_Control="Case", FirstName="John", Include=TRUE, Test=1)
+unequal_cols = rbind(new_df, new_entry)
+print(unequal_cols)
+```
+
+## Subsetting or Filtering your Data.Frame
+
+Reference: [R Keep or Drop Columns](https://www.listendata.com/2015/06/r-keep-drop-columns-from-data-frame.html)
+
+You can subset data.frames using the brackets `[]` and instead of just supplying an single **indice/name** - supply a vector of **indices** or **names**
+
+```{r}
+df[c(1,3), c("FirstName", "Age")]
+```
+
+You can also use comparison operators similar to subsetting vectors to choose rows that meet a specific criteria. `which()` function takes applies a single or multiple comparisons and returns the indices where the comparison is TRUE.
+
+For which `df` rows are the `'Age'>22`
+
+```{r}
+which(df$'Age'>22)
+```
+
+Then we just need to plug that into the where we access rows in the `[]` operator and we get the subsetted table filtered on `Age>22`.
+
+```{r}
+df[which(df$'Age'>22),]
+```
+
+Another methods is `subset(x, comparison, optional(select=c(column names))`
+
+Notice that in subset, we don't need to wrap the column names in quotes.
+
+```{r}
+subset(df, Age>22 & Include, select=c(FirstName, LastNames))
+```
+
+## Removing Rows or Columns
+
+If you need to remove Rows or Columns, you just need to pass a negative indice that corresponds to that row or column.
+
+```{r}
+df[-1,]
+```
+
+```{r}
+df[,-2]
+```
+
+```{r}
+df[-which(df$'Age'>22),]
+```
+
+If you are using the `subset()` function, you can just make the `select` vector negative (ie \`select=-c(FirstName, Include)) would exclude FirstName and Include from the data.frame.
+
+```{r}
+subset(df, Age>22 & Include, select=-c(FirstName, Include))
+```
+
+# What about Date? It's still a character type.
+
+```{r}
+df
+```
+
+R does have a `Date` object, and we can convert it to dates using `as.date()` either when we create the data.frame or after.
+
+```{r}
+df[['Date']] = as.Date(df[['Date']])
+df
+```
+
+```{r}
+
+
+```
+
+For more information about Dates: <https://www.stat.berkeley.edu/~s133/dates.html>
+
+#### Now we've seen the major players in R datatypes and Objects.
+
+Let's step aside an look at conditional, loops, plotting.
+
+We're going to then jump back in to exploring the [**Tidyverse**](https://www.tidyverse.org/). The Tidyverse is a group of tools built for data science that address some of R's peculiarities to make data analysis simpler and more powerful.
+
+# Exercise 1: Penguins Dataset
+
+Import the Palmer Penguins dataset from above. You'll notice that the Species, Island, and Sex are all categorical. Convert Species, Island, and Sex columns to Categorical `factor`
+
+Get the summary information (mean, median, max, min, quartile) for each species.

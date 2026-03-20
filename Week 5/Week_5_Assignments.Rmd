@@ -1,0 +1,137 @@
+---
+title: "Week5_Assignments"
+output:
+  pdf_document: default
+  html_document: default
+date: "2025-04-29"
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Assignment 1: Calculate the GC Percentage of DNA Sequence
+
+For this next assignment, you'll be required to calculate the GC
+percentage of a DNA sequence.
+
+The percentage of Guanine and Cytosine in DNA or RNA significantly
+impacts it's molecular stability, shape, and function.
+
+$$
+GCpercent=(\sum G +C)/\sum A + C+ G+T
+$$
+
+Using the R string functions (I'd encourage you to use the `stringr`
+and/or `stringi` library), calculate the GC percentage for the following
+DNA sequence. Be certain to exclude all ambiguous nucleotides (any
+nucleotide that isn't ACGT).
+
+```{r}
+library(stringr)
+dna = "ttcccagcacagaggaaaaggtagatctgaatgctgaacccctatatggaagaagaaaac
+tgaacaaacagaaattgtcatgctctgagagccctgaggatccccaagagatgacttgga
+tgacttcgaagagtagcctacagaaagttaatgattggttttctagaagtgatgatgtat
+taacttctgatgatttccatgacgaagggtctaattcaaatacaaaagctgaggcggaag
+aaatcccaagtgcagcagatggggtttttgtttcttcagagannnnnnnnnnnnnnnnnn
+nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnngtagaga
+gtagcattgaagataaaatatttgggaaaacttatcggaggaaagcaagcttcgctaact
+tgaactgcacaactgaagatgtaactctagaatcatctctactagaaccgcatatggcac
+acaaacaccccttcacaaataaattaaaacgtaaaagaattacatcaagccttggtcctg
+aggattttataaagaaagtagatttggcggttgttgttcaaaagtctcctgaaaagaaaa
+tcgagaggctcaaccaaatggatcaaaatggtcaggtggtgaatactacta"
+
+(dna)
+```
+
+```{r}
+uc_dna = str_to_upper(dna)
+cleaned_dna = str_replace_all(uc_dna, '[\n\r]', '')
+cleaned_dna = str_replace_all(cleaned_dna, 'N','')
+#cleaned_dna = str_replace_all(uc_dna, '[^ACGT]', '')
+
+dna_len = nchar(cleaned_dna)
+g = str_count(cleaned_dna, 'G')
+c = str_count(cleaned_dna, 'C')
+a = str_count(cleaned_dna, 'A')
+t = str_count(cleaned_dna, 'T')
+
+gc = g+c
+
+gc_frac = gc/dna_len
+
+print(gc_frac)
+```
+
+------------------------------------------------------------------------
+
+# Assignment #2 Create a Function from from your calculate GC Percentage Code
+
+In Lesson 4, you were assigned to take the GC percentage of a DNA
+sequence. For Assignment #2, convert your code to a function that takes
+the following:
+
+Inputs: - DNA/RNA sequence
+
+Arguments/Parameters:
+
+-   remove_ambig: (Default Value: TRUE) Takes a Logical (TRUE/FALSE)
+    whether to remove ambiguous characters before calculating GC percent
+
+-   percentage: (Default Value: FALSE) Takes a Logical (TRUE/FALSE)
+    whether to return value as Percentage
+
+**Note:** You'll probably need to add some conditional blocks to test
+the values of your arguments, and determine how to process the sequence
+and return value.
+
+```         
+library(stringr) calc_gc = function(dna, ... ){ \# <your code>
+return(gc_perc) }
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG") would return 0.7
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE) return
+0.2692308
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE,
+percentage=TRUE) return 26.92308
+```
+
+```{r}
+library(stringr)
+
+calc_gc = function(dna, remove_ambig=TRUE, percentage=FALSE){
+  # Input:
+  # dna is a DNA string
+  # 
+  
+  uc_dna = str_to_upper(dna)
+  cleaned_dna = str_replace_all(uc_dna, '[\n\r]', '')
+  
+  if (remove_ambig){
+    cleaned_dna = str_replace_all(cleaned_dna, '[^ACGTU]','')
+  }
+  
+  dna_len = nchar(cleaned_dna)
+  g = str_count(cleaned_dna, 'G')
+  c = str_count(cleaned_dna, 'C')
+
+  gc = g+c   # this is taking the sum of g + c
+
+  if (percentage){
+    return((gc/dna_len)*100)
+  }
+  
+  return(gc/dna_len)
+}
+
+(calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG"))# would return 0.7
+
+(calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE))# return 0.2692308
+
+(calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE, percentage=TRUE)) #  return 26.92308
+```

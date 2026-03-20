@@ -1,0 +1,442 @@
+---
+title: "Lesson 21: Salmon and tximeta"
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Quantifying with *Salmon*
+
+As mentioned above, a short tutorial on how to use *Salmon* can be found
+[here](https://combine-lab.github.io/salmon/getting_started/), so
+instead we will provide the code that was used to quantify the files
+used in this workflow. *Salmon* can be conveniently run on a cluster
+using the [Snakemake](https://snakemake.readthedocs.io/en/stable/)
+workflow management system [@snakemake].
+
+The following `Snakemake` file was used to quantify the eight samples
+that were downloaded from the SRA (the SRR identifier is the run
+identifier, and there was only one run per sample for these eight
+samples).
+
+```         
+DATASETS = ["SRR1039508",
+            "SRR1039509",
+            "SRR1039512",
+            "SRR1039513",
+            "SRR1039516",
+            "SRR1039517",
+            "SRR1039520",
+            "SRR1039521"]
+
+SALMON = "/path/to/salmon_0.14.1/bin/salmon"
+
+rule all:
+  input: expand("quants/{dataset}/quant.sf", dataset=DATASETS)
+
+rule salmon_quant:
+    input:
+        r1 = "fastq/{sample}_1.fastq.gz",
+        r2 = "fastq/{sample}_2.fastq.gz",
+        index = "/path/to/gencode.v29_salmon_0.14.1"
+    output:
+        "quants/{sample}/quant.sf"
+    params:
+        dir = "quants/{sample}"
+    shell:
+        "{SALMON} quant -i {input.index} -l A -p 6 --validateMappings \
+         --gcBias --numGibbsSamples 20 -o {params.dir} \
+         -1 {input.r1} -2 {input.r2}"
+```
+
+The last line is the key one which runs *Salmon*. It says to quantify
+using a specific *index*, with automatic library type detection, using 6
+threads, with the validate mappings setting (this is default in versions
+of *Salmon* $\ge$ 0.99), with GC bias correction, and writing out 20
+Gibbs samples (this is optional). The last three arguments specify the
+output directory and the two paired read files.
+
+The above Snakemake file requires that an index be created at
+`/path/to/gencode.vVV_salmon_X.Y.Z`, where VV and X,Y,Z should help
+specify the release of the reference transcripts and of *Salmon*. For
+human and mouse reference transcripts, we recommend to use
+[GENCODE](https://gencodegenes.org) [@gencode].
+
+The *Salmon* index can be created easily with the following command:
+
+```         
+salmon index -t transcripts.fa.gz -i name_of_index
+```
+
+**Note:** *Salmon* can also make use of genomic *decoy sequences* during
+indexing, as described in @Srivastava2020, which has been demonstrated
+to improve quantification accuracy. For further details on how to make
+use of decoy sequences within the *Salmon* software please consult this
+note in the [Salmon
+documentation](https://salmon.readthedocs.io/en/latest/salmon.html#preparing-transcriptome-indices-mapping-based-mode).
+Here, we will continue mapping reads to the transcriptome without decoy
+sequences. During indexing, a note will appear that the *Salmon* index
+is being built without any decoy sequences.
+
+If the transcripts are downloaded from GENCODE, it is recommended to use
+something similar to the following command (which simply helps to strip
+the extra information from the transcript names):
+
+```         
+salmon index --gencode -t gencode.v29.transcripts.fa.gz \
+  -i gencode.v29_salmon_X.Y.Z
+```
+
+The above Snakemake file can then be used to [execute
+Snakemake](https://snakemake.readthedocs.io/en/stable/executable.html)
+in various ways, including submitting multiple jobs to a compute cluster
+or in the cloud. The above Snakemake file was executed on a cluster with
+SLURM scheduling, with the following line in a separate job submitted to
+the cluster:
+
+```         
+snakemake -j 4 --latency-wait 30 --cluster "sbatch -N 1 -n 6"
+```
+
+```{r loadairway}
+library("airway")
+```
+
+The R function *system.file* can be used to find out where on your
+computer the files from a package have been installed. Here we ask for
+the full path to the `extdata` directory, where R packages store
+external data, that is part of the `r Biocexptpkg("airway")` package.
+
+```{r dir}
+dir <- system.file("extdata", package="airway", mustWork=TRUE)
+```
+
+In this directory, we find a number of files, including eight BAM files
+that were used in the previous version of this workflow demonstrating
+alignment and counting. We will focus on the two directories that are in
+the `quants` directory, which contain the output from *Salmon* on two
+files.
+
+```{r list.files}
+list.files(dir)
+list.files(file.path(dir, "quants"))
+```
+
+Typically, we have a table with detailed information for each of our
+samples that links samples to the associated FASTQ and *Salmon*
+directories. For your own project, you might create such a
+comma-separated value (CSV) file using a text editor or spreadsheet
+software such as Excel.
+
+We load such a CSV file with *read.csv*:
+
+```{r sampleinfo}
+csvfile <- file.path(dir, "sample_table.csv")
+coldata <- read.csv(csvfile, row.names=1, stringsAsFactors=FALSE)
+coldata
+```
+
+To demonstrate loading *Salmon* quantifiation data into R, we will just
+work with the two samples that are provided in the *airway* package. We
+create a column called `names` and a column called `files`:
+
+```{r makecoldata}
+coldata <- coldata[1:2,]
+coldata$names <- coldata$Run
+coldata$files <- file.path(dir, "quants", coldata$names, "quant.sf.gz")
+file.exists(coldata$files)
+```
+
+Now we load the *tximeta* package and run its main function:
+
+```{r tximeta, message=TRUE}
+library("tximeta")
+se <- tximeta(coldata)
+```
+
+If the reference transcriptome checksum was recognized by tximeta
+(details on this in the `r Biocpkg("tximeta")` vignette), and if we have
+a working internet connection, *tximeta* will locate and download the
+relevant annotation data from various sources. A few details: the
+annotation data is only downloaded and parsed once, subsequently it will
+used locally cached versions of the metadata as needed (if you load data
+a second time that was quantified against the same reference
+transcripts). Also, the very first time that one uses *tximeta*, it will
+ask you to approve the default cache location (following the paradigm of
+the cache location used by other R and Bioconductor packages). You can
+change this location at any point later.
+
+We will discuss what is the structure of the `se` object in the next
+section, but we can first just consider the dimensions. Note that
+*tximeta* imports data at the *transcript level*.
+
+```{r lookse}
+dim(se)
+head(rownames(se))
+```
+
+As this workflow is concerned with gene-level analysis, we will now
+summarize the transcript-level quantifications to the gene level (which
+internally makes use of the methods in *tximport*
+[@Soneson2015Differential]). The correct transcript-to-gene mapping
+table is automatically created based on the metadata stored within the
+`se` object.
+
+```{r summarize, message=TRUE}
+gse <- summarizeToGene(se)
+```
+
+Now we can check that the dimensions are reduced and the row IDs are now
+gene IDs:
+
+```{r lookgse}
+dim(gse)
+head(rownames(gse))
+```
+
+## *DESeq2* import functions
+
+While the above section described use of *Salmon* and *tximeta*, there
+are many possible inputs to *DESeq2*, each of which have their own
+dedicated import functions. The following tools can be used generate or
+compile count data for use with *DESeq2*: *tximport*
+[@Soneson2015Differential], *tximeta* [@Love2020], *htseq-count*
+[@Anders2015HTSeqa], *featureCounts* [@Liao2014FeatureCounts],
+*summarizeOverlaps* [@Lawrence2013Software].
+
+| function | package | framework | output | *DESeq2* input function |
+|---------------|---------------|---------------|---------------|---------------|
+| *tximport* | `r Biocpkg("tximport")` | R/Bioconductor | list of matrices | *DESeqDataSetFromTximport* |
+| *tximeta* | `r Biocpkg("tximeta")` | R/Bioconductor | *SummarizedExperiment* | *DESeqDataSet* |
+| *htseq-count* | [HTSeq](http://www-huber.embl.de/users/anders/HTSeq) | Python | files | *DESeqDataSetFromHTSeq* |
+| *featureCounts* | `r Biocpkg("Rsubread")` | R/Bioconductor | matrix | *DESeqDataSetFromMatrix* |
+| *summarizeOverlaps* | `r Biocpkg("GenomicAlignments")` | R/Bioconductor | *SummarizedExperiment* | *DESeqDataSet* |
+
+We will next describe the class of object created by *tximeta* which was
+saved above as `se` and `gse`, and how to create a *DESeqDataSet* object
+from this for use with *DESeq2* (the other functions above also create a
+*DESeqDataSet*).
+
+## SummarizedExperiment
+
+```{r sumexp, echo=FALSE}
+par(mar=c(0,0,0,0))
+plot(1,1,xlim=c(0,100),ylim=c(0,100),bty="n",
+     type="n",xlab="",ylab="",xaxt="n",yaxt="n")
+polygon(c(45,90,90,45),c(5,5,70,70),col="pink",border=NA)
+polygon(c(45,90,90,45),c(68,68,70,70),col="pink3",border=NA)
+text(67.5,40,"assay(s)")
+text(67.5,35,'e.g. "counts", ...')
+polygon(c(10,40,40,10),c(5,5,70,70),col="skyblue",border=NA)
+polygon(c(10,40,40,10),c(68,68,70,70),col="skyblue3",border=NA)
+text(25,40,"rowRanges")
+polygon(c(45,90,90,45),c(75,75,95,95),col="palegreen",border=NA)
+polygon(c(45,47,47,45),c(75,75,95,95),col="palegreen3",border=NA)
+text(67.5,85,"colData")
+```
+
+**The component parts of a *SummarizedExperiment* object.** The `assay`
+(pink block) contains the matrix of counts, the `rowRanges` (blue block)
+contains information about the genomic ranges and the `colData` (green
+block) contains information about the samples. The highlighted line in
+each block represents the first row (note that the first row of
+`colData` lines up with the first column of the `assay`).
+
+The *SummarizedExperiment* container is diagrammed in the Figure above
+and discussed in the latest Bioconductor paper
+[@Huber2015Orchestrating]. In our case, *tximeta* has created an object
+`gse` with three matrices: "counts" - the estimated fragment counts for
+each gene and sample, "abundance" - the estimated transcript abundances
+in TPM, and "length" - the effective gene lengths which include changes
+in length due to biases as well as due to transcript usage. The names of
+the assays can be examined with *assayNames*, and the assays themselves
+are stored as `assays` (a list of matrices). The first matrix in the
+list can be pulled out via `assay`. The `rowRanges` for our object is
+the *GRanges* of the genes (from the left-most position of all the
+transcripts to the right-most position of all the transcripts). The
+component parts of the *SummarizedExperiment* are accessed with an R
+function of the same name: `assay` (or `assays`), `rowRanges` and
+`colData`.
+
+We now will load the full count matrix corresponding to all samples and
+all data, which is provided in the *airway* package, and will continue
+the analysis with the full data object. We can investigate this
+*SummarizedExperiment* object by looking at the matrices in the `assays`
+slot, the phenotypic data about the samples in `colData` slot, and the
+data about the genes in the `rowRanges` slot.
+
+```{r loadfullgse}
+data(gse)
+gse
+```
+
+The counts are the first matrix, so we can examine them with just
+`assay`:
+
+```{r assaysgse}
+assayNames(gse)
+head(assay(gse), 3)
+colSums(assay(gse))
+```
+
+The `rowRanges`, when printed, shows the ranges for the first five and
+last five genes:
+
+```{r rowrangesgse}
+rowRanges(gse)
+```
+
+The `rowRanges` also contains metadata about the sequences (chromosomes
+in our case) in the `seqinfo` slot:
+
+```{r lookseqinfo}
+seqinfo(rowRanges(gse))
+```
+
+The `colData` for the *SummarizedExperiment* reflects the *data.frame*
+that was provided to the `tximeta` function for importing the
+quantification data. Here we can see that there are columns indicating
+sample names, as well as the donor ID, and the treatment condition
+(treated with dexamethasone or untreated).
+
+```{r coldatagse}
+colData(gse)
+```
+
+## Branching point
+
+# The *DESeqDataSet* object, sample information and the design formula
+
+Bioconductor software packages often define and use a custom class for
+storing data that makes sure that all the needed data slots are
+consistently provided and fulfill the requirements. In addition,
+Bioconductor has general data classes (such as the
+*SummarizedExperiment*) that can be used to move data between packages.
+Additionally, the core Bioconductor classes provide useful
+functionality: for example, subsetting or reordering the rows or columns
+of a *SummarizedExperiment* automatically subsets or reorders the
+associated *rowRanges* and *colData*, which can help to prevent
+accidental sample swaps that would otherwise lead to spurious results.
+With *SummarizedExperiment* this is all taken care of behind the scenes.
+
+In *DESeq2*, the custom class is called *DESeqDataSet*. It is built on
+top of the *SummarizedExperiment* class, and it is easy to convert
+*SummarizedExperiment* objects into *DESeqDataSet* objects, which we
+show below. One of the two main differences is that the `assay` slot is
+instead accessed using the *counts* accessor function, and the
+*DESeqDataSet* class enforces that the values in this matrix are
+non-negative integers.
+
+A second difference is that the *DESeqDataSet* has an associated *design
+formula*. The experimental design is specified at the beginning of the
+analysis, as it will inform many of the *DESeq2* functions how to treat
+the samples in the analysis (one exception is the size factor
+estimation, i.e., the adjustment for differing library sizes, which does
+not depend on the design formula). The design formula tells which
+columns in the sample information table (`colData`) specify the
+experimental design and how these factors should be used in the
+analysis.
+
+First, let's examine the columns of the `colData` of `gse`. We can see
+each of the columns just using the `$` directly on the
+*SummarizedExperiment* or *DESeqDataSet*.
+
+```{r gsevars}
+gse$donor
+gse$condition
+```
+
+We can rename our variables if we want. Let's use `cell` to denote the
+donor cell line, and `dex` to denote the treatment condition.
+
+```{r gsevarsrename}
+gse$cellLine <- gse$donor
+gse$dexamethasone <- gse$condition
+```
+
+We can also change the names of the levels. It is critical when one
+renames levels to not change the order. Here we will rename
+`"Untreated"` as `"untrt"` and `"Dexamethasone"` as `"trt"`:
+
+```{r renamelevels}
+levels(gse$dexamethasone)
+# when renaming levels, the order must be preserved!
+levels(gse$dexamethasone) <- c("untreated", "treated")
+```
+
+The simplest design formula for differential expression would be
+`~ condition`, where `condition` is a column in `colData(dds)` that
+specifies which of two (or more groups) the samples belong to. For the
+airway experiment, we will specify `~ cell + dex` meaning that we want
+to test for the effect of dexamethasone (`dex`) controlling for the
+effect of different cell line (`cell`).
+
+**Note:** it is prefered in R that the first level of a factor be the
+reference level (e.g. control, or untreated samples). In this case, when
+the `colData` table was assembled the untreated samples were already set
+as the reference, but if this were not the case we could use *relevel*
+as shown below. While `levels(...) <-` above was simply for renaming the
+character strings associated with levels, *relevel* is a very different
+function, which decides how the variables will be coded, and how
+contrasts will be computed. For a two-group comparison, the use of
+*relevel* to change the reference level would flip the sign of a
+coefficient associated with a contrast between the two groups.
+
+```{r gsedex}
+library("magrittr")
+gse$dexamethasone %<>% relevel("untreated")
+gse$dexamethasone
+```
+
+`%<>%` is the compound assignment pipe-operator from the
+`r CRANpkg("magrittr")` package, the above line of code is a concise way
+of saying:
+
+```{r explaincmpass, eval = FALSE}
+gse$dexamethasone <- relevel(gse$dexamethasone, "untreated")
+```
+
+For running *DESeq2* models, you can use R's formula notation to express
+any fixed-effects experimental design. Note that *DESeq2* uses the same
+formula notation as, for instance, the *lm* function of base R. If the
+research aim is to determine for which genes the effect of treatment is
+different across groups, then interaction terms can be included and
+tested using a design such as `~ group + treatment + group:treatment`.
+See the manual page for `?results` for more examples. We will show how
+to use an interaction term to test for condition-specific changes over
+time in a time course example below.
+
+In the following sections, we will demonstrate the construction of the
+*DESeqDataSet* from two starting points:
+
+-   from a *SummarizedExperiment* object
+-   from a count matrix and a sample information table
+
+For a full example of using the *HTSeq* Python package for read
+counting, please see the `r Biocexptpkg("pasilla")` vignette. For an
+example of generating the *DESeqDataSet* from files produced by
+*htseq-count*, please see the `r Biocpkg("DESeq2")` vignette.
+
+## Starting from *SummarizedExperiment*
+
+Again, we can quickly check the millions of fragments that could be
+mapped by *Salmon* to the genes (the second argument of *round* tells
+how many decimal points to keep).
+
+```{r countreads}
+round( colSums(assay(gse)) / 1e6, 1 )
+```
+
+Once we have our fully annotated *SummarizedExperiment* object, we can
+construct a *DESeqDataSet* object from it that will then form the
+starting point of the analysis. We add an appropriate design for the
+analysis:
+
+```{r loaddeseq2}
+library("DESeq2")
+```
+
+```{r makedds}
+dds <- DESeqDataSet(gse, design = ~ cellLine + dexamethasone)
+```

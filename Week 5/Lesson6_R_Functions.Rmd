@@ -1,0 +1,135 @@
+---
+title: "Lesson12_R_Functions"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Functions
+
+Functions in R are created using the command `function()`. A function can have as many arguments as needed and is defined by assigning at variable `<function name>`. You can then run the function by calling the `<function name>()`. The function code block is placed between curly brackets `{ Your code goes here }`. Finally, the values you want to return from the function must be placed in the `return(<Values you want to return goes here>)`.
+
+#### Syntax
+
+```         
+x = function(arguments){
+  <code>
+  return(result)
+}
+
+y = x()  #Using your function
+```
+
+### Example
+
+#### Reverse Complement Function
+
+```{r}
+library(stringr)
+library(stringi)
+
+dna = "ACGTT"
+
+dna = str_to_upper(dna)
+  
+complement = chartr("ACGTN", "TGCAN", dna) 
+(rc = stri_reverse(complement))
+```
+
+```{r}
+library(stringr)
+library(stringi)
+rev_comp = function(dna, to_upper){
+  # Input: 
+  # - dna is DNA character sequence
+  # - to_upper is a Logical (TRUE/FALSE) to change the sequence to upper case
+  
+  if (to_upper){
+    dna = str_to_upper(dna)
+  }
+  
+  complement = chartr("ACGTN", "TGCAN", dna) 
+  rc = stri_reverse(complement)
+  return(rc)
+}
+
+rev_comp("ACGTTTT", TRUE)
+```
+
+```{r}
+rev_comp("GGGTTAG", TRUE)
+```
+
+## Default Arguments
+
+Similar to Python, you can add default values for function arguments by assigning them a value. If the value is not supplied by the user then the *default* value is used.
+
+```{r}
+library(stringi)
+rev_comp = function(dna, to_upper=TRUE){
+ 
+  
+  complement = chartr("acgtnACGTN", "tgcanTGCAN", dna) 
+  rc = stri_reverse(complement)
+  
+  if (to_upper){
+    rc = str_to_upper(rc)
+  }
+  
+  return(rc)
+}
+```
+
+```{r}
+rev_comp("aagcagagaaag", to_upper = FALSE)
+```
+
+## Dot Arguments- Ellipsis `...` allows you to have an unlimited number of arguments
+
+```{r}
+concat = function(...){
+  val = paste(...)
+  return(val)
+}
+
+concat('1', '2', '4')
+```
+
+```{r}
+concat("Hello", "World")
+```
+
+# Assignment #2 Create a Function from your calculate GC Percentage Code
+
+In Lesson 4, you were assigned to take the GC percentage of a DNA sequence. For Assignment #2, convert your code to a function that takes the following:
+
+Inputs: - DNA/RNA sequence
+
+Arguments/Parameters:
+
+-   remove_ambig: (Default Value: TRUE) Takes a Logical (TRUE/FALSE) whether to remove ambiguous characters before calculating GC percent
+
+-   percentage: (Default Value: FALSE) Takes a Logical (TRUE/FALSE) whether to return value as Percentage
+
+**Note:** You'll probably need to add some conditional blocks to test the values of your arguments, and determine how to process the sequence and return value.
+
+```         
+library(stringr) 
+
+calc_gc = function(dna, <paramenters> ){
+\# <your code> 
+return(gc_perc) 
+}  
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG") would return 0.7
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE) return 0.2692308  
+
+calc_gc("ACGATCNNnnnnnnnnnnNNNNCCGG", remove_ambig=FALSE, percentage=TRUE) return 26.92308
+```

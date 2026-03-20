@@ -1,0 +1,31 @@
+---
+title: "Lesson8_R_Array"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Array
+
+R arrays extend the idea of matrices 2d datasets, to store more than two dimensions. You can use arrays to create higher dimensional datasets.
+
+`array(vector, dim=)`
+
+Because they are kind of an extension of matrices, I'm going to skip over them for now.
+
+If you need to access array information you can use the indices `[row, col, matrix]` operators.
+
+```{r}
+vector1 <- 1:50
+
+# Take these vectors as input to the array.
+result <- array(vector1,dim = c(2,5,5))
+print(result)
+print(result[1,3,3])
+```
