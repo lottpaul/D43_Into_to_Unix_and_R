@@ -1,0 +1,1806 @@
+
+				
+				<html>
+					<head>
+						<meta charset="UTF-8"/>
+						<meta name="viewport" content="width=device-width, initial-scale=1"/>
+						<style>.markdown-alert {
+  padding: 0.5rem 1rem;
+  margin-bottom: 16px;
+  color: inherit;
+  border-left: .25em solid #888;
+}
+
+.markdown-alert > :first-child {
+  margin-top: 0;
+}
+
+.markdown-alert > :last-child {
+  margin-bottom: 0;
+}
+
+.markdown-alert .markdown-alert-title {
+  display: flex;
+  font-weight: 500;
+  align-items: center;
+  line-height: 1;
+}
+
+.markdown-alert .markdown-alert-title .octicon {
+  margin-right: 0.5rem;
+  display: inline-block;
+  overflow: visible !important;
+  vertical-align: text-bottom;
+  fill: currentColor;
+}
+
+.markdown-alert.markdown-alert-note {
+  border-left-color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-note .markdown-alert-title {
+  color: var(--color-note);
+}
+
+.markdown-alert.markdown-alert-important {
+  border-left-color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-important .markdown-alert-title {
+  color: var(--color-important);
+}
+
+.markdown-alert.markdown-alert-warning {
+  border-left-color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-warning .markdown-alert-title {
+  color: var(--color-warning);
+}
+
+.markdown-alert.markdown-alert-tip {
+  border-left-color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-tip .markdown-alert-title {
+  color: var(--color-tip);
+}
+
+.markdown-alert.markdown-alert-caution {
+  border-left-color: var(--color-caution);
+}
+
+.markdown-alert.markdown-alert-caution .markdown-alert-title {
+  color: var(--color-caution);
+}</style><style>:root {
+  --color-note: #0969da;
+  --color-tip: #1a7f37;
+  --color-warning: #9a6700;
+  --color-severe: #bc4c00;
+  --color-caution: #d1242f;
+  --color-important: #8250df;
+}</style><style>/* Copy from https://github.com/SaswatPadhi/pseudocode.js/blob/v2.2.0/static/pseudocode.css */
+
+.ps-root {
+  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
+  font-size: 1em;
+  font-weight: 100;
+  -webkit-font-smoothing: antialiased !important;
+}
+
+.ps-root .ps-algorithm {
+  margin: 0.8em 0;
+  /* algorithm environment has borders; algorithmic has not */
+  border-top: 3px solid black;
+  border-bottom: 2px solid black;
+}
+
+.ps-root .ps-algorithm.with-caption > .ps-line:first-child {
+  border-bottom: 2px solid black;
+}
+
+.ps-root .katex {
+  text-indent: 0;
+  font-size: 1em;
+}
+
+.ps-root .MathJax_CHTML,
+.ps-root .MathJax {
+  text-indent: 0;
+  font-size: 1em !important;
+}
+
+.ps-root .ps-line {
+  margin: 0;
+  padding: 0;
+  line-height: 1.2;
+}
+
+.ps-root .ps-funcname {
+  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
+  font-weight: normal;
+  font-variant: small-caps;
+  font-style: normal;
+  text-transform: none;
+}
+
+.ps-root .ps-keyword {
+  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
+  font-weight: bold;
+  font-variant: normal;
+  font-style: normal;
+  text-transform: none;
+}
+
+.ps-root .ps-comment {
+  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
+  font-weight: normal;
+  font-variant: normal;
+  font-style: normal;
+  text-transform: none;
+}
+
+/* line number support */
+
+.ps-root .ps-linenum {
+  font-size: 0.8em;
+  line-height: 1em;
+  width: 1.6em;
+  text-align: right;
+  display: inline-block;
+  position: relative;
+  padding-right: 0.3em;
+}
+
+.ps-root .ps-algorithmic.with-linenum .ps-line.ps-code {
+  text-indent: -1.6em;
+}
+
+.ps-root .ps-algorithmic.with-linenum .ps-line.ps-code > span {
+  text-indent: 0em;
+}</style><style>.jsdraw--editButton {
+  display: inline-block;
+  opacity: 0;
+  overflow: hidden;
+  z-index: 1;
+  position: relative;
+  align-self: flex-end;
+  justify-self: right;
+  transition: opacity 0.2s ease;
+}
+
+.jsdraw--editButton.-show,
+.jsdraw--editButton:hover {
+  opacity: 0.9;
+  overflow: visible;
+}
+
+.jsdraw--editButton > button {
+  width: min-content;
+  max-height: 50px;
+  position: absolute;
+}</style><script>(() => {
+  // src/localization.ts
+  var defaultStrings = {
+    insertDrawing: "Insert Drawing",
+    insertDrawingInNewWindow: "Insert drawing in new window",
+    restoreFromAutosave: "Restore from autosaved drawing",
+    deleteAutosave: "Delete all autosaved drawings",
+    noSuchAutosaveExists: "No autosave exists",
+    discardChanges: "Discard changes",
+    defaultImageTitle: "Freehand Drawing",
+    edit: "Edit",
+    close: "Close",
+    saveAndClose: "Save and close",
+    overwriteExisting: "Overwrite existing",
+    saveAsNewDrawing: "Save as a new drawing",
+    clickBelowToContinue: "Done! Click below to continue.",
+    discardUnsavedChanges: "Discard unsaved changes?",
+    resumeEditing: "Resume editing",
+    saveAndResumeEditing: "Save and resume editing",
+    saveChanges: "Save changes",
+    exitInstructions: "All changes saved! Click below to exit.",
+    settingsPaneDescription: "Settings for the Freehand Drawing image editor.",
+    setting__disableFullScreen: "Dialog mode",
+    setting__disableFullScreenDescription: "Enabling this setting causes the editor to only partially fill the Joplin window.",
+    setting__autosaveIntervalSettingLabel: "Autosave interval (minutes)",
+    setting__autosaveIntervalSettingDescription: 'Adjusts how often a backup copy of the current drawing is created. The most recent autosave can be restored by searching for ":restore autosave" in the command palette (ctrl+shift+p or cmd+shift+p on MacOS) and clicking "Restore from autosaved drawing". If this setting is set to zero, autosaves are created every two minutes.',
+    setting__themeLabel: "Theme",
+    setting__toolbarTypeLabel: "Toolbar type",
+    setting__toolbarTypeDescription: "This setting switches between possible toolbar user interfaces for the image editor.",
+    setting__keyboardShortcuts: "Keyboard shortcuts",
+    toolbarTypeDefault: "Default",
+    toolbarTypeSidebar: "Sidebar",
+    toolbarTypeDropdown: "Dropdown",
+    styleMatchJoplin: "Match Joplin",
+    styleJsDrawLight: "Light",
+    styleJsDrawDark: "Dark",
+    images: "Images",
+    pdfs: "PDFs",
+    allFiles: "All Files",
+    loadLargePdf: (pageCount) => `A selected file is a large PDF (${pageCount} pages). Loading it may take some time and increase the size of the current drawing. Continue?`,
+    notAnEditableImage: (resourceId, resourceType) => `Resource ${resourceId} is not an editable image. Unable to edit resource of type ${resourceType}.`
+  };
+  var localizations = {
+    de: {
+      insertDrawing: "Zeichnung einf\xFCgen",
+      insertDrawingInNewWindow: "Zeichnung in neuem Fenster einf\xFCgen",
+      restoreFromAutosave: "Automatische Sicherung wiederherstellen",
+      deleteAutosave: "Alle automatischen Sicherungen l\xF6schen",
+      noSuchAutosaveExists: "Keine automatischen Sicherungen vorhanden",
+      discardChanges: "\xC4nderungen verwerfen",
+      defaultImageTitle: "Freihand-Zeichnen",
+      edit: "Bearbeiten",
+      close: "Schlie\xDFen",
+      saveAndClose: "Speichern und Schlie\xDFen",
+      overwriteExisting: "Existierende Zeichnung \xFCberschreiben",
+      saveAsNewDrawing: "Als neue Zeichnung speichern",
+      clickBelowToContinue: "Fertig! Unten klicken, um fortzufahen.",
+      discardUnsavedChanges: "Ungespeicherte \xC4nderungen verwerfen?",
+      resumeEditing: "Weiter bearbeiten",
+      saveAndResumeEditing: "Speichern und weiter bearbeiten",
+      saveChanges: "\xC4nderungen speichern",
+      exitInstructions: "Alle \xC4nderungen gespeichert! Unten klicken, um das Fenster zu schlie\xDFen.",
+      settingsPaneDescription: "Einstellungen f\xFCr Freihand-Zeichnen.",
+      setting__disableFullScreen: "Dialogmodus",
+      setting__disableFullScreenDescription: "Wenn diese Einstellung aktiviert ist, f\xFCllt der Editor das Joplin-Fenster nur teilweise aus.",
+      setting__autosaveIntervalSettingLabel: "Intervall f\xFCr die automatische Speicherung (Minuten)",
+      setting__autosaveIntervalSettingDescription: "Legt fest, wie oft eine Sicherungskopie der aktuellen Zeichnung erstellt wird. Die letzte automatische Speicherung kann wiederhergestellt werden, indem du in der Befehlspalette (Strg+Umschalt+P oder Cmd+Umschalt+P unter MacOS) nach \u201E:restore autosave\u201C suchst und auf \u201EAutomatische Sicherung wiederherstellen\u201C klickst. Wenn diese Einstellung auf Null gesetzt ist, werden alle zwei Minuten automatische Speichervorg\xE4nge durchgef\xFChrt.",
+      setting__themeLabel: "Design",
+      setting__toolbarTypeLabel: "Toolbar-Typ",
+      setting__toolbarTypeDescription: "Diese Einstellung wechselt zwischen den m\xF6glichen Benutzeroberfl\xE4chen der Symbolleiste f\xFCr den Bildeditor.",
+      setting__keyboardShortcuts: "Tastaturk\xFCrzel",
+      toolbarTypeDefault: "Standard",
+      toolbarTypeSidebar: "Sidebar",
+      toolbarTypeDropdown: "Dropdown-Men\xFC",
+      styleMatchJoplin: "wie Joplin",
+      styleJsDrawLight: "Hell",
+      styleJsDrawDark: "Dunkel",
+      images: "Bilder",
+      pdfs: "PDFs",
+      allFiles: "Alle Dateien",
+      loadLargePdf: (pageCount) => `Die ausgew\xE4hlte Datei ist eine gro\xDFe PDF-Datei (mit ${pageCount} Seiten). Das Laden kann einige Zeit dauern und die Gr\xF6\xDFe der aktuellen Zeichnung erh\xF6hen. Fortfahren?`,
+      notAnEditableImage: (resourceId, resourceType) => `Die Ressource ${resourceId} ist kein bearbeitbares Bild. Ressource vom Typ ${resourceType} kann nicht bearbeitet werden.`
+    },
+    en: defaultStrings,
+    es: {
+      insertDrawing: "A\xF1ada dibujo",
+      restoreFromAutosave: "Resturar al autoguardado",
+      deleteAutosave: "Borrar el autoguardado",
+      noSuchAutosaveExists: "No autoguardado existe",
+      discardChanges: "Descartar cambios",
+      defaultImageTitle: "Dibujo",
+      edit: "Editar",
+      close: "Cerrar",
+      saveAndClose: "Guardar y cerrar",
+      overwriteExisting: "Sobrescribir existente",
+      saveAsNewDrawing: "Guardar como dibujo nuevo",
+      clickBelowToContinue: "Guardado. Ponga \xABok\xBB para continuar.",
+      discardUnsavedChanges: "\xBFDescartar cambios no guardados?",
+      resumeEditing: "Continuar editando",
+      saveAndResumeEditing: "Guardar y continuar editando"
+    },
+    hr: {
+      insertDrawing: "Umetni crte\u017E",
+      insertDrawingInNewWindow: "Umetni crte\u017E u novom prozoru",
+      restoreFromAutosave: "Obnovi iz automatski spremljenog crte\u017Ea",
+      deleteAutosave: "Izbri\u0161i sve automatski spremljene crte\u017Ee",
+      noSuchAutosaveExists: "Ne postoji automatski spremljeni crte\u017E",
+      discardChanges: "Odbaci promjene",
+      defaultImageTitle: "Prostoru\u010Dni crte\u017E",
+      edit: "Uredi",
+      close: "Zatvori",
+      saveAndClose: "Spremi i zatvori",
+      overwriteExisting: "Prepi\u0161i postoje\u0107e",
+      saveAsNewDrawing: "Spremi kao novi crte\u017E",
+      clickBelowToContinue: "Gotovo! Klikni dolje za nastavak.",
+      discardUnsavedChanges: "Odbaciti nespremljene promjene?",
+      resumeEditing: "Nastavi ure\u0111ivati",
+      saveAndResumeEditing: "Spremi i nastavi ure\u0111ivati",
+      saveChanges: "Spremi promjene",
+      exitInstructions: "Sve promjene su spremljene! Klikni dolje za izlaz.",
+      settingsPaneDescription: "Postavke ure\u0111iva\u010Da crte\u017Ea.",
+      setting__disableFullScreen: "Modus dijaloga",
+      setting__disableFullScreenDescription: "Uklju\u010Divanjem ove postavke \u0107e ure\u0111iva\u010D ispuniti samo dio Joplinovog prozora.",
+      setting__autosaveIntervalSettingLabel: "Interval automatskog spremanja (minute)",
+      setting__autosaveIntervalSettingDescription: "Prilago\u0111ava u\u010Destalost stvaranja sigurnosnih kopija trenuta\u010Dnog crte\u017Ea. Najnoviji automatski spremljeni crte\u017E se mo\u017Ee obnoviti pretra\u017Eivanjem \u201E:restore autosave\u201D u paleti naredbi (ctrl+shift+p ili cmd+shift+p na MacOS-u) i klikom na \u201EObnovi iz automatski spremljenog crte\u017Ea\u201D. Ako je ova postavka postavljena na nulu, automatska spremanja se izvode svake dvije minute.",
+      setting__themeLabel: "Tema",
+      setting__toolbarTypeLabel: "Vrsta alatne trake",
+      setting__toolbarTypeDescription: "Ova postavka omogu\u0107uje prebacivanje izme\u0111u mogu\u0107ih korisni\u010Dkih su\u010Delja alatnih traka za ure\u0111iva\u010D slika.",
+      setting__keyboardShortcuts: "Tipkovni pre\u010Daci",
+      toolbarTypeDefault: "Zadano",
+      toolbarTypeSidebar: "Bo\u010Dna traka",
+      toolbarTypeDropdown: "Padaju\u0107i izbornik",
+      styleMatchJoplin: "Uskladi s Joplinom",
+      styleJsDrawLight: "Svijetla",
+      styleJsDrawDark: "Tamna",
+      images: "Slike",
+      pdfs: "PDF-ovi",
+      allFiles: "Sve datoteke",
+      loadLargePdf: (pageCount) => `Jedna odabrana datoteka je veliki PDF (${pageCount} stranica). U\u010Ditavanje mo\u017Ee potrajati i pove\u0107ati veli\u010Dinu trenuta\u010Dnog crte\u017Ea. \u017Deli\u0161 li nastaviti?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resurs ${resourceId} nije slika koja se mo\u017Ee ure\u0111ivati. Nije mogu\u0107e urediti resurs vrste ${resourceType}.`
+    },
+    ro: {
+      insertDrawing: "Insereaz\u0103 un desen",
+      insertDrawingInNewWindow: "Insereaz\u0103 un desen \xEEntr-o fereastr\u0103 nou\u0103",
+      restoreFromAutosave: "Restaureaz\u0103 dintr-un desen salvat automat",
+      deleteAutosave: "\u0218terge toate desenele salvate automat",
+      noSuchAutosaveExists: "Nicio salvare automat\u0103 nu exist\u0103",
+      discardChanges: "Anuleaz\u0103 modific\u0103rile",
+      defaultImageTitle: "Desen liber",
+      edit: "Editeaz\u0103",
+      close: "\xCEnchide",
+      saveAndClose: "Salveaz\u0103 \u0219i \xEEnchide",
+      overwriteExisting: "Suprascrie existent",
+      saveAsNewDrawing: "Salveaz\u0103 ca desen nou",
+      clickBelowToContinue: "Gata! F\u0103 clic mai jos pentru a continua.",
+      discardUnsavedChanges: "Anulezi modific\u0103rile nesalvate?",
+      resumeEditing: "Continu\u0103 editarea",
+      saveAndResumeEditing: "Salveaz\u0103 \u0219i continu\u0103 editarea",
+      saveChanges: "Salveaz\u0103 modific\u0103rile",
+      exitInstructions: "Toate modific\u0103rile au fost salvate! F\u0103 clic mai jos pentru a ie\u0219i.",
+      settingsPaneDescription: "Set\u0103ri pentru editorul de imagine liber.",
+      setting__disableFullScreen: "Mod dialog",
+      setting__disableFullScreenDescription: "Activarea acestei op\u021Biuni face ca editorul s\u0103 acopere doar par\u021Bial fereastra Joplin.",
+      setting__autosaveIntervalSettingLabel: "Interval salvare automat\u0103 (minute)",
+      setting__autosaveIntervalSettingDescription: 'Ajusteaz\u0103 c\xE2t de des se face o copie de siguran\u021B\u0103 a desenului curent. Cea mai recent\u0103 versiune salvat\u0103 automat poate fi restaurat\u0103 c\u0103ut\xE2nd dup\u0103 ":restore autosave" \xEEn paleta de comenzi (Ctrl+Shift+P sau Cmd+Shift+P pe MacOS) \u0219i f\u0103c\xE2nd clic pe \u201ERestaureaz\u0103 dintr-un desen salvat automat\u201D. Dac\u0103 acest\u0103 setare este 0, salv\u0103rile automate sunt create la fiecare 2 minute.',
+      setting__themeLabel: "Tem\u0103",
+      setting__toolbarTypeLabel: "Tip bar\u0103 de instrumente",
+      setting__toolbarTypeDescription: "Aceast\u0103 setare comut\u0103 \xEEntre posibilele interfe\u021Be pentru editorul de imagine.",
+      setting__keyboardShortcuts: "Scurt\u0103turi de la tastatur\u0103",
+      toolbarTypeDefault: "Implicit",
+      toolbarTypeSidebar: "Bar\u0103 lateral\u0103",
+      toolbarTypeDropdown: "Casete derulante",
+      styleMatchJoplin: "La fel ca Joplin",
+      styleJsDrawLight: "Luminoas\u0103",
+      styleJsDrawDark: "\xCEntunecat\u0103",
+      images: "Imagini",
+      pdfs: "PDF-uri",
+      allFiles: "Toate fi\u0219ierele",
+      loadLargePdf: (pageCount) => `Un fi\u0219ier PDF selectat este un fi\u0219ier mare (${pageCount} de pagini). \xCEnc\u0103rcarea lui ar putea dura ceva timp \u0219i s\u0103 creasc\u0103 dimensiunea desenului curent. Continui?`,
+      notAnEditableImage: (resourceId, resourceType) => `Resursa ${resourceId} nu este o imagine editabil\u0103. Nu se poate edita resursa de tipul ${resourceType}.`
+    },
+    sk: {
+      insertDrawing: "Vlo\u017Ei\u0165 kresbu",
+      insertDrawingInNewWindow: "Vlo\u017Ei\u0165 kresbu do nov\xE9ho okna",
+      restoreFromAutosave: "Obnovi\u0165 z automaticky ulo\u017Eenej kresby",
+      deleteAutosave: "Vymaza\u0165 v\u0161etky automaticky ulo\u017Een\xE9 kresby",
+      noSuchAutosaveExists: "Neexistuj\xFA \u017Eiadne automaticky ulo\u017Een\xE9",
+      discardChanges: "Zru\u0161i\u0165 zmeny",
+      defaultImageTitle: "Kresba vo\u013Enou rukou",
+      edit: "Upravi\u0165",
+      close: "Zavrie\u0165",
+      saveAndClose: "Ulo\u017Ei\u0165 a zavrie\u0165",
+      overwriteExisting: "Prep\xEDsa\u0165 existuj\xFAcu",
+      saveAsNewDrawing: "Ulo\u017Ei\u0165 ako nov\xFA kresbu",
+      clickBelowToContinue: "Hotovo! Kliknite ni\u017E\u0161ie pre pokra\u010Dovanie.",
+      discardUnsavedChanges: "Zru\u0161i\u0165 neulo\u017Een\xE9 zmeny?",
+      resumeEditing: "Pokra\u010Dova\u0165 v \xFAprave",
+      saveAndResumeEditing: "Ulo\u017Ei\u0165 a pokra\u010Dova\u0165 v \xFAprav\xE1ch",
+      saveChanges: "Ulo\u017Ei\u0165 zmeny",
+      exitInstructions: "V\u0161etky zmeny boli ulo\u017Een\xE9! Kliknite ni\u017E\u0161ie pre ukon\u010Denie.",
+      settingsPaneDescription: "Nastavenia pre grafick\xFD editor Kresba vo\u013Enou rukou.",
+      setting__disableFullScreen: "Dial\xF3gov\xFD re\u017Eim",
+      setting__disableFullScreenDescription: "Aktiv\xE1cia tohto nastavenia sp\xF4sob\xED, \u017Ee editor vypln\xED okno Joplin len \u010Diasto\u010Dne.",
+      setting__autosaveIntervalSettingLabel: "Interval automatick\xE9ho ukladania (v min\xFAtach)",
+      setting__autosaveIntervalSettingDescription: "Nastav\xED, ako \u010Dasto sa vytv\xE1ra z\xE1lo\u017En\xE1 k\xF3pia aktu\xE1lnej kresby. Posledn\xE9 automatick\xE9 ulo\u017Eenie je mo\u017En\xE9 obnovi\u0165 vyh\u013Eadan\xEDm \u201E:restore autosave\u201C v palete pr\xEDkazov (ctrl+shift+p alebo cmd+shift+p v syst\xE9me MacOS) a kliknut\xEDm na \u201EObnovi\u0165 z automaticky ulo\u017Eenej kresby\u201C. Ak je toto nastavenie nastaven\xE9 na nulu, automatick\xE9 ulo\u017Eenia sa vytv\xE1raj\xFA ka\u017Ed\xE9 dve min\xFAty.",
+      setting__themeLabel: "T\xE9ma",
+      setting__toolbarTypeLabel: "Typ panela n\xE1strojov",
+      setting__toolbarTypeDescription: "Toto nastavenie prep\xEDna medzi mo\u017En\xFDmi pou\u017E\xEDvate\u013Esk\xFDmi rozhraniami panela n\xE1strojov pre grafick\xFD editor.",
+      setting__keyboardShortcuts: "Kl\xE1vesov\xE9 skratky",
+      toolbarTypeDefault: "Predvolen\xE9",
+      toolbarTypeSidebar: "Bo\u010Dn\xFD panel",
+      toolbarTypeDropdown: "Rozba\u013Eovacie menu",
+      styleMatchJoplin: "Rovnak\xE1 ako Joplin",
+      styleJsDrawLight: "Svetl\xE1",
+      styleJsDrawDark: "Tmav\xE1",
+      images: "Obr\xE1zky",
+      pdfs: "PDF s\xFAbory",
+      allFiles: "V\u0161etky s\xFAbory",
+      loadLargePdf: (pageCount) => `Vybran\xFD s\xFAbor je ve\u013Ek\xFD PDF s\xFAbor (${pageCount} str\xE1n). Jeho na\u010D\xEDtanie m\xF4\u017Ee trva\u0165 nejak\xFD \u010Das a zv\xFD\u0161i\u0165 ve\u013Ekos\u0165 aktu\xE1lnej kresby. Pokra\u010Dova\u0165?`,
+      notAnEditableImage: (resourceId, resourceType) => `Zdroj ${resourceId} nie je upravite\u013En\xFD obr\xE1zok. Nie je mo\u017En\xE9 upravi\u0165 zdroj typu ${resourceType}.`
+    }
+  };
+  var localization;
+  var supportedLanguages = [];
+  var setLocaleInternal = (supportedLocales) => {
+    const languages = [...supportedLocales];
+    for (let language of supportedLocales) {
+      language = language.replace("_", "-");
+      const localeSep = language.indexOf("-");
+      if (localeSep !== -1) {
+        languages.push(language.substring(0, localeSep));
+      }
+    }
+    for (const locale of languages) {
+      if (locale in localizations) {
+        localization = localizations[locale];
+        break;
+      }
+    }
+    supportedLanguages = languages;
+  };
+  var localizationSet = false;
+  var setLocale = (supportedLocales) => {
+    if (typeof supportedLocales === "string") {
+      supportedLocales = [supportedLocales];
+    }
+    setLocaleInternal(supportedLocales);
+    localizationSet = true;
+  };
+  setLocale(navigator.languages);
+  var localization_default = new Proxy(defaultStrings, {
+    get(_target, prop) {
+      if (!localizationSet) {
+        console.warn(
+          "Accessing language data without a localization set. The default Electron locale will be used."
+        );
+      }
+      const propAsKey = prop;
+      return localization?.[propAsKey] ?? defaultStrings[propAsKey];
+    }
+  });
+
+  // src/constants.ts
+  var markdownItContentScriptId = "jsdraw__markdownIt_editDrawingButton";
+
+  // src/contentScripts/utils/makeImageEditable.ts
+  var hasFocus = (element) => {
+    return element.contains(document.activeElement);
+  };
+  var onEdit = (image) => {
+    if (!(image instanceof HTMLElement)) {
+      image = image.currentTarget;
+    }
+    const message = `edit:${image.getAttribute("src")}`;
+    webviewApi.postMessage(markdownItContentScriptId, message).catch((err) => {
+      console.error("Error posting message!", err, "\nMessage: ", message);
+    });
+  };
+  var makeImageEditable = (image, editLabel) => {
+    if (image.classList.contains("js-draw--skip")) return;
+    if (image.ondblclick === onEdit) return;
+    image.ondblclick = onEdit;
+    const addEditButton = () => {
+      const editButtonContainer = document.createElement("span");
+      const editButton = document.createElement("button");
+      const updateLabel = (label) => {
+        editButton.textContent = `${label} \u{1F58A}\uFE0F`;
+      };
+      editButton.ariaDescribedByElements = [image];
+      editButtonContainer.classList.add("jsdraw--editButton");
+      editButtonContainer.appendChild(editButton);
+      updateLabel("Edit");
+      void (async () => {
+        updateLabel(await editLabel);
+      })();
+      image.insertAdjacentElement("afterend", editButtonContainer);
+      const pointerSet = /* @__PURE__ */ new Set();
+      const updateVisibleState = () => {
+        const show = pointerSet.size > 0 || editButton.querySelector(":hover, :focus") || hasFocus(editButton) || hasFocus(image);
+        if (show) {
+          editButtonContainer.classList.add("-show");
+        } else {
+          editButtonContainer.classList.remove("-show");
+        }
+      };
+      const updatePositioning = () => {
+        const containerBox = editButtonContainer.getBoundingClientRect();
+        const imageBox = image.getBoundingClientRect();
+        editButton.style.right = `${imageBox.right - containerBox.right}px`;
+        editButton.style.top = `${imageBox.top - containerBox.top}px`;
+      };
+      image.addEventListener("pointerenter", (event) => {
+        pointerSet.add(event.pointerId);
+        updateVisibleState();
+        updatePositioning();
+      });
+      image.addEventListener("pointerleave", (event) => {
+        pointerSet.delete(event.pointerId);
+        updateVisibleState();
+      });
+      for (const item of [image, editButton]) {
+        item.addEventListener("focus", () => {
+          updateVisibleState();
+          updatePositioning();
+        });
+        item.addEventListener("blur", () => {
+          requestAnimationFrame(() => {
+            updateVisibleState();
+          });
+        });
+      }
+      editButton.onclick = () => {
+        onEdit(image);
+      };
+    };
+    const isRichTextEditor = document.body.classList.contains("mce-content-body") || document.body.id === "tinymce";
+    const hasWebViewApi = typeof webviewApi !== "undefined";
+    const isHtmlNote = !document.body.querySelector("#rendered-md");
+    if (isRichTextEditor || isHtmlNote) {
+      image.style.cursor = "pointer";
+    } else if (hasWebViewApi) {
+      addEditButton();
+    }
+  };
+  var makeImageEditable_default = makeImageEditable;
+
+  // src/contentScripts/markdownIt-content.ts
+  var initLocalePromise = null;
+  var initLocale = async () => {
+    if (initLocalePromise) {
+      return initLocalePromise;
+    }
+    const promise = (async () => {
+      const languages = await webviewApi.postMessage(markdownItContentScriptId, "get-locale:");
+      if (!Array.isArray(languages)) {
+        throw new Error(
+          `Invalid locale request response. Not an array: ${JSON.stringify(languages)}`
+        );
+      }
+      setLocale(languages);
+    })();
+    initLocalePromise = promise;
+    return promise;
+  };
+  var processImages = () => {
+    const images = document.querySelectorAll('img[src*=".svg"]');
+    for (const image of images) {
+      if (image.src.match(/^https?:/) || !image.src.match(/[a-z0-9]{32}[.]svg([?]t=\d+)?$/)) {
+        continue;
+      }
+      makeImageEditable_default(
+        image,
+        (async () => {
+          await initLocale();
+          return localization_default.edit;
+        })()
+      );
+    }
+  };
+  document.addEventListener("joplin-noteDidUpdate", () => {
+    processImages();
+  });
+  processImages();
+})();
+</script></script><style>pre code.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 1em;
+}
+
+code.hljs {
+  padding: 3px 5px;
+}
+
+/*
+
+Atom One Light by Daniel Gamage
+Original One Light Syntax theme from https://github.com/atom/one-light-syntax
+
+base:    #fafafa
+mono-1:  #383a42
+mono-2:  #686b77
+mono-3:  #a0a1a7
+hue-1:   #0184bb
+hue-2:   #4078f2
+hue-3:   #a626a4
+hue-4:   #50a14f
+hue-5:   #e45649
+hue-5-2: #c91243
+hue-6:   #986801
+hue-6-2: #c18401
+
+*/
+
+.hljs {
+  color: #383a42;
+  background: #fafafa;
+}
+
+.hljs-comment,
+.hljs-quote {
+  color: #a0a1a7;
+  font-style: italic;
+}
+
+.hljs-doctag,
+.hljs-keyword,
+.hljs-formula {
+  color: #a626a4;
+}
+
+.hljs-section,
+.hljs-name,
+.hljs-selector-tag,
+.hljs-deletion,
+.hljs-subst {
+  color: #e45649;
+}
+
+.hljs-literal {
+  color: #0184bb;
+}
+
+.hljs-string,
+.hljs-regexp,
+.hljs-addition,
+.hljs-attribute,
+.hljs-meta .hljs-string {
+  color: #50a14f;
+}
+
+.hljs-attr,
+.hljs-variable,
+.hljs-template-variable,
+.hljs-type,
+.hljs-selector-class,
+.hljs-selector-attr,
+.hljs-selector-pseudo,
+.hljs-number {
+  color: #986801;
+}
+
+.hljs-symbol,
+.hljs-bullet,
+.hljs-link,
+.hljs-meta,
+.hljs-selector-id,
+.hljs-title {
+  color: #4078f2;
+}
+
+.hljs-built_in,
+.hljs-title.class_,
+.hljs-class .hljs-title {
+  color: #c18401;
+}
+
+.hljs-emphasis {
+  font-style: italic;
+}
+
+.hljs-strong {
+  font-weight: bold;
+}
+
+.hljs-link {
+  text-decoration: underline;
+}</style>
+						<title>Unix Lesson 5:  Viewing File Contents</title>
+					</head>
+					<body>
+						<div class="exported-note"><div class="exported-note-title">Unix Lesson 5:  Viewing File Contents</div>
+
+<style>
+		/* https://necolas.github.io/normalize.css/ */
+		html{line-height:1.15;-ms-text-size-adjust:100%;-webkit-text-size-adjust:100%}body{margin:0}
+		article,aside,footer,header,nav,section{display:block}h1{font-size:2em;margin:.67em 0}hr{box-sizing:content-box;height:0;overflow:visible}
+		pre{font-family:monospace,monospace;font-size:1em}a{background-color:transparent;-webkit-text-decoration-skip:objects}
+		b,strong{font-weight:bolder}small{font-size:80%}img{border-style:none}
+
+		body {
+			font-size: 15px;
+			color: #32373F;
+			word-wrap: break-word;
+			line-height: 1.6em;
+			background-color: #ffffff;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+			padding-bottom: 0px;
+			padding-top: 0px;
+		}
+		kbd {
+			border: 1px solid rgb(220, 220, 220);
+			box-shadow: inset 0 -1px 0 rgb(220, 220, 220);
+			padding: 2px 4px;
+			border-radius: 3px;
+			background-color: rgb(243, 243, 243);
+		}
+
+		:root {
+			--scrollbar-size: 7px;
+		}
+
+		::-webkit-scrollbar {
+			width: var(--scrollbar-size);
+			height: var(--scrollbar-size);
+		}
+		::-webkit-scrollbar-thumb {
+			border-radius: calc(var(--scrollbar-size) / 2);
+		}
+		::-webkit-scrollbar-corner {
+			background: none;
+		}
+		::-webkit-scrollbar-track {
+			border: none;
+		}
+		::-webkit-scrollbar-thumb {
+			background: rgba(50, 55, 63, 0.54); 
+		}
+		::-webkit-scrollbar-track:hover {
+			background: rgba(0, 0, 0, 0.1); 
+		}
+		::-webkit-scrollbar-thumb:hover {
+			background: rgba(50, 55, 63, 0.63); 
+		}
+
+		
+
+		/* Remove top padding and margin from first child so that top of rendered text is aligned to top of text editor text */
+
+		#rendered-md > h1:first-child,
+		#rendered-md > h2:first-child,
+		#rendered-md > h3:first-child,
+		#rendered-md > h4:first-child,
+		#rendered-md > ul:first-child,
+		#rendered-md > ol:first-child,
+		#rendered-md > table:first-child,
+		#rendered-md > blockquote:first-child,
+		#rendered-md > img:first-child,
+		#rendered-md > p:first-child {
+			margin-top: 0;
+			padding-top: 0;
+		}
+		
+		p, h1, h2, h3, h4, h5, h6, ul, table {
+			margin-top: .6em;
+			margin-bottom: 1.35em;
+
+			/*
+				Adds support for RTL text in the note body. It automatically detects the direction using the content.
+				Issue: https://github.com/laurent22/joplin/issues/3991
+			*/
+			unicode-bidi: plaintext;
+		}
+
+		h1, h2, h3, h4, h5, h6, ul, table {
+			margin-bottom: 0.65em;
+		}
+
+		h1, h2, h3, h4, h5, h6 {
+			line-height: 1.5em;
+		}
+		h1 {
+			font-size: 1.5em;
+			font-weight: bold;
+			border-bottom: 1px solid #dddddd;
+			padding-bottom: .3em;
+		}
+		h2 {
+			font-size: 1.3em;
+			font-weight: bold;
+			padding-bottom: .1em; */
+		}
+		h3 {
+			font-size: 1.1em;
+			font-weight: bold;
+		}
+		h4, h5, h6 {
+			font-size: 1em;
+			font-weight: bold;
+		}
+
+		.exported-note-title {
+			font-size: 2em;
+			font-weight: bold;
+			margin-bottom: 0.8em;
+			line-height: 1.5em;
+			padding-bottom: .35em;
+			border-bottom: 1px solid #dddddd;
+		}
+
+		a {
+			color: #155BDA;
+		}
+		ul, ol {
+			padding-left: 0;
+			margin-left: 1.7em;
+		}
+		li {
+			margin-bottom: .4em;
+		}
+		li p {
+			margin-top: 0.2em;
+			margin-bottom: 0;
+		}
+
+		dt {
+			font-weight: bold;
+			margin-bottom: 0.25em;
+		}
+
+		dd {
+			margin-inline-start: 2.5em;
+			margin-bottom: 0.5em;
+		}
+
+		.resource-icon {
+			display: inline-block;
+			position: relative;
+			top: 0.3em;
+			text-decoration: none;
+			width: 1.2em;
+			height: 1.4em;
+			margin-right: 0.4em;
+			background-color:  #155BDA;
+		}
+    /* These icons are obtained from the wonderful ForkAwesome project by copying the src svgs 
+     * into the css classes below.
+     * svgs are obtained from https://github.com/ForkAwesome/Fork-Awesome/tree/master/src/icons/svg
+     * instead of the svg width, height property you must use a viewbox here, 0 0 1536 1792 is typically the actual size of the icon
+     * each line begins with the pre-amble -webkit-mask: url("data:image/svg+xml;utf8,
+     * and of course finishes with ");
+     * to prevent artifacts it is also necessary to include -webkit-mask-repeat: no-repeat;
+     * on the following line
+     * */
+		.fa-joplin {
+			/* Awesome Font file */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M373.834 128C168.227 128 0 296.223 0 501.834v788.336C0 1495.778 168.227 1664 373.834 1664h788.336c205.608 0 373.83-168.222 373.83-373.83V501.834C1536 296.224 1367.778 128 1162.17 128zm397.222 205.431h417.424a7.132 7.132 0 0 1 7.132 7.133v132.552c0 4.461-3.619 8.073-8.077 8.073h-57.23c-24.168 0-43.768 19.338-44.284 43.374v2.377h-.017v136.191h-.053l-.466 509.375c-5.02 77.667-39.222 149.056-96.324 201.046-60.28 54.834-141.948 85.017-229.962 85.017-12.45 0-25.208-.61-37.907-1.785-92.157-8.682-181.494-48.601-251.662-112.438-71.99-65.517-117.147-150.03-127.164-238-11.226-98.763 23.42-192.783 95.045-257.937 81.99-74.637 198.185-101.768 316.613-75.704 5.574 1.227 9.55 6.282 9.55 11.997v199.52c-.199 2.625-1.481 6.599-8.183 2.896-.663-.365-1.194-.511-1.653-.531-21.987-10.587-45.159-17.57-68.559-19.916-.38-.04-.757-.124-1.138-.163-.537-.048-1.034-.033-1.556-.075-4.13-.354-8.183-.517-12.203-.58-.87-.011-1.771-.127-2.641-.127-.486 0-.951.05-1.437.057-1.464.011-2.886.115-4.33.163-2.76.102-5.497.211-8.182.448-.273.024-.547.07-.835.097-25.509 2.4-47.864 11.104-65.012 25.47-.954.802-1.974 1.53-2.9 2.36a1.34 1.34 0 0 1-.168.146c-23.96 21.8-34.881 53.872-30.726 90.316 4.62 40.737 26.94 81.156 62.841 113.823 35.908 32.67 80.335 52.977 125.113 57.186 35.118 3.36 66.547-3.919 89.899-20.461a97.255 97.255 0 0 0 9.365-7.501c2.925-2.661 5.569-5.5 8.086-8.416.3-.348.672-.673.975-1.024 8.253-9.864 14.222-21.067 17.996-33.148.639-2.034 1.051-4.148 1.564-6.227.381-1.563.81-3.106 1.112-4.693.555-2.784.923-5.632 1.253-8.49.086-.709.183-1.414.237-2.128.492-4.893.693-9.858.55-14.91h.013V521.623c-2.01-22.626-20.78-40.434-43.928-40.434h-57.23a8.071 8.071 0 0 1-8.077-8.073V340.564a7.132 7.132 0 0 1 7.136-7.133z'/></svg>");
+		}
+		.fa-file-image {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-128-448v320H256v-192l192-192 128 128 384-384zm-832-192c-106 0-192-86-192-192s86-192 192-192 192 86 192 192-86 192-192 192z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-pdf {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-514-593c25 20 53 38 84 56 42-5 81-7 117-7 67 0 152 8 177 49 7 10 13 28 2 52-1 1-2 3-3 4v1c-3 18-18 38-71 38-64 0-161-29-245-73-139 15-285 46-392 83-103 176-182 262-242 262-10 0-19-2-28-7l-24-12c-3-1-4-3-6-5-5-5-9-16-6-36 10-46 64-123 188-188 8-5 18-2 23 6 1 1 2 3 2 4 31-51 67-116 107-197 45-90 80-178 104-262-32-109-42-221-24-287 7-25 22-40 42-40h22c15 0 27 5 35 15 12 14 15 36 9 68-1 3-2 6-4 8 1 3 1 5 1 8v30c-1 63-2 123-14 192 35 105 87 190 146 238zm-576 411c30-14 73-57 137-158-75 58-122 124-137 158zm398-920c-10 28-10 76-2 132 3-16 5-31 7-44 2-17 5-31 7-43 1-3 2-5 4-8-1-1-1-3-2-5-1-18-7-29-13-36 0 2-1 3-1 4zm-124 661c88-35 186-63 284-81-10-8-20-15-29-23-49-43-93-103-127-176-19 61-47 126-83 197-15 28-30 56-45 83zm646-16c-5-5-31-24-140-24 49 18 94 28 124 28 9 0 14 0 18-1 0-1-1-2-2-3z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-word {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM233 768v107h70l164 661h159l128-485c5-15 8-30 10-46 1-8 2-16 2-24h4l3 24c3 14 4 30 9 46l128 485h159l164-661h70V768h-300v107h90l-99 438c-4 16-6 33-7 46l-2 21h-4c0-6-2-14-3-21-3-13-5-30-9-46L825 768H711l-144 545c-4 16-5 33-8 46l-4 21h-4l-2-21c-1-13-3-30-7-46l-99-438h90V768H233z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-powerpoint {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-992-234v106h327v-106h-93v-167h137c43 0 82-2 118-15 90-31 146-124 146-233s-54-193-137-228c-38-15-84-19-130-19H416v107h92v555h-92zm353-280H650V882h120c35 0 62 6 83 18 36 21 56 62 56 115 0 56-20 99-62 120-21 10-47 15-78 15z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-excel {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zm-979-234v106h281v-106h-75l103-161c12-19 18-34 21-34h2c1 4 3 7 5 10 4 8 10 14 17 24l107 161h-76v106h291v-106h-68l-192-273 195-282h67V768H828v107h74l-103 159c-12 19-21 34-21 33h-2c-1-4-3-7-5-10-4-7-9-14-17-23L648 875h76V768H434v107h68l189 272-194 283h-68z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-audio {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM620 850c12 5 20 17 20 30v544c0 13-8 25-20 30-4 1-8 2-12 2-8 0-16-3-23-9l-166-167H288c-18 0-32-14-32-32v-192c0-18 14-32 32-32h131l166-167c10-9 23-12 35-7zm417 689c19 0 37-8 50-24 83-102 129-231 129-363s-46-261-129-363c-22-28-63-32-90-10-28 23-32 63-9 91 65 80 100 178 100 282s-35 202-100 282c-23 28-19 68 9 90 12 10 26 15 40 15zm-211-148c17 0 34-7 47-20 56-60 87-137 87-219s-31-159-87-219c-24-26-65-27-91-3-25 24-27 65-2 91 33 36 52 82 52 131s-19 95-52 131c-25 26-23 67 2 91 13 11 29 17 44 17z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-video {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM768 768c70 0 128 58 128 128v384c0 70-58 128-128 128H384c-70 0-128-58-128-128V896c0-70 58-128 128-128h384zm492 2c12 5 20 17 20 30v576c0 13-8 25-20 30-4 1-8 2-12 2-8 0-17-3-23-9l-265-266v-90l265-266c6-6 15-9 23-9 4 0 8 1 12 2z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-archive {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M640 384V256H512v128h128zm128 128V384H640v128h128zM640 640V512H512v128h128zm128 128V640H640v128h128zm700-388c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H768v128H640V128H128v1536h1280zM781 943c85 287 107 349 107 349 5 17 8 34 8 52 0 111-108 192-256 192s-256-81-256-192c0-18 3-35 8-52 0 0 21-62 120-396V768h128v128h79c29 0 54 19 62 47zm-141 465c71 0 128-29 128-64s-57-64-128-64-128 29-128 64 57 64 128 64z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-code {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM480 768c11-14 31-17 45-6l51 38c14 11 17 31 6 45l-182 243 182 243c11 14 8 34-6 45l-51 38c-14 11-34 8-45-6l-226-301c-8-11-8-27 0-38zm802 301c8 11 8 27 0 38l-226 301c-11 14-31 17-45 6l-51-38c-14-11-17-31-6-45l182-243-182-243c-11-14-8-34 6-45l51-38c14-11 34-8 45 6zm-620 461c-18-3-29-20-26-37l138-831c3-18 20-29 37-26l63 10c18 3 29 20 26 37l-138 831c-3 18-20 29-37 26z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file-alt, .fa-file-csv {
+      /* fork-awesome doesn't have csv so we use the text icon */
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280zM384 800c0-18 14-32 32-32h704c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64zm736 224c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704zm0 256c18 0 32 14 32 32v64c0 18-14 32-32 32H416c-18 0-32-14-32-32v-64c0-18 14-32 32-32h704z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		.fa-file {
+			-webkit-mask: url("data:image/svg+xml;utf8,<svg viewBox='0 0 1536 1792' xmlns='http://www.w3.org/2000/svg'><path d='M1468 380c37 37 68 111 68 164v1152c0 53-43 96-96 96H96c-53 0-96-43-96-96V96C0 43 43 0 96 0h896c53 0 127 31 164 68zm-444-244v376h376c-6-17-15-34-22-41l-313-313c-7-7-24-16-41-22zm384 1528V640H992c-53 0-96-43-96-96V128H128v1536h1280z'/></svg>");
+      -webkit-mask-repeat: no-repeat;
+		}
+		blockquote {
+			border-left: 4px solid rgb(220, 220, 220);
+			padding-left: 1.2em;
+			margin-left: 0;
+			opacity: 0.7;
+		}
+
+		.jop-tinymce table,
+		table {
+			text-align: left;
+			border-collapse: collapse;
+			border: 1px solid rgb(220, 220, 220);
+			background-color: #ffffff;
+		}
+
+		.jop-tinymce table td, .jop-tinymce table th,
+		table td, th {
+			text-align: left;
+			padding: .5em 1em .5em 1em;
+			font-size: 15;
+			color: #32373F;
+			font-family: 'Avenir Next', 'Avenir', 'Arial', sans-serif;
+		}
+
+		.jop-tinymce table td,
+		table td {
+			border: 1px solid rgb(220, 220, 220);
+		}
+
+		.jop-tinymce table th,
+		table th {
+			border: 1px solid rgb(220, 220, 220);
+			border-bottom: 2px solid rgb(220, 220, 220);
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:nth-child(even),
+		table:has(thead) tr:nth-child(even) {
+			background-color: rgb(247, 247, 247);
+		}
+
+		.jop-tinymce table tr:hover,
+		table tr:hover {
+			background-color: #e5e5e5;
+		}
+
+		hr {
+			border: none;
+			border-bottom: 2px solid #dddddd;
+		}
+		img {
+			max-width: 100%;
+			height: auto;
+		}
+		
+		.inline-code,
+		.mce-content-body code {
+			border: 1px solid rgb(220, 220, 220);
+			background-color: rgb(243, 243, 243);
+			padding-right: .2em;
+			padding-left: .2em;
+			border-radius: .25em;
+			color: rgb(0,0,0);
+			font-size: .9em;
+		}
+
+		.highlighted-keyword {
+			background-color: #F3B717;
+			color: black;
+		}
+
+		
+	.not-loaded-resource img {
+		width: 1.15em;
+		height: 1.15em;
+		background: white;
+		padding: 2px !important;
+		border-radius: 2px;
+		box-shadow: 0 1px 3px #000000aa;
+	}
+
+	a.not-loaded-resource img {
+		margin-right: .2em;
+	}
+
+	a.not-loaded-resource {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+	}
+
+
+		.md-checkbox input[type=checkbox]:checked {
+			opacity: 0.7;
+		}
+
+		.jop-tinymce ul.joplin-checklist .checked,
+		.md-checkbox .checkbox-label-checked {
+			opacity: 0.5;
+		}
+
+		.exported-note {
+			padding: 1em;
+		}
+
+		.joplin-editable .joplin-source {
+			display: none;
+		}
+
+		mark {
+			background: #F7D26E;
+			color: black;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		.mce-content-body {
+			/* Note: we give a bit more padding at the bottom, to allow scrolling past the end of the document */
+			padding: 5px 10px 10em 0;
+		}
+
+		/*
+		.mce-content-body code {
+			background-color: transparent;
+		}
+		*/
+
+		.mce-content-body [data-mce-selected=inline-boundary] {
+			background-color: transparent;
+		}
+
+		.mce-content-body .joplin-editable {
+			cursor: pointer !important;
+		}
+
+		.mce-content-body.mce-content-readonly {
+			opacity: 0.5;
+		}
+
+		/* We need that to make sure click events have the A has a target */
+		.katex a span {
+			pointer-events: none;
+		}
+
+		.media-player {
+			width: 100%;
+			margin-top: 10px;
+		}
+
+		.media-player.media-pdf {
+			min-height: 35rem;
+			width: 100%;
+			max-width: 1000px;
+			margin: 0;
+			border: 0;
+			display: block;
+		}
+
+		/* Clear the CODE style if the element is within a joplin-editable block */
+		.mce-content-body .joplin-editable code {
+			border: none;
+			background: none;
+			padding: 0;
+			color: inherit;
+			font-size: inherit;
+		}
+
+		/* To make code blocks horizontally scrollable */
+		/* https://github.com/laurent22/joplin/issues/5740 */
+		pre.hljs {
+			overflow-x: auto;
+		}
+
+		.joplin-table-wrapper{
+			overflow-x: auto;
+			overflow-y: hidden;
+		}
+
+		/* =============================================== */
+		/* For TinyMCE */
+		/* =============================================== */
+
+		@media print {
+			body {
+				height: auto !important;
+			}
+
+			pre {
+				white-space: pre-wrap;
+			}
+
+			.code, .inline-code {
+				border: 1px solid #CBCBCB;
+			}
+
+			#joplin-container-content {
+				/* The height of the content is set dynamically by JavaScript (in updateBodyHeight) to go
+				   around various issues related to scrolling. However when printing we don't want this
+				   fixed size as that would crop the content. So we set it to auto here. "important" is
+				   needed to override the style set by JavaScript at the element-level. */
+				height: auto !important;
+			}
+		}
+	
+
+				/*
+					FOR THE MARKDOWN EDITOR
+				*/
+
+				/* Remove the indentation from the checkboxes at the root of the document
+				   (otherwise they are too far right), but keep it for their children to allow
+				   nested lists. Make sure this value matches the UL margin. */
+
+				li.md-checkbox {
+					list-style-type: none;
+				}
+
+				li.md-checkbox input[type=checkbox] {
+					margin-left: -1.71em;
+					margin-right: 0.7em;
+					position: relative;
+					top: 1px;
+				}
+				
+				ul.joplin-checklist {
+					list-style:none;
+				}
+
+				/*
+					FOR THE RICH TEXT EDITOR
+				*/
+
+				ul.joplin-checklist li::before {
+					content:"\f14a";
+					font-family:"Font Awesome 5 Free";
+					background-size: 16px 16px;
+					pointer-events: all;
+					cursor: pointer;
+					width: 1em;
+					height: 1em;
+					margin-left: -1.3em;
+					position: absolute;
+					color: #32373F;
+				}
+
+				.joplin-checklist li:not(.checked)::before {
+					content:"\f0c8";
+				}
+
+				.abc-notation-block svg {
+					background-color: white;
+				}
+			
+.mermaid { width: 640px; }
+pre.mermaid[data-processed=true] { white-space: unset; }
+.mermaid-export-graph {
+					opacity: 0;
+					height: 0;
+					z-index: 1;
+					position: relative;
+				} 
+				.joplin-editable:hover .mermaid-export-graph,
+				.joplin-editable .mermaid-export-graph:has(:focus-visible) {
+					opacity: 1;
+				}
+				.mermaid-export-graph > button:hover {
+					background-color: #CBDAF1 !important;
+				}</style><div id="rendered-md"><hr/>
+<h1 id="assignment-week-1-review">Assignment Week 1 Review</h1>
+<p>Using file/directories commands we learned in Week 1: Create the following directory and file structure.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">~/.  #Your Home Directory or other starting folder
+&boxur;&boxh;&boxh; D43_Unix_R_Class
+  &boxvr;&boxh;&boxh; Books
+  &boxv;&nbsp;&nbsp; &boxvr;&boxh;&boxh; R
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Unix
+  &boxvr;&boxh;&boxh; Cheatsheets
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; My_Notes.md
+  &boxvr;&boxh;&boxh; Questions
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; CommandPromptIssue.txt
+  &boxvr;&boxh;&boxh; R
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Lessons
+  &boxv;&nbsp;&nbsp;     &boxvr;&boxh;&boxh; Lesson_1
+  &boxv;&nbsp;&nbsp;     &boxvr;&boxh;&boxh; Lesson_2
+  &boxv;&nbsp;&nbsp;     &boxur;&boxh;&boxh; Lesson_3
+  &boxur;&boxh;&boxh; Unix
+      &boxur;&boxh;&boxh; Lessons
+          &boxvr;&boxh;&boxh; Lesson_1
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-10.txt
+          &boxvr;&boxh;&boxh; Lesson_2
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-4.txt
+          &boxvr;&boxh;&boxh; Lesson_3
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-6.txt
+          &boxur;&boxh;&boxh; Lesson_4 
+</pre><pre class="hljs"><code>~/.  <span class="hljs-selector-id">#Your</span> Home Directory or other starting folder
+&boxur;&boxh;&boxh; D43_Unix_R_Class
+  &boxvr;&boxh;&boxh; Books
+  &boxv;&nbsp;&nbsp; &boxvr;&boxh;&boxh; R
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Unix
+  &boxvr;&boxh;&boxh; Cheatsheets
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; My_Notes<span class="hljs-selector-class">.md</span>
+  &boxvr;&boxh;&boxh; Questions
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; CommandPromptIssue<span class="hljs-selector-class">.txt</span>
+  &boxvr;&boxh;&boxh; R
+  &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Lessons
+  &boxv;&nbsp;&nbsp;     &boxvr;&boxh;&boxh; Lesson_1
+  &boxv;&nbsp;&nbsp;     &boxvr;&boxh;&boxh; Lesson_2
+  &boxv;&nbsp;&nbsp;     &boxur;&boxh;&boxh; Lesson_3
+  &boxur;&boxh;&boxh; Unix
+      &boxur;&boxh;&boxh; Lessons
+          &boxvr;&boxh;&boxh; Lesson_1
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-<span class="hljs-number">10</span><span class="hljs-selector-class">.txt</span>
+          &boxvr;&boxh;&boxh; Lesson_2
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-<span class="hljs-number">4</span><span class="hljs-selector-class">.txt</span>
+          &boxvr;&boxh;&boxh; Lesson_3
+          &boxv;&nbsp;&nbsp; &boxur;&boxh;&boxh; Exercises_1-<span class="hljs-number">6</span><span class="hljs-selector-class">.txt</span>
+          &boxur;&boxh;&boxh; Lesson_4 
+</code></pre></div>
+<h2 id="solution">Solution:</h2>
+<p><strong>A:</strong> Single directory at a time</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ mkdir D43_Unix_R_Class
+$ cd D43_Unix_R_Class
+$ mkdir Books
+$ mkdir Books/R
+$ mkdir Books/Unix
+$ mkdir Cheatsheets
+$ mkdir Questions 
+$ touch Cheatsheets/My_Notes.md
+$ touch Questions/CommandPromptIssue.txt
+$ mkdir R
+$ mkdir R/Lessons
+$ mkdir R/Lessons/Lesson_1
+$ mkdir R/Lessons/Lesson_2
+$ mkdir R/Lessons/Lesson_2
+$ mkdir Unix
+$ mkdir Unix/Lessons
+$ mkdir Unix/Lessons/Lesson_1
+$ mkdir Unix/Lessons/Lesson_2
+$ mkdir Unix/Lessons/Lesson_3
+$ mkdir Unix/Lessons/Lesson_4
+$ touch Unix/Lessons/Lesson_1/Exercises_1-10.txt
+$ touch Unix/Lessons/Lesson_2/Exercises_1-4.txt
+$ touch Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+#or 
+$ ls -R
+$ history</pre><pre class="hljs"><code>$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class
+$ <span class="hljs-built_in">cd</span> D43_Unix_R_Class
+$ <span class="hljs-built_in">mkdir</span> Books
+$ <span class="hljs-built_in">mkdir</span> Books/R
+$ <span class="hljs-built_in">mkdir</span> Books/Unix
+$ <span class="hljs-built_in">mkdir</span> Cheatsheets
+$ <span class="hljs-built_in">mkdir</span> Questions 
+$ <span class="hljs-built_in">touch</span> Cheatsheets/My_Notes.md
+$ <span class="hljs-built_in">touch</span> Questions/CommandPromptIssue.txt
+$ <span class="hljs-built_in">mkdir</span> R
+$ <span class="hljs-built_in">mkdir</span> R/Lessons
+$ <span class="hljs-built_in">mkdir</span> R/Lessons/Lesson_1
+$ <span class="hljs-built_in">mkdir</span> R/Lessons/Lesson_2
+$ <span class="hljs-built_in">mkdir</span> R/Lessons/Lesson_2
+$ <span class="hljs-built_in">mkdir</span> Unix
+$ <span class="hljs-built_in">mkdir</span> Unix/Lessons
+$ <span class="hljs-built_in">mkdir</span> Unix/Lessons/Lesson_1
+$ <span class="hljs-built_in">mkdir</span> Unix/Lessons/Lesson_2
+$ <span class="hljs-built_in">mkdir</span> Unix/Lessons/Lesson_3
+$ <span class="hljs-built_in">mkdir</span> Unix/Lessons/Lesson_4
+$ <span class="hljs-built_in">touch</span> Unix/Lessons/Lesson_1/Exercises_1-10.txt
+$ <span class="hljs-built_in">touch</span> Unix/Lessons/Lesson_2/Exercises_1-4.txt
+$ <span class="hljs-built_in">touch</span> Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+<span class="hljs-comment">#or </span>
+$ <span class="hljs-built_in">ls</span> -R
+$ <span class="hljs-built_in">history</span></code></pre></div>
+<p><strong>B.</strong> Multiple Directories using <code class="inline-code">mkdir -p</code> option</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ mkdir -p D43_Unix_R_Class/Books/Unix
+$ mkdir D43_Unix_R_Class/Books/R
+$ mkdir -p D43_Unix_R_Class/Cheatsheets
+$ mkdir -p D43_Unix_R_Class/Questions
+$ mkdir -p D43_Unix_R_Class/R/Lessons/Lesson_1
+$ mkdir D43_Unix_R_Class/R/Lessons/Lesson_2
+$ mkdir D43_Unix_R_Class/R/Lessons/Lesson_3
+$ mkdir -p D43_Unix_R_Class/Unix/Lessons/Lesson_1
+$ mkdir D43_Unix_R_Class/Unix/Lessons/Lesson_2
+$ mkdir D43_Unix_R_Class/Unix/Lessons/Lesson_3
+$ mkdir D43_Unix_R_Class/Unix/Lessons/Lesson_4
+$ touch D43_Unix_R_Class/Cheatsheets/My_Notes.md
+$ touch D43_Unix_R_Class/Questions/CommandPromptIssue.txt
+$ touch D43_Unix_R_Class/Unix/Lessons/Lesson_1/Exercises_1-10.txt
+$ touch D43_Unix_R_Class/Unix/Lessons/Lesson_2/Exercises_1-4.txt
+$ touch D43_Unix_R_Class/Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+#or 
+$ ls -R
+$ history</pre><pre class="hljs"><code>$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/Books/Unix
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/Books/R
+$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/Cheatsheets
+$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/Questions
+$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/R/Lessons/Lesson_1
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/R/Lessons/Lesson_2
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/R/Lessons/Lesson_3
+$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/Unix/Lessons/Lesson_1
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/Unix/Lessons/Lesson_2
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/Unix/Lessons/Lesson_3
+$ <span class="hljs-built_in">mkdir</span> D43_Unix_R_Class/Unix/Lessons/Lesson_4
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Cheatsheets/My_Notes.md
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Questions/CommandPromptIssue.txt
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Unix/Lessons/Lesson_1/Exercises_1-10.txt
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Unix/Lessons/Lesson_2/Exercises_1-4.txt
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+<span class="hljs-comment">#or </span>
+$ <span class="hljs-built_in">ls</span> -R
+$ <span class="hljs-built_in">history</span></code></pre></div>
+<p><strong>C.</strong> Multiple Directories using <code class="inline-code">mkdir -p</code> single command and touch single command</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ mkdir -p D43_Unix_R_Class/Books/Unix D43_Unix_R_Class/Books/R D43_Unix_R_Class/Cheatsheets D43_Unix_R_Class/Questions D43_Unix_R_Class/R/Lessons/Lesson_1 D43_Unix_R_Class/R/Lessons/Lesson_2 D43_Unix_R_Class/R/Lessons/Lesson_3 D43_Unix_R_Class/Unix/Lessons/Lesson_1 D43_Unix_R_Class/Unix/Lessons/Lesson_2 D43_Unix_R_Class/Unix/Lessons/Lesson_3  D43_Unix_R_Class/Unix/Lessons/Lesson_4
+
+$ touch D43_Unix_R_Class/Cheatsheets/My_Notes.md D43_Unix_R_Class/Questions/CommandPromptIssue.txt D43_Unix_R_Class/Unix/Lessons/Lesson_1/Exercises_1-10.txt D43_Unix_R_Class/Unix/Lessons/Lesson_2/Exercises_1-4.txt D43_Unix_R_Class/Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+#or 
+$ ls -R 
+$ history</pre><pre class="hljs"><code>$ <span class="hljs-built_in">mkdir</span> -p D43_Unix_R_Class/Books/Unix D43_Unix_R_Class/Books/R D43_Unix_R_Class/Cheatsheets D43_Unix_R_Class/Questions D43_Unix_R_Class/R/Lessons/Lesson_1 D43_Unix_R_Class/R/Lessons/Lesson_2 D43_Unix_R_Class/R/Lessons/Lesson_3 D43_Unix_R_Class/Unix/Lessons/Lesson_1 D43_Unix_R_Class/Unix/Lessons/Lesson_2 D43_Unix_R_Class/Unix/Lessons/Lesson_3  D43_Unix_R_Class/Unix/Lessons/Lesson_4
+
+$ <span class="hljs-built_in">touch</span> D43_Unix_R_Class/Cheatsheets/My_Notes.md D43_Unix_R_Class/Questions/CommandPromptIssue.txt D43_Unix_R_Class/Unix/Lessons/Lesson_1/Exercises_1-10.txt D43_Unix_R_Class/Unix/Lessons/Lesson_2/Exercises_1-4.txt D43_Unix_R_Class/Unix/Lessons/Lesson_3/Exercises_1-6.txt
+
+$ tree
+<span class="hljs-comment">#or </span>
+$ <span class="hljs-built_in">ls</span> -R 
+$ <span class="hljs-built_in">history</span></code></pre></div>
+<h3 id="review-question-what-command-should-we-use-to-delete-this-exercises-directories-and-files">Review Question: What command should we use to delete this exercise&apos;s directories and files?</h3>
+<hr/>
+<h2 id="lesson-4-review">Lesson 4 Review:</h2>
+<p>We learned about file permissions and how to set them using <code class="inline-code">chmod</code> command</p>
+<p><strong>Week 1 Review Quiz</strong></p>
+<h3 id="review-question-the-file-secrettxt-is-in-the-folder-private-on-your-computer-and-it-contains-your-bank-account-information-what-permission-should-you-assign-the-file-and-the-directory"><s>Review Question: The file <code class="inline-code">secret.txt</code> is in the folder <code class="inline-code">.private</code> on your computer and it contains your bank account information, what permission should you assign the file and the directory?</s></h3>
+<p>Questions</p>
+<ol>
+<li>In the Week 1 Assignment, we created a folder called D43_Unix_R_Class with many subfolders and files. What command should we use to delete the D43_Unix_R_Class folder and all of its files and sub-folders?</li>
+</ol>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">rm -r D43_Unix_R_Class
+rm -rf *</pre><pre class="hljs"><code><span class="hljs-built_in">rm</span> -r D43_Unix_R_Class
+<span class="hljs-built_in">rm</span> -rf *</code></pre></div>
+<ol start="2">
+<li>A file named secret.txt is in a folder called .private on your computer and it contains your bank account username, password, and account number. &nbsp;What file permission should you assign the file and the directory (Single choice) *</li>
+</ol>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">a. File: rwxr--r--&nbsp; &nbsp;Directory: rw-rw-rw-
+
+b. File:&nbsp; 600&nbsp; Directory: 111
+
+c. File: 400&nbsp; Directory: 500&nbsp; (File: Only You(read)&nbsp; Directory: Only you(read + execute) - Best
+</pre><pre class="hljs"><code>a. <span class="hljs-params">File:</span> rwxr--r--&nbsp; &nbsp;<span class="hljs-params">Directory:</span> rw-rw-rw-
+
+b. <span class="hljs-params">File:</span>&nbsp; <span class="hljs-number">600</span>&nbsp; <span class="hljs-params">Directory:</span> <span class="hljs-number">111</span>
+
+c. <span class="hljs-params">File:</span> <span class="hljs-number">400</span>&nbsp; <span class="hljs-params">Directory:</span> <span class="hljs-number">500</span>&nbsp; (<span class="hljs-params">File:</span> Only You(read)&nbsp; <span class="hljs-params">Directory:</span> Only you(read <span class="hljs-operator">+</span> execute) <span class="hljs-operator">-</span> Best
+</code></pre></div>
+<ol start="3">
+<li>Which statements are true? (Multiple choice) *</li>
+</ol>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">Unix is case sensitive;</pre><pre class="hljs"><code>Unix <span class="hljs-keyword">is</span> <span class="hljs-keyword">case</span> sensitive;</code></pre></div>
+<ol start="4">
+<li>A directory requires which permission in order to be able to change into the directory? (Single choice)</li>
+</ol>
+<p>Executable Permissions are required to be able to change into the directory</p>
+<ol start="5">
+<li>To see your current working directory, you should use the _<strong>_</strong> command? (Single choice)</li>
+</ol>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">pwd</pre><pre class="hljs"><code><span class="hljs-built_in">pwd</span></code></pre></div>
+<ol start="6">
+<li>
+<p>The directory /share/course/D43_Unix_R_Class is a _<strong>_</strong>_____. (Single choice)<br/>
+Absolute Path - because it starts with <code class="inline-code">/</code></p>
+</li>
+<li>
+<p>The up-arrow key allows you to see the prior command you typed (Single choice)<br/>
+True</p>
+</li>
+<li>
+<p>In order to get to your Unix HOME directory, you can type: (Multiple choice)<br/>
+cd<br/>
+cd ~<br/>
+cd .. # Only if you&apos;re in a directory directly below your home directory</p>
+</li>
+<li>
+<p>Windows PowerShell is a Unix terminal (Single choice) *<br/>
+False - PowerShell is a command-line shell and scripting language developed by Microsoft</p>
+</li>
+<li>
+<p>Assignments are due (Single choice)</p>
+</li>
+</ol>
+<hr/>
+<h1 id="lesson-5-viewing-file-contents">Lesson 5 Viewing File Contents</h1>
+<p>For this lesson, we&apos;re going to be using files from the <code class="inline-code">D43_Unix.tar.gz</code> file. This is a gzipped (compressed) tarball file, which is a file archive of multiple files. It is a 57.5MB file</p>
+<p>Once you&apos;ve downloaded the file, move it to where you want to keep it on your Home directory. Then expand the file with the following command to decompress and unarchive the files into a folder called D43_Unix</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ tar zxvf D43_Unix.tar.gz</pre><pre class="hljs"><code>$ tar zxvf D43_Unix.tar.gz</code></pre></div>
+<p>You should now have a D43_Unix Folder with lots of files and folders.</p>
+<hr/>
+<p>In Lesson 1-4, we were mainly focused learning to navigate and organize the filesystem. We&apos;re now going to start to dive into some of the basic programs in Unix that make it such a powerful tool.</p>
+<p>In this lesson, we&apos;re going to be introduced to Unix Streams, which is a fundamental piece of Unix programs. We&apos;ll also start to learn commands to view the contents of files. In the next few lessons, we&apos;ll start to practice linking these simple commands together to make some more complex tools.</p>
+<h1 id="unix-three-streams-or-inputs1outputs2">Unix Three Streams or Inputs(1)/Outputs(2)</h1>
+<p>What you see on your terminal screen is made up of three different streams of inputs/outputs.</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>UNIX Stream</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>STDIN</td>
+<td>This is the input we feed to the terminal.</td>
+</tr>
+<tr>
+<td>STDOUT</td>
+<td>The standard output from programs or commands that we issue.</td>
+</tr>
+<tr>
+<td>STDERR</td>
+<td>Error messages from programs or commands</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>We&apos;ll see more of these in the next few lessons, and we&apos;ll see how to capture or redirect them.</p>
+<p>A couple <strong>commands</strong>, you&apos;ll see used from time to time:</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>file &lt;file&gt;</td>
+<td>Provides information about a file</td>
+</tr>
+<tr>
+<td>echo &quot;&lt;text&gt;&quot;</td>
+<td>Print text to terminal</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>&nbsp;</p>
+<h1 id="51-common-commands-to-view-files">5.1 Common Commands to View Files</h1>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>cat &lt;file&gt;</td>
+<td>Print file contents to stdout</td>
+</tr>
+<tr>
+<td>less &lt;file&gt;</td>
+<td>View file by page</td>
+</tr>
+<tr>
+<td>head &lt;file&gt;</td>
+<td>Output first 10 lines of file</td>
+</tr>
+<tr>
+<td>tail &lt;file&gt;</td>
+<td>Output last 10 lines of file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr/>
+<h2 id="511-cat">5.1.1 <code class="inline-code">cat</code></h2>
+<p>While the <code class="inline-code">cat</code> command may seem simple at first glance, it is a very versatile command that lets you view, concatenate, create, copy, merge, and manipulate file contents.</p>
+<p>We&apos;re going to just cover the basics of using <code class="inline-code">cat</code> to view, contcatenate, create, and copy.</p>
+<p>For more indepth examples, please see: <a data-from-md="" title="https://www.geeksforgeeks.org/cat-command-in-linux-with-examples/" href="https://www.geeksforgeeks.org/cat-command-in-linux-with-examples/">https://www.geeksforgeeks.org/cat-command-in-linux-with-examples/</a></p>
+<p><code class="inline-code">cat</code> prints the contents of the terminal screen/STDOUT.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ cat D43_Unix/Documents/Page1.md
+# First Page
+
+This is my document and I&apos;m going to write some things here
+
+#This is some Code I&apos;d like to run  
+ls -alh  
+sleep 10
+
+| Column1   |  Column 2 |
+| --------- | --------- |
+| Row 1     | Row 1     |
+| Row 2     | Row 2 Info|
+</pre><pre class="hljs"><code>$ <span class="hljs-built_in">cat</span> D43_Unix/Documents/Page1.md
+<span class="hljs-comment"># First Page</span>
+
+This is my document and I<span class="hljs-string">&apos;m going to write some things here
+
+#This is some Code I&apos;</span>d like to run  
+<span class="hljs-built_in">ls</span> -alh  
+<span class="hljs-built_in">sleep</span> 10
+
+| Column1   |  Column 2 |
+| --------- | --------- |
+| Row 1     | Row 1     |
+| Row 2     | Row 2 Info|
+</code></pre></div>
+<p>Use caution when using <code class="inline-code">cat</code> to print long files. It doesn&apos;t pause, but rather will print the complete document to the terminal. If it&apos;s a long file you may want to use <code class="inline-code">CTRL+c</code> to terminate the process.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ cat D43_Unix/Books/Elements\ of\ Style.txt
+# You&apos;ll want to use CTRL+C to exit out of this long book </pre><pre class="hljs"><code>$ <span class="hljs-built_in">cat</span> D43_Unix/Books/Elements\ of\ Style.txt
+<span class="hljs-comment"># You&apos;ll want to use CTRL+C to exit out of this long book </span></code></pre></div>
+<hr/>
+<h2 id="512-less">5.1.2 <code class="inline-code">less</code></h2>
+<p><code class="inline-code">less</code> lets you efficiently view and search within files interactively. Like <code class="inline-code">cat</code> it allows you to view the contents of the file, but it does so in an interactive manner - it only displays a page at a time and let&apos;s you scroll forward and backward.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ less D43_Unix/Books/Elements\ of\ Style.txt</pre><pre class="hljs"><code>$ less D43_Unix/Books/Elements\ of\ Style.txt</code></pre></div>
+<p>To quit out of <code class="inline-code">less</code> you need to type <code class="inline-code">q</code></p>
+<h2 id="interactive-keys-in-less">Interactive Keys in <code class="inline-code">less</code></h2>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Key</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Space / PgDn</td>
+<td>Scroll down one page at a time</td>
+</tr>
+<tr>
+<td>b / PgUp</td>
+<td>Scroll up one page at a time</td>
+</tr>
+<tr>
+<td>g</td>
+<td>Go to the beginning</td>
+</tr>
+<tr>
+<td>G</td>
+<td>Go to the end</td>
+</tr>
+<tr>
+<td>q</td>
+<td>Quit or exit out of less</td>
+</tr>
+<tr>
+<td>/&lt;pattern&gt;</td>
+<td>Search for a pattern</td>
+</tr>
+<tr>
+<td>n</td>
+<td>Find next pattern match</td>
+</tr>
+<tr>
+<td>N</td>
+<td>Find previous pattern match</td>
+</tr>
+<tr>
+<td>&lt;number&gt;g</td>
+<td>Goto line &lt;number&gt;</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>For more in-depth options and commands in <code class="inline-code">less</code>, please see the man pages.</p>
+<hr/>
+<h2 id="513-dealing-with-gzipped-files-ending-in-gz">5.1.3 Dealing with Gzipped Files (ending in .gz)</h2>
+<p>A lot of times you&apos;ll come across a gzipped (compressed) file that you want to view. If you use <code class="inline-code">cat</code> or <code class="inline-code">less</code> on these files, you&apos;ll see a lot of garbled output. This is because the compressed file is not a text file but rather a binary compressed text file.</p>
+<p>Because it&apos;s so common to deal with compressed text files, Unix provides versions of many utilities that handle the conversion seamlessly. Typically, the commands are prefixed with just a <code class="inline-code">z</code>.</p>
+<p><code class="inline-code">zless</code> displays compressed gzip text files just like <code class="inline-code">less</code></p>
+<p><code class="inline-code">zcat</code> prints compressed gzip text files just like <code class="inline-code">cat</code></p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ zless D43_Unix/Reference/Clinvar/Clinvar_20241111.vcf.gz
+
+$ zcat D43_Unix/Reference/Clinvar/Clinvar_20241111.vcf.gz</pre><pre class="hljs"><code>$ zless D43_Unix/Reference/Clinvar/Clinvar_20241111.vcf.gz
+
+$ zcat D43_Unix/Reference/Clinvar/Clinvar_20241111.vcf.gz</code></pre></div>
+<h1 id="exercise-1-view-the-contents-of-d43_unixreferencegencodegencodev47primary_assemblybasicannotationgff3gz">Exercise 1: View the contents of <code class="inline-code">D43_Unix/Reference/Gencode/gencode.v47.primary_assembly.basic.annotation.gff3.gz</code></h1>
+<p><strong>Hint:</strong> Based on the suffix of .gz, this is a gzipped file. Be certain to use a the appropriate command for gzipped files.</p>
+<hr/>
+<h2 id="514-head-or-tail">5.1.4 <code class="inline-code">head</code> or <code class="inline-code">tail</code></h2>
+<p><code class="inline-code">head</code> and <code class="inline-code">tail</code> displays 10 lines at the beginning or end of the file, respectively.</p>
+<p>If you want to display more than 10 lines, you use the option <code class="inline-code">-n &lt;number&gt;</code> to display a given number of lines.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ head D43_Unix/Reference/Homo_sapiens_assembly38.fasta.fai
+
+$ tail D43_Unix/Reference/Homo_sapiens_assembly38.fasta.fai</pre><pre class="hljs"><code>$ <span class="hljs-built_in">head</span> D43_Unix/Reference/Homo_sapiens_assembly38.fasta.fai
+
+$ <span class="hljs-built_in">tail</span> D43_Unix/Reference/Homo_sapiens_assembly38.fasta.fai</code></pre></div>
+<h3 id="end-monday-april-7-2025">End Monday April 7, 2025</h3>
+<hr/>
+<h1 id="52-processing-files">5.2 Processing Files</h1>
+<p>There are some very basic commands that can help you process files.</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>wc &lt;file&gt;</td>
+<td>Return the number of lines, words, and bytes in a file</td>
+</tr>
+<tr>
+<td>cut [options] &lt;file&gt;</td>
+<td>Print specific column(s) from a file</td>
+</tr>
+<tr>
+<td>sort &lt;file&gt;</td>
+<td>Sort a file by values in column(s)</td>
+</tr>
+<tr>
+<td>uniq &lt;file&gt;</td>
+<td>Return only uniq lines from a file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<hr/>
+<h2 id="521-wc-counting-lines-words-and-bytes-for-file">5.2.1 <code class="inline-code">wc</code> Counting lines, words, and bytes for file</h2>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ wc D43_Unix/Books/Elements\ of\ Style.txt
+ 2757  16956 108509 D43_Unix/Books/Elements of Style.txt</pre><pre class="hljs"><code>$ <span class="hljs-built_in">wc</span> D43_Unix/Books/Elements\ of\ Style.txt
+ 2757  16956 108509 D43_Unix/Books/Elements of Style.txt</code></pre></div>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Options</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>-l</td>
+<td>Print out Line counts</td>
+</tr>
+<tr>
+<td>-w</td>
+<td>Print out word counts</td>
+</tr>
+<tr>
+<td>-m</td>
+<td>Print out character counts</td>
+</tr>
+</tbody>
+</table>
+</div>
+<h1 id="exercise-2-how-many-lines-does-latin_for_beginnerstxt-have">Exercise 2: How many lines does Latin_for_Beginners.txt have?</h1>
+<hr/>
+<h2 id="522-cut-print-out-selected-fields-or-section-from-each-line">5.2.2 <code class="inline-code">cut</code> - Print out selected fields or section from each line.</h2>
+<p><code class="inline-code">cut</code> requires you to provide a set of fields to extract. The option for this is <code class="inline-code">-f&lt;column(s) numbers separated by comma&gt;</code> . If you need a range of columns, you can specify the range with the starting column number, a dash, and then ending column number.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ head D43_Unix/Data/penguins.tsv
+rowid   species island  bill_length_mm  bill_depth_mm   flipper_length_mm       body_mass_g     sexyear
+1       Adelie  Torgersen       39.1    18.7    181     3750    male    2007
+2       Adelie  Torgersen       39.5    17.4    186     3800    female  2007
+3       Adelie  Torgersen       40.3    18      195     3250    female  2007
+4       Adelie  Torgersen       NA      NA      NA      NA      NA      2007
+5       Adelie  Torgersen       36.7    19.3    193     3450    female  2007
+6       Adelie  Torgersen       39.3    20.6    190     3650    male    2007
+7       Adelie  Torgersen       38.9    17.8    181     3625    female  2007
+8       Adelie  Torgersen       39.2    19.6    195     4675    male    2007
+9       Adelie  Torgersen       34.1    18.1    193     3475    NA      2007
+
+$ cut -f2-3,8 D43_Unix/Data/penguins.tsv
+Chinstrap       Dream   female
+Chinstrap       Dream   male
+Chinstrap       Dream   male
+Chinstrap       Dream   female</pre><pre class="hljs"><code>$ <span class="hljs-built_in">head</span> D43_Unix/Data/penguins.tsv
+rowid   species island  bill_length_mm  bill_depth_mm   flipper_length_mm       body_mass_g     sexyear
+1       Adelie  Torgersen       39.1    18.7    181     3750    male    2007
+2       Adelie  Torgersen       39.5    17.4    186     3800    female  2007
+3       Adelie  Torgersen       40.3    18      195     3250    female  2007
+4       Adelie  Torgersen       NA      NA      NA      NA      NA      2007
+5       Adelie  Torgersen       36.7    19.3    193     3450    female  2007
+6       Adelie  Torgersen       39.3    20.6    190     3650    male    2007
+7       Adelie  Torgersen       38.9    17.8    181     3625    female  2007
+8       Adelie  Torgersen       39.2    19.6    195     4675    male    2007
+9       Adelie  Torgersen       34.1    18.1    193     3475    NA      2007
+
+$ <span class="hljs-built_in">cut</span> -f2-3,8 D43_Unix/Data/penguins.tsv
+Chinstrap       Dream   female
+Chinstrap       Dream   male
+Chinstrap       Dream   male
+Chinstrap       Dream   female</code></pre></div>
+<h1 id="exercise-3-use-cut-to-extract-the-following-columns-rowid-bill_length_mm-body_mass_g-and-year-from-the-file-d43_unixdatapenguinstsv">Exercise 3: Use <code class="inline-code">cut</code> to extract the following columns: rowid, bill_length_mm, body_mass_g, and year from the file <code class="inline-code">D43_Unix/Data/penguins.tsv</code></h1>
+<p>By default, the delimiter used to determine the columns is a <code class="inline-code">tab</code> character. If you need to change the delimiter, you use the <code class="inline-code">-d &lt;delimiter&gt;</code> option.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ cut -d , -f1,2,3 D43_Unix/Data/Penguins.csv</pre><pre class="hljs"><code>$ <span class="hljs-built_in">cut</span> -d , -f1,2,3 D43_Unix/Data/Penguins.csv</code></pre></div>
+<h1 id="exercise-4-use-cut-to-extract-the-columns-park-code-park-name-and-state-from-the-file-d43_unixdatasetsparkscsv">Exercise 4: Use <code class="inline-code">cut</code> to extract the columns: Park Code, Park Name, and State from the file <code class="inline-code">D43_Unix/Datasets/parks.csv</code></h1>
+<hr/>
+<h2 id="523-sort-allows-you-to-sort-columns-either-alphabetically-or-numerically">5.2.3 <code class="inline-code">sort</code> allows you to sort columns either alphabetically or numerically.</h2>
+<p>By default <code class="inline-code">sort</code> will sort any file by line.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ sort D43_Unix/Data/Penguins.tsv
+1       Adelie  Torgersen       39.1    18.7    181     3750    male    2007
+10      Adelie  Torgersen       42      20.2    190     4250    NA      2007
+100     Adelie  Dream   43.2    18.5    192     4100    male    2008</pre><pre class="hljs"><code>$ <span class="hljs-built_in">sort</span> D43_Unix/Data/Penguins.tsv
+1       Adelie  Torgersen       39.1    18.7    181     3750    male    2007
+10      Adelie  Torgersen       42      20.2    190     4250    NA      2007
+100     Adelie  Dream   43.2    18.5    192     4100    male    2008</code></pre></div>
+<p>By default <code class="inline-code">sort</code> sorts the columns alphabetically.</p>
+<p>To select which columns to sort on and how we want to sort that column, we need to use one or more instances of the <code class="inline-code">-k</code> option.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ sort -k2,2 -k8,8 D43_Unix/Data/Penguins.tsv</pre><pre class="hljs"><code>$ <span class="hljs-built_in">sort</span> -k2,2 -k8,8 D43_Unix/Data/Penguins.tsv</code></pre></div>
+<p>To sort numerically, you can put a <code class="inline-code">n</code> after the selection. Default is (ascending order)</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ sort -k4,4n D43_Unix/Data/Penguins.tsv</pre><pre class="hljs"><code>$ <span class="hljs-built_in">sort</span> -k4,4n D43_Unix/Data/Penguins.tsv</code></pre></div>
+<p>To sort numerically (descending), you can put <code class="inline-code">r</code> after the selection</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ sort -k4,4nr D43_Unix/Data/Penguins.tsv</pre><pre class="hljs"><code>$ <span class="hljs-built_in">sort</span> -k4,4nr D43_Unix/Data/Penguins.tsv</code></pre></div>
+<h1 id="exercise-5-sort-d43_unixdatapenguinstsv-first-by-sex-and-then-numerically-ascending-order-by-body_mass_g">Exercise 5: Sort <code class="inline-code">D43_Unix/Data/penguins.tsv</code> first by sex and then numerically ascending order by body_mass_g</h1>
+<hr/>
+<h2 id="524-uniq-outputting-unique-lines">5.2.4 <code class="inline-code">uniq</code> outputting unique lines.</h2>
+<p>We won&apos;t cover this to much, in this section but we&apos;ll use it a lot more in the next lesson.</p>
+<p><code class="inline-code">uniq</code> takes the contents of a file or what is passed to it and returns only the unique items.</p>
+<p>If you want to output the duplicate items from the file, use <code class="inline-code">uniq -d</code></p>
+<hr/>
+<h1 id="53-interactively-editing-files-in-terminal">5.3 Interactively editing files in Terminal</h1>
+<p>There are a lot of different editors. If you&apos;re a developer, you may use <code class="inline-code">vi</code>, <code class="inline-code">vim</code>, or <code class="inline-code">emacs</code>. But these are way more than we need.</p>
+<p>One of the simplest interactive text editors in Unix is called <code class="inline-code">nano</code></p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>nano &lt;file&gt;</td>
+<td>A simple Terminal editor</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>To create a new file, you can just run <code class="inline-code">nano</code><br/>
+<img src="data:image/png;base64,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Ptvt9ocffvjuu++uebJ2Fsh3v/vdBRZIt/Hx8RdeeKEsos2bN6/FVAPAsqz293vflC1btvzbv/3bxMTEkr8K5WYtZnXebDa7S7vsW+4+Fn2RY/vlL385MzPT09PT3cadX/nVr361nKO7W63WCh5w3mq1/vVf/7UcpugLxgDmtMA6q8Tztm3buu/csGHDxo0bL1y4cOXKlbIiWL9+fXmoHCy2adOmEydOdIb/1Kc+tbQJ6xynXTb7Hjp0qFarfec73/nKV76yyDH09/dPTk6W23v27Llw4cL1X6tRBus81wKDdS+Q7jXU9Quk26xNyZ3pAYDbxSq191133VVuNBqNz3/+8+Xg7bI+Lhd0mfO3NmzY8Mgjj9RqtTk3ga++Vqv14osvdq77siLmO4awfC5Zsvfee68c93izVzi/XqvV2rt37/T0dOcCuQBcb4F1VtnPPDo6Ot/6rnjggQfq9Xq5uMbAwMD9999fNviWX//MZz6z/IncvHnzt7/97X/4h3947bXXtm7dulbnEC1ygXTrbJgAgNvUKrV3tVrt6elpt9vvvfdeae9F+vKXv/zOO++88847izzru1yW5p577lnGxM7rxIkT9Xq9Wq3+9V//decpjh49upzjw8vVdK537733LnmcnQPOBwcHl/nlLo1G4x//8R/b7fbAwMC+ffuWMyqAO15nnTXr/v7+/nq93tPTM+f21s7m6U5e/uIXv7jvvvvKG3i50Fr3YMtUDrBqt9udreGrb5ELBADuJKt3zPng4OD4+PipU6cGBwcX/7Vhmzdv7u3tvf7KsSVNL1261Gq1OnnZarVKBofa++zZs5VK5emnn16RDyv333//unXr2u321NRU50Du8+fPlxt/+Id/uOQxT01NlU9+f/qnf7rAPo1Wq/XLX/5yvqvftVqtU6dOnTp1qhxqbo83wA0tvM6qVCr79u1bYJNoGezatWvtdvuzn/1s2fv985//vGylXfzFShfWWdF0J245sbzjF7/4xYo813w6C+SFF164++67o88FALeI1bvW2uOPP16+H+W5554bGxvrHJJX9lQv4M/+7M+uv+DZH/3RH5XN9idOnCijmpqa2rt3bzmDeqU+oMxSpv9Xv/pV554zZ86U872XYPPmzWWE//zP//zrX/+67GR+7bXXypeBL+dk75/97GflMIGFv9Ft7969w8PDu3fvvv6Y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" alt="20df311e88ec6f1d9588bc090b29de07.png"/></p>
+<p>You&apos;ll notice at the bottom of the page, it provides some shortcuts. <code class="inline-code">^</code> is the same as <code class="inline-code">CTRL</code> key</p>
+<div class="joplin-table-wrapper">
+<table>
+<thead>
+<tr>
+<th>Nano Shortcut</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>^G is CTRL+g</td>
+<td>Display the Help Screen</td>
+</tr>
+<tr>
+<td>^X is CTRL+x</td>
+<td>Exit (Prompt to Save)</td>
+</tr>
+<tr>
+<td>^O is CTRL+o</td>
+<td>Save file</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>See <code class="inline-code">Help</code> for more shortcuts.</p>
+<p>To open a specific file for editing, you can supply the filename you want to read into <code class="inline-code">nano</code></p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+" data-joplin-source-close="
+```">$ nano D43_Unix/Private/MyJournal.txt</pre><pre class="hljs"><code>$ nano D43_Unix/<span class="hljs-keyword">Private</span>/MyJournal.txt</code></pre></div>
+<p>To exit <code class="inline-code">nano</code> remember, you&apos;ll have to use the <code class="inline-code">CTRL+x</code> to get back to the command prompt.</p>
+<h1 id="exercise-6-open-d43_unixprivatemyjournaltxt-in-nano-and-write-a-joke-or-sentence-then-save-the-file-exit-nano-and-view-the-file-with-less-to-confirm-that-youve-made-changes">Exercise 6: Open <code class="inline-code">D43_Unix/Private/MyJournal.txt</code> in <code class="inline-code">nano</code> and write a joke or sentence. Then save the file, exit <code class="inline-code">nano</code> and view the file with <code class="inline-code">less</code> to confirm that you&apos;ve made changes.</h1>
+</div></div>
+					</body>
+				</html>
+			
