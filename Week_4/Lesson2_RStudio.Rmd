@@ -215,6 +215,12 @@ RStudio's creator has a good Tutorial on R Markdown - Let's follow the
 links and learn more about why we should be using R Markdown for our
 projects.
 
+```{r}
+#Knit PDF
+install.packages("tinytex")
+tinytex::install_tinytex()
+```
+
 1.  [Introduction](RMarkdown_Lesson-1.Rmd)
 2.  [How It Works](RMarkdown_Lesson-2.Rmd)
     -   [Example 1](RMarkdown_Example1.Rmd)
@@ -418,108 +424,104 @@ list.files(path='.')  #Get the files in your Current directory
 
 ### Additional R File and Directory Functions
 
-+-------------------+----------------------------+----------------+
-| R Function        | Unix Command               | Description    |
-+===================+============================+================+
-| getwd()           | pwd                        | Get the        |
-|                   |                            | current        |
-|                   |                            | working        |
-|                   |                            | directory      |
-+-------------------+----------------------------+----------------+
-| set               | cd \<directory\>           |                |
-| wd(\<directory\>) |                            |                |
-+-------------------+----------------------------+----------------+
-| lis               | ls                         | Lists all      |
-| t.files(path=".") |                            | files in a     |
-|                   |                            | given          |
-|                   |                            | directory      |
-+-------------------+----------------------------+----------------+
-| li                | ls                         | List           |
-| st.dirs(path=".") |                            | directories    |
-+-------------------+----------------------------+----------------+
-| fi                | touch \<fn\>               | Create an      |
-| le.create(\<fn\>) |                            | empty file     |
-+-------------------+----------------------------+----------------+
-| file.exists(...)  |                            | Returns `TRUE` |
-|                   |                            | if file exists |
-+-------------------+----------------------------+----------------+
-| fi                | rm \<fn\>                  | Delete a file  |
-| le.remove(\<fn\>) |                            |                |
-+-------------------+----------------------------+----------------+
-| file              | mv \<from\> \<to\>         | Attempts to    |
-| .rename(\<from\>, |                            | rename         |
-| \<new\>)          |                            | filename       |
-|                   |                            | `<from>` to    |
-|                   |                            | `<new>`        |
-+-------------------+----------------------------+----------------+
-| f                 | cat \<file1\> \<file2\>    | Appends File1  |
-| ile.append(file1, |                            | and File2      |
-| file2)            |                            |                |
-+-------------------+----------------------------+----------------+
-| fi                | ls -alh                    | Provide        |
-| le.info(filename) |                            | information    |
-|                   |                            | about file     |
-|                   |                            | (size, isdir,  |
-|                   |                            | mode, time,    |
-|                   |                            | uid, gui,      |
-|                   |                            | username,      |
-|                   |                            | groupname)     |
-+-------------------+----------------------------+----------------+
-| fi                | cp \<from\> \<to\>         | Copy a file    |
-| le.copy(\<from\>, |                            | `from` file to |
-| \<to\>)           |                            | `new` location |
-+-------------------+----------------------------+----------------+
-| file              | ln -sf \<from\> \<to\>     | Create a       |
-| .                 |                            | symbolic link  |
-| symlink(\<from\>, |                            | to a `from`    |
-| \<new\>)          |                            | file to `new`  |
-|                   |                            | location       |
-+-------------------+----------------------------+----------------+
-| dir.exists        |                            | Return `TRUE`  |
-| (\<directory\>)   |                            | if directory   |
-|                   |                            | exists         |
-+-------------------+----------------------------+----------------+
-| dir.              | mkdir \<newdir\>           | Create a       |
-| c                 |                            | Directory      |
-| reate(\<newdir\>) |                            |                |
-+-------------------+----------------------------+----------------+
-| sy                | chmod \<permission\>       | Change File    |
-| s.chmod(\<path\>, | \<path/fn\>                | permissions    |
-| mode=\            |                            |                |
-| \< Permission#\>) |                            | 4 = Read       |
-|                   |                            |                |
-|                   |                            | 2 = Write      |
-|                   |                            |                |
-|                   |                            | 1 = Execute    |
-|                   |                            |                |
-|                   |                            | 7 = (4+2+1) =  |
-|                   |                            | Read, Write,   |
-|                   |                            | Execute        |
-|                   |                            |                |
-|                   |                            | \<Users#,      |
-|                   |                            | Group#,        |
-|                   |                            | Everyone#\>    |
-|                   |                            |                |
-|                   |                            | 777 = RWE for  |
-|                   |                            | User /         |
-|                   |                            | Group/Everyone |
-+-------------------+----------------------------+----------------+
-| basename(path)    | basename \<path\>          | Returns the    |
-|                   |                            | Filename       |
-|                   |                            | portion of the |
-|                   |                            | path           |
-+-------------------+----------------------------+----------------+
-| dirname(path)     | dirname                    | Returns the    |
-|                   |                            | Directory      |
-|                   |                            | portion of the |
-|                   |                            | path           |
-+-------------------+----------------------------+----------------+
-| unlink(x)         | rm \<directory\>           | Deletes files  |
-|                   |                            | or directories |
-|                   | or                         | specified by x |
-|                   |                            |                |
-|                   | rmdir \<directory\>        |                |
-+-------------------+----------------------------+----------------+
++------------------------+-------------------------+----------------+
+| R Function             | Unix Command            | Description    |
++========================+=========================+================+
+| getwd()                | pwd                     | Get the        |
+|                        |                         | current        |
+|                        |                         | working        |
+|                        |                         | directory      |
++------------------------+-------------------------+----------------+
+| setwd(\<directory\>)   | cd \<directory\>        |                |
++------------------------+-------------------------+----------------+
+| list.files(path=".")   | ls                      | Lists all      |
+|                        |                         | files in a     |
+|                        |                         | given          |
+|                        |                         | directory      |
++------------------------+-------------------------+----------------+
+| list.dirs(path=".")    | ls                      | List           |
+|                        |                         | directories    |
++------------------------+-------------------------+----------------+
+| file.create(\<fn\>)    | touch \<fn\>            | Create an      |
+|                        |                         | empty file     |
++------------------------+-------------------------+----------------+
+| file.exists(...)       |                         | Returns `TRUE` |
+|                        |                         | if file exists |
++------------------------+-------------------------+----------------+
+| file.remove(\<fn\>)    | rm \<fn\>               | Delete a file  |
++------------------------+-------------------------+----------------+
+| file.rename(\<from\>,  | mv \<from\> \<to\>      | Attempts to    |
+| \<new\>)               |                         | rename         |
+|                        |                         | filename       |
+|                        |                         | `<from>` to    |
+|                        |                         | `<new>`        |
++------------------------+-------------------------+----------------+
+| file.append(file1,     | cat \<file1\> \<file2\> | Appends File1  |
+| file2)                 |                         | and File2      |
++------------------------+-------------------------+----------------+
+| file.info(filename)    | ls -alh                 | Provide        |
+|                        |                         | information    |
+|                        |                         | about file     |
+|                        |                         | (size, isdir,  |
+|                        |                         | mode, time,    |
+|                        |                         | uid, gui,      |
+|                        |                         | username,      |
+|                        |                         | groupname)     |
++------------------------+-------------------------+----------------+
+| file.copy(\<from\>,    | cp \<from\> \<to\>      | Copy a file    |
+| \<to\>)                |                         | `from` file to |
+|                        |                         | `new` location |
++------------------------+-------------------------+----------------+
+| file.symlink(\<from\>, | ln -sf \<from\> \<to\>  | Create a       |
+| \<new\>)               |                         | symbolic link  |
+|                        |                         | to a `from`    |
+|                        |                         | file to `new`  |
+|                        |                         | location       |
++------------------------+-------------------------+----------------+
+| dir.exists             |                         | Return `TRUE`  |
+| (\<directory\>)        |                         | if directory   |
+|                        |                         | exists         |
++------------------------+-------------------------+----------------+
+| dir.                   | mkdir \<newdir\>        | Create a       |
+| create(\<newdir\>)     |                         | Directory      |
++------------------------+-------------------------+----------------+
+| sys.chmod(\<path\>,    | chmod \<permission\>    | Change File    |
+| mode=\                 | \<path/fn\>             | permissions    |
+| \< Permission#\>)      |                         |                |
+|                        |                         | 4 = Read       |
+|                        |                         |                |
+|                        |                         | 2 = Write      |
+|                        |                         |                |
+|                        |                         | 1 = Execute    |
+|                        |                         |                |
+|                        |                         | 7 = (4+2+1) =  |
+|                        |                         | Read, Write,   |
+|                        |                         | Execute        |
+|                        |                         |                |
+|                        |                         | \<Users#,      |
+|                        |                         | Group#,        |
+|                        |                         | Everyone#\>    |
+|                        |                         |                |
+|                        |                         | 777 = RWE for  |
+|                        |                         | User /         |
+|                        |                         | Group/Everyone |
++------------------------+-------------------------+----------------+
+| basename(path)         | basename \<path\>       | Returns the    |
+|                        |                         | Filename       |
+|                        |                         | portion of the |
+|                        |                         | path           |
++------------------------+-------------------------+----------------+
+| dirname(path)          | dirname                 | Returns the    |
+|                        |                         | Directory      |
+|                        |                         | portion of the |
+|                        |                         | path           |
++------------------------+-------------------------+----------------+
+| unlink(x)              | rm \<directory\>        | Deletes files  |
+|                        |                         | or directories |
+|                        | or                      | specified by x |
+|                        |                         |                |
+|                        | rmdir \<directory\>     |                |
++------------------------+-------------------------+----------------+
 
 ------------------------------------------------------------------------
 
