@@ -13,7 +13,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # R Functions
 
-Functions in R are created using the command `function()`. A function can have as many arguments as needed and is defined by assigning at variable `<function name>`. You can then run the function by calling the `<function name>()`. The function code block is placed between curly brackets `{ Your code goes here }`. Finally, the values you want to return from the function must be placed in the `return(<Values you want to return goes here>)`.
+Functions in R are created using the command `function()`. A function can have as many arguments as needed and is defined by assigning a variable which will be the function name `<function name>`.
+
+You can then run the function by calling the `<function name>()`. The function code block is placed between curly brackets `{ Your code goes here }`. Finally, the values you want to return from the function must be placed in the `return(<Values you want to return goes here>)`.
 
 #### Syntax
 
@@ -39,7 +41,8 @@ dna = "ACGTT"
 dna = str_to_upper(dna)
   
 complement = chartr("ACGTN", "TGCAN", dna) 
-(rc = stri_reverse(complement))
+rc = stri_reverse(complement)
+rc
 ```
 
 ```{r}

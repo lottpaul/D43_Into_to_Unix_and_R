@@ -29,7 +29,9 @@ if (conditional){
 }
 ```
 
-**Notice:** In conditionals the first statement that evaluates to TRUE gets executed, the rest are skipped. Even if there are multiple TRUE conditional statements at different levels -only the first will get executed. You should take care when writing your conditionals. It's also a good idea to test your conditional statements to make certain all the necessary conditions are handled appropriately.
+**Notice:** In conditionals, the first statement that evaluates to TRUE gets executed, the rest of the `else if`(s) or `else`(s) are skipped. Even if there are multiple TRUE conditional statements at different levels - **Only the first will get executed.**
+
+You should take care when writing your conditionals. It's also a good idea to test your conditional statements to make certain all the necessary conditions are handled appropriately.
 
 ```{r}
 x = "Gastric"
@@ -40,7 +42,7 @@ if (x=="Gastric" && y=="H.pylori"){
 } 
 ```
 
-We already reviewed the mathematical operators "`>`", "`>=`", "`<`", "`<=`", "`==`". They test an expression and return TRUE or FALSE depending on the mathematical comparison between the value on the left and the value on the right. We'll use them to write an example conditional statement.
+We already reviewed the mathematical operators "`>`", "`>=`", "`<`", "`<=`", "`==`". They test an mathematical expression and return TRUE or FALSE depending on the mathematical comparison between the value on the left and the value on the right. We'll use them to write an example conditional statement.
 
 ```{r}
 x <- 210
@@ -104,6 +106,8 @@ if ((x>10 && y<10) || (x==10 && y ==12)){
 
 ### Negating Expression
 
+If you want to change a TRUE expression to a FALSE - you should negate it with a `!`. It is essentially interpreted as "not"
+
 ```{r}
 x = 10
 y = 12
@@ -119,7 +123,7 @@ if (!x>10 && !y<10) {
 
 ## Nesting Conditionals
 
-You can nest conditionals inside of other conditionals. This is often done to give fine control of each
+You can nest conditionals inside of other conditionals. This is often done to give fine control of each condition.
 
 ```{r}
 x = 10

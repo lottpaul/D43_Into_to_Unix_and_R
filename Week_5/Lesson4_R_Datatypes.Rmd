@@ -20,10 +20,10 @@ knitr::opts_chunk$set(echo = TRUE)
     position on the line. Everything on the line after the `#` is
     considered a comment
 
--   **Variable Assignment:** Variables can be assigned in three ways.
-    `=`, `<-`, or `->` . Variables start with alphabetic characters and
-    can contain alphanumeric characters, and/or underscores. Variables
-    names are case-sensitive.
+-   **Variables:** Variables can be assigned in three ways. `=`, `<-`,
+    or `->` . Variables start with alphabetic characters and can contain
+    alphanumeric characters, and/or underscores. Variables names are
+    case-sensitive.
 
     -   \<variable\>=\<value\> :
 
@@ -32,13 +32,15 @@ knitr::opts_chunk$set(echo = TRUE)
     -   \<value\> -\> \<variable\>
 
 -   **Functions:** Functions in R are called with the function name
-    followed by **(**, arguments, and/or paramenters and completed with
-    **)**
+    followed directly by an opening parenthese **(** Then comes the
+    arguments, and/or paramenters separated by commas and its completed
+    with a closing parenthese **)**
 
-    -   \<function name\>(\<options/parameters\>)
+    -   \<function name\>(\<options/parameters separated by commas\>)
 
--   **Printing with Print:** If you want to print out a variable value
-    or string, the print() function takes the variable or string
+-   **Printing with the `print` function:** If you want to print out a
+    variable value or string, the print() function takes the variable or
+    string
 
     -   `print(x) # This will print the value of x`
 
@@ -77,32 +79,32 @@ how the data is represented.
 R has six basic fundamental datatypes. These are single instances of
 fundamental computer datatypes stored in memory.
 
-+----------------------------------+----------------------------------+
-| R Datatype                       | Description                      |
-+==================================+==================================+
-| **Numeric**                      | Decimal values are called        |
-|                                  | numeric in R. It is the default  |
-|                                  | R data type for numbers in R.    |
-|                                  | Example: 10.4, 55, 78.121E-2     |
-+----------------------------------+----------------------------------+
-| **Integer**                      | Integer data types which are the |
-|                                  | set of all integers. (Must have  |
-|                                  | suffix `L`) Example: 10L, 1L,    |
-|                                  | 55L                              |
-+----------------------------------+----------------------------------+
-| **Logical (aka Boolean)**        | Logical/Boolean either TRUE or   |
-|                                  | FALSE                            |
-+----------------------------------+----------------------------------+
-| **Character (aka String)**       | Alphabet and Special Characters  |
-|                                  | (ASCII) Example: "Hello",        |
-|                                  | "World"                          |
-+----------------------------------+----------------------------------+
-| **Complex**                      | Set of all the complex numbers   |
-|                                  | (9+2i, where i is the imaginary  |
-|                                  | part)                            |
-+----------------------------------+----------------------------------+
-| **Raw**                          | Byte encoded                     |
-+----------------------------------+----------------------------------+
++---------------------------------+---------------------------------+
+| R Datatype                      | Description                     |
++=================================+=================================+
+| **Numeric**                     | Decimal values are called       |
+|                                 | numeric in R. It is the default |
+|                                 | R data type for numbers in R.   |
+|                                 | Example: 10.4, 55, 78.121E-2    |
++---------------------------------+---------------------------------+
+| **Integer**                     | Integer data types which are    |
+|                                 | the set of all integers. (Must  |
+|                                 | have suffix `L`) Example: 10L,  |
+|                                 | 1L, 55L                         |
++---------------------------------+---------------------------------+
+| **Logical (aka Boolean)**       | Logical/Boolean either TRUE or  |
+|                                 | FALSE                           |
++---------------------------------+---------------------------------+
+| **Character (aka String)**      | Alphabet and Special Characters |
+|                                 | (ASCII) Example: "Hello",       |
+|                                 | "World"                         |
++---------------------------------+---------------------------------+
+| **Complex**                     | Set of all the complex numbers  |
+|                                 | (9+2i, where i is the imaginary |
+|                                 | part)                           |
++---------------------------------+---------------------------------+
+| **Raw**                         | Byte encoded                    |
++---------------------------------+---------------------------------+
 
 ### Helpful Functions to determine datatypes and classes
 
@@ -243,54 +245,54 @@ sprintf("Is X Greater Than or Equal to Y: %s", x>=y)
 sprintf("Is X Less Than or Equal to Y: %s", x<=y)
 ```
 
-+---------------+----------------+----------------+----------------+
-| Operator      | Name           | Description    | Example        |
-+===============+================+================+================+
-| &             | E lement-wise  | Returns True   | `c(            |
-|               | AND operator   | if both        | TR  U E,  F AL |
-|               |                | elements are   | SE , T R  UE)  |
-|               |                | TRUE           |   & c(FALSE  , |
-|               |                |                |  T RUE, TRUE)` |
-|               |                |                |                |
-|               |                |                | Returns:       |
-|               |                |                | `FALSE  ,      |
-|               |                |                |  F ALSE, TRUE` |
-+---------------+----------------+----------------+----------------+
-| &&            | AND operator   | Returns TRUE   | TRUE & TRUE    |
-|               |                | if both        | Returns TRUE   |
-|               |                | statements are |                |
-|               |                | TRUE           | TRUE & FALSE   |
-|               |                |                | Returns FALSE  |
-|               |                |                |                |
-|               |                |                | FALSE & TRUE   |
-|               |                |                | Returns FALSE  |
-+---------------+----------------+----------------+----------------+
-| \|            | E lement-wise  | Returns TRUE   | `c(            |
-|               | OR operator    | if one or more | TR  U E,  F AL |
-|               |                | element is     | SE , T R  UE)  |
-|               |                | TRUE           |   & c(FALSE  , |
-|               |                |                |  T RUE, TRUE)` |
-|               |                |                |                |
-|               |                |                | Returns:       |
-|               |                |                | `TR UE         |
-|               |                |                |  , TRUE, TRUE` |
-+---------------+----------------+----------------+----------------+
-| \|\|          | OR operator    | Returns TRUE   | TRUE & TRUE    |
-|               |                | if at least    | Returns TRUE   |
-|               |                | one statement  |                |
-|               |                | is TRUE        | TRUE & FALSE   |
-|               |                |                | Returns TRUE   |
-|               |                |                |                |
-|               |                |                | FALSE & TRUE   |
-|               |                |                | Returns TRUE   |
-+---------------+----------------+----------------+----------------+
-| !             | Logical NOT    | Negates any    | ! FALSE        |
-|               |                | statment:      | Returns TRUE   |
-|               |                | Returns TRUE   |                |
-|               |                | if statement   | ! TRUE Returns |
-|               |                | is FALSE and   | FALSE          |
-|               |                | vice versa     |                |
-+---------------+----------------+----------------+----------------+
++---------------+---------------+---------------+---------------+
+| Operator      | Name          | Description   | Example       |
++===============+===============+===============+===============+
+| &             | E lement-wise | Returns True  | `c( TR  U     |
+|               | AND operator  | if both       | E,  F AL SE , |
+|               |               | elements are  |  T R  UE)   & |
+|               |               | TRUE          |  c(FALSE  ,   |
+|               |               |               | T RUE, TRUE)` |
+|               |               |               |               |
+|               |               |               | Returns:      |
+|               |               |               | `FALSE  ,     |
+|               |               |               | F ALSE, TRUE` |
++---------------+---------------+---------------+---------------+
+| &&            | AND operator  | Returns TRUE  | TRUE & TRUE   |
+|               |               | if both       | Returns TRUE  |
+|               |               | statements    |               |
+|               |               | are TRUE      | TRUE & FALSE  |
+|               |               |               | Returns FALSE |
+|               |               |               |               |
+|               |               |               | FALSE & TRUE  |
+|               |               |               | Returns FALSE |
++---------------+---------------+---------------+---------------+
+| \|            | E lement-wise | Returns TRUE  | `c( TR  U     |
+|               | OR operator   | if one or     | E,  F AL SE , |
+|               |               | more element  |  T R  UE)   & |
+|               |               | is TRUE       |  c(FALSE  ,   |
+|               |               |               | T RUE, TRUE)` |
+|               |               |               |               |
+|               |               |               | Returns:      |
+|               |               |               | `TR UE        |
+|               |               |               | , TRUE, TRUE` |
++---------------+---------------+---------------+---------------+
+| \|\|          | OR operator   | Returns TRUE  | TRUE & TRUE   |
+|               |               | if at least   | Returns TRUE  |
+|               |               | one statement |               |
+|               |               | is TRUE       | TRUE & FALSE  |
+|               |               |               | Returns TRUE  |
+|               |               |               |               |
+|               |               |               | FALSE & TRUE  |
+|               |               |               | Returns TRUE  |
++---------------+---------------+---------------+---------------+
+| !             | Logical NOT   | Negates any   | ! FALSE       |
+|               |               | statment:     | Returns TRUE  |
+|               |               | Returns TRUE  |               |
+|               |               | if statement  | ! TRUE        |
+|               |               | is FALSE and  | Returns FALSE |
+|               |               | vice versa    |               |
++---------------+---------------+---------------+---------------+
 
 ------------------------------------------------------------------------
 
@@ -598,35 +600,35 @@ datatypes - you'll need to remember that **R is 1-based** not 0-based.
 
 Some of the most useful character/string function in R.
 
-+---------------------------+-----------------------------------------+
-| R Function                | Description                             |
-+===========================+=========================================+
-| print()                   | Print its arguments                     |
-+---------------------------+-----------------------------------------+
-| paste()                   | Concatenate String                      |
-+---------------------------+-----------------------------------------+
-| sprintf()                 | C-style format a string                 |
-+---------------------------+-----------------------------------------+
-| substr(x, start, stop)    | Get Substring                           |
-+---------------------------+-----------------------------------------+
-| nchar(x)                  | Get String Length                       |
-+---------------------------+-----------------------------------------+
-| sub(pattern, replacment,  | Replace substring with                  |
-| x)                        |                                         |
-+---------------------------+-----------------------------------------+
-| tolower()                 | Convert string to lowercase             |
-+---------------------------+-----------------------------------------+
-| toupper()                 | Convert string to uppercase             |
-+---------------------------+-----------------------------------------+
-| trimws()                  | Strip whitespace characters             |
-+---------------------------+-----------------------------------------+
-| strrep()                  | Repeat string n times                   |
-+---------------------------+-----------------------------------------+
-| strsplit()                | Split up string                         |
-+---------------------------+-----------------------------------------+
-| chartr()                  | Translate characters in characters      |
-|                           | string                                  |
-+---------------------------+-----------------------------------------+
++--------------------------+----------------------------------------+
+| R Function               | Description                            |
++==========================+========================================+
+| print()                  | Print its arguments                    |
++--------------------------+----------------------------------------+
+| paste()                  | Concatenate String                     |
++--------------------------+----------------------------------------+
+| sprintf()                | C-style format a string                |
++--------------------------+----------------------------------------+
+| substr(x, start, stop)   | Get Substring                          |
++--------------------------+----------------------------------------+
+| nchar(x)                 | Get String Length                      |
++--------------------------+----------------------------------------+
+| sub(pattern, replacment, | Replace substring with                 |
+| x)                       |                                        |
++--------------------------+----------------------------------------+
+| tolower()                | Convert string to lowercase            |
++--------------------------+----------------------------------------+
+| toupper()                | Convert string to uppercase            |
++--------------------------+----------------------------------------+
+| trimws()                 | Strip whitespace characters            |
++--------------------------+----------------------------------------+
+| strrep()                 | Repeat string n times                  |
++--------------------------+----------------------------------------+
+| strsplit()               | Split up string                        |
++--------------------------+----------------------------------------+
+| chartr()                 | Translate characters in characters     |
+|                          | string                                 |
++--------------------------+----------------------------------------+
 
 Here's some example code to show the basic built-in functions.
 
@@ -758,8 +760,6 @@ the 5' to 3' strand in a computer format called FASTA. The data from the
 3' to 5' wasn't lost - because it was just the complement of the 5' to
 3' strand in reverse.
 
-`{#> chr1} #NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNACTTTACCTAACCCAGAGGGA #> chr2 #NNNNNNNNNNNNNNNNNNNNNNNNNACGATTAGCGA`
-
 If a gene's coding sequence starts on 5' to 3' strand with an **ATG**
 then it's easy to find and you can pass it to function that parse the
 coding regions. If you didn't take the reverse complement of the
@@ -822,7 +822,7 @@ Vignette](https://stringi.gagolewski.com/_static/vignette/stringi.pdf)
 
 # Stringr
 
-In addition to working with Unicode and Internation encoded text,
+In addition to working with Unicode and International encoded text,
 `stringr` also provides equivalent functions to the R-base character
 functions and provides many additional functions.
 
@@ -842,30 +842,31 @@ Remember, we briefly discussed Regular Expressions in Unix. They are a
 way to search or match different text patterns. (The second page of
 Stringr Cheatsheet is dedicated to Regular Expressions) .
 
-+----------------------------------+----------------------------------+
-| Functions                        | Description                      |
-+==================================+==================================+
-| str_detect(x, pattern,           | Detect the presence of a         |
-| negate=FALSE)                    | pattern. Returns Boolean         |
-+----------------------------------+----------------------------------+
-| str_starts(x, pattern,           | Detect the presence of a pattern |
-| negate=FALSE)                    | at the beginning of string       |
-+----------------------------------+----------------------------------+
-| str_ends(x, pattern,             | Detect the presence of a pattern |
-| negate=FALSE)                    | at the ending of string          |
-+----------------------------------+----------------------------------+
-| str_which(x, pattern,            | Find the indexes of strings that |
-| negate=FALSE)                    | contain a pattern match          |
-+----------------------------------+----------------------------------+
-| str_locate(x, pattern)           | Locate the first position of     |
-|                                  | pattern matches in a string      |
-+----------------------------------+----------------------------------+
-| str_locate_all(x, pattern)       | Locate the all positions of      |
-|                                  | pattern matches in a string      |
-+----------------------------------+----------------------------------+
-| str_count(x, pattern)            | Count the number of matches in a |
-|                                  | string                           |
-+----------------------------------+----------------------------------+
++---------------------------------+---------------------------------+
+| Functions                       | Description                     |
++=================================+=================================+
+| str_detect(x, pattern,          | Detect the presence of a        |
+| negate=FALSE)                   | pattern. Returns Boolean        |
++---------------------------------+---------------------------------+
+| str_starts(x, pattern,          | Detect the presence of a        |
+| negate=FALSE)                   | pattern at the beginning of     |
+|                                 | string                          |
++---------------------------------+---------------------------------+
+| str_ends(x, pattern,            | Detect the presence of a        |
+| negate=FALSE)                   | pattern at the ending of string |
++---------------------------------+---------------------------------+
+| str_which(x, pattern,           | Find the indexes of strings     |
+| negate=FALSE)                   | that contain a pattern match    |
++---------------------------------+---------------------------------+
+| str_locate(x, pattern)          | Locate the first position of    |
+|                                 | pattern matches in a string     |
++---------------------------------+---------------------------------+
+| str_locate_all(x, pattern)      | Locate the all positions of     |
+|                                 | pattern matches in a string     |
++---------------------------------+---------------------------------+
+| str_count(x, pattern)           | Count the number of matches in  |
+|                                 | a string                        |
++---------------------------------+---------------------------------+
 
 ```{r, collape=TRUE}
 #install.packages("stringr")
@@ -910,26 +911,26 @@ print(str_count(dna, 'g'))
 
 ### Subsetting & Extracting Matching Strings
 
-+----------------------------------+----------------------------------+
-| Functions                        | Description                      |
-+==================================+==================================+
-| str_sub(x, start, end)           | Extract substring                |
-+----------------------------------+----------------------------------+
-| str_subset(x, pattern,           | Return string that contains a    |
-| negate=FALSE)                    | match                            |
-+----------------------------------+----------------------------------+
-| str_extract(x, pattern)          | Return first match found in each |
-|                                  | string                           |
-+----------------------------------+----------------------------------+
-| str_extract_all(x, pattern)      | Return every match found in each |
-|                                  | string                           |
-+----------------------------------+----------------------------------+
-| str_match(x, pattern)            | Locate the first match found in  |
-|                                  | each string as matrix            |
-+----------------------------------+----------------------------------+
-| str_match_all(x, pattern)        | Locate the all matches found in  |
-|                                  | each string as matrix            |
-+----------------------------------+----------------------------------+
++---------------------------------+---------------------------------+
+| Functions                       | Description                     |
++=================================+=================================+
+| str_sub(x, start, end)          | Extract substring               |
++---------------------------------+---------------------------------+
+| str_subset(x, pattern,          | Return string that contains a   |
+| negate=FALSE)                   | match                           |
++---------------------------------+---------------------------------+
+| str_extract(x, pattern)         | Return first match found in     |
+|                                 | each string                     |
++---------------------------------+---------------------------------+
+| str_extract_all(x, pattern)     | Return every match found in     |
+|                                 | each string                     |
++---------------------------------+---------------------------------+
+| str_match(x, pattern)           | Locate the first match found in |
+|                                 | each string as matrix           |
++---------------------------------+---------------------------------+
+| str_match_all(x, pattern)       | Locate the all matches found in |
+|                                 | each string as matrix           |
++---------------------------------+---------------------------------+
 
 ```{r, collape=TRUE}
 print(str_sub(dna, 0,100))
@@ -942,28 +943,28 @@ print(str_match_all(dna, 'ttcg'))
 
 ### Mutate Strings
 
-+----------------------------------+----------------------------------+
-| Functions                        | Description                      |
-+==================================+==================================+
-| str_sub()\<-value                | Identify with str_sub then       |
-|                                  | replace                          |
-+----------------------------------+----------------------------------+
-| str_replace(string, pattern,     | Replace the first match in       |
-| replacement)                     | string                           |
-+----------------------------------+----------------------------------+
-| str_replace_all(string, pattern, | Replace all matches in string    |
-| replacement)                     |                                  |
-+----------------------------------+----------------------------------+
-| str_remove(string, pattern)      | Remove first match in string     |
-+----------------------------------+----------------------------------+
-| str_remove_all(string, pattern)  | Remove all matches in string     |
-+----------------------------------+----------------------------------+
-| str_to_lower(string)             | Convert string to uppercase      |
-+----------------------------------+----------------------------------+
-| str_to_upper(string)             | Convert string to lowercase      |
-+----------------------------------+----------------------------------+
-| str_to_title(string)             | Convert string to camelcase      |
-+----------------------------------+----------------------------------+
++---------------------------------+---------------------------------+
+| Functions                       | Description                     |
++=================================+=================================+
+| str_sub()\<-value               | Identify with str_sub then      |
+|                                 | replace                         |
++---------------------------------+---------------------------------+
+| str_replace(string, pattern,    | Replace the first match in      |
+| replacement)                    | string                          |
++---------------------------------+---------------------------------+
+| str_replace_all(string,         | Replace all matches in string   |
+| pattern, replacement)           |                                 |
++---------------------------------+---------------------------------+
+| str_remove(string, pattern)     | Remove first match in string    |
++---------------------------------+---------------------------------+
+| str_remove_all(string, pattern) | Remove all matches in string    |
++---------------------------------+---------------------------------+
+| str_to_lower(string)            | Convert string to uppercase     |
++---------------------------------+---------------------------------+
+| str_to_upper(string)            | Convert string to lowercase     |
++---------------------------------+---------------------------------+
+| str_to_title(string)            | Convert string to camelcase     |
++---------------------------------+---------------------------------+
 
 ```{r}
 x = "Hello World"
@@ -980,27 +981,27 @@ print(paste("str_to_title:", str_to_title(x)))
 
 ### Join and Split Strings
 
-+----------------------------------+----------------------------------+
-| Functions                        | Description                      |
-+==================================+==================================+
-| str_c(..., sep="",               | Combines multiple strings to a   |
-| collapse=NULL)                   | single string (like paste0)      |
-+----------------------------------+----------------------------------+
-| str_flatten(string, pattern,     | Combined multiple strings to a   |
-| replacement)                     | single string                    |
-+----------------------------------+----------------------------------+
-| str_dup(string,n)                | Repeat string n times            |
-+----------------------------------+----------------------------------+
-| str_unique(string)               | Remove duplicate strings         |
-+----------------------------------+----------------------------------+
-| str_split_fixed(string, pattern) | Split vector of strings into     |
-|                                  | matrix of strings                |
-+----------------------------------+----------------------------------+
-| str_split(string)                | Return a list of substrings      |
-+----------------------------------+----------------------------------+
-| str_glue(string)                 | Creates a string from string and |
-|                                  | expressions                      |
-+----------------------------------+----------------------------------+
++---------------------------------+---------------------------------+
+| Functions                       | Description                     |
++=================================+=================================+
+| str_c(..., sep="",              | Combines multiple strings to a  |
+| collapse=NULL)                  | single string (like paste0)     |
++---------------------------------+---------------------------------+
+| str_flatten(string, pattern,    | Combined multiple strings to a  |
+| replacement)                    | single string                   |
++---------------------------------+---------------------------------+
+| str_dup(string,n)               | Repeat string n times           |
++---------------------------------+---------------------------------+
+| str_unique(string)              | Remove duplicate strings        |
++---------------------------------+---------------------------------+
+| str_split_fixed(string,         | Split vector of strings into    |
+| pattern)                        | matrix of strings               |
++---------------------------------+---------------------------------+
+| str_split(string)               | Return a list of substrings     |
++---------------------------------+---------------------------------+
+| str_glue(string)                | Creates a string from string    |
+|                                 | and expressions                 |
++---------------------------------+---------------------------------+
 
 ```{r}
 print(str_c("Letter: ", letters))
