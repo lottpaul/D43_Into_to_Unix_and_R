@@ -14,14 +14,21 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+# Introduction to Programming in R
+
+For the next few lessons, we're going to take a look at the R language
+and learn some of the basic R language, so that we'll all have a basic
+understanding of R datatypes, error messages, issues, and packages.
+
 # R Comments and Variables
 
 ## Comments
 
-In R code, we can leave comments by adding `#`. Note it has the same
-function in Python. Anything after the `#` is treated as a comment.
-Therefore, if you want to skip running some line of code, you can
-*comment* it and it won't be run in R.
+In R code, we can leave comments by adding `#` before a comment or text.
+Anything after the `#` is treated as a comment and anything before the
+`#` is treated as code. Therefore, if you want to skip running some line
+of code, you can *comment* it and it won't be run in R. We call this
+*'commenting it out'*
 
 ```{r eval=FALSE}
 example(vector)  # Get the Vector Examples
@@ -29,7 +36,20 @@ example(vector)  # Get the Vector Examples
 #example(list)  
 ```
 
-## R Variables
+You should get in the habit of commenting your code. The R Notebooks is
+essentially a way to format comments and text for your analysis.
+However, even in your R code it's good to leave comments about the
+functions, why you chose to do something, or maybe some insights you
+discovered about using a function (ie. #This function requires that the
+file end with a `.vcf.bgz` suffix.
+
+You may ask why do you need to leave a comment - you know what it does.
+One reason is that in 6 months to a year, you may forget - or another
+researcher may be using your code to perform a similar analysis.
+Comments can be an invaluable tool to provide insights into your code
+and analysis.
+
+## R Creating, Assigning, and Deleting Variables
 
 ### Variable Assignment
 
