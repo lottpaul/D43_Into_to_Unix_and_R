@@ -1,0 +1,24 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Dashboards
+
+Dashboards are a useful way to communicate large amounts of information visually and quickly. Create one with the `flexdashboard::flex_dashboard` output format, as in the .Rmd file below (available [here](https://posit.cloud/content/181966) on RStudio Cloud):
+
+![](https://d33wubrfki0l68.cloudfront.net/fb9d9abda3be41ff0159fa0786cecfafcc2ed073/ca334/lesson-images/dashboards-1-dashboard.png)
+
+Flexdashboard makes it easy to organize your content into a visual layout:
+
+-   Each Level 1 Header (`#`) begins a new page in the dashboard.
+
+-   Each Level 2 Header (`##`) begins a new column.
+
+-   Each Level 3 Header (`###`) begins a new box.
+
+You can further modify elements with attributes, as in the `{.sidebar}` above.
+
+Flexdashboard also provides simple tools for creating tabsets, value boxes, and gauges. Learn more about flexdashboard at [flexdashboard: Easy interactive dashboards for R](https://rmarkdown.rstudio.com/flexdashboard/).

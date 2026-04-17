@@ -1,0 +1,36 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Code Languages
+
+Notice how this .Rmd file executes code in bash and python. You can open the file [here](https://posit.cloud/content/181938?_gl=1*151k0q8*_ga*OTgwMTA4NTc5LjE3NDQ3MzQ3Mzg.*_ga_2C0WZ1JHG0*MTc0NDczNDczNy4xLjEuMTc0NDczNjM3MC4wLjAuMA..) in RStudio Cloud.
+
+![](https://d33wubrfki0l68.cloudfront.net/162347ef5afe219da22fb7d7d9a5989f2c3e5a85/59316/lesson-images/languages-1-demos.png)
+
+[knitr](http://yihui.name/knitr/) can execute code in many languages besides R. Some of the available language engines include:
+
+-   Python
+
+-   SQL
+
+-   Bash
+
+-   Rcpp
+
+-   Stan
+
+-   JavaScript
+
+-   CSS
+
+To process a code chunk using an alternate language engine, replace the `r` at the start of your chunk declaration with the name of the language:
+
+```         
+```{bash} ```
+```
+
+Note that chunk options like `echo` and `results` are all valid when using a language engine like python.
+
+Learn more about using other languages with R Markdown in [knitr Language Engines](https://bookdown.org/yihui/rmarkdown/language-engines.html).

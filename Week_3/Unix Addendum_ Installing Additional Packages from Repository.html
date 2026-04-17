@@ -1154,13 +1154,13 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 				}</style><div id="rendered-md"><p>Over the 56 year history of Unix, many tools have been developed for specific tasks. However, it would be impossible to have them all installed by default. So, typically your base Unix contains tools such as <code class="inline-code">less</code>, <code class="inline-code">wc</code>, <code class="inline-code">grep</code>, and other tools. If you need to install other programs, they are often available from a repository or from Source.</p>
 <p>Some applications aren&apos;t available via Environment Modules on the HIVE. There are a few different options available to get an application up and running on the cluster</p>
 <ol>
-<li>Install a compiled binary into your CONDA environment via <code class="inline-code">conda install</code></li>
-<li>Download a x86_64 compiled binary file and put it in your&nbsp;<code class="inline-code">PATH</code></li>
-<li>Download a container (Docker) using Singularity/Apptainer</li>
-<li>Compile a program from it&apos;s source code</li>
+<li><strong>Install a compiled binary into your CONDA environment via <code class="inline-code">conda install</code></strong></li>
+<li><strong>Download a x86_64 compiled binary file and put it in your&nbsp;<code class="inline-code">PATH</code></strong></li>
+<li><strong>Download a container (Docker) using Singularity/Apptainer</strong></li>
+<li><strong>Compile a program from it&apos;s source code</strong></li>
 </ol>
 <hr/>
-<h1 id="hive-1-via-conda-install">HIVE: 1. via Conda Install</h1>
+<h1 id="hive-1-via-conda-install-beginner">HIVE: 1. via Conda Install&nbsp; (Beginner)</h1>
 <p>We covered installing applications via Conda in the Introduction to Hive lesson.&nbsp; There are 3 main conda channels or repositories:</p>
 <ol>
 <li>
@@ -1180,17 +1180,21 @@ pre.mermaid[data-processed=true] { white-space: unset; }
 </li>
 </ol>
 <p>You can search package online via web browser or via Unix command-line and install specific versions.</p>
-<h1 id="hive-2-via-compiled-binary">HIVE: 2. Via Compiled Binary</h1>
-<p>Some applications provide statically linked pre-compiled binary applications that can be downloaded and run. Oftentime, these are found in the applications Github Repository Releases section:   They&apos;ll often be described as pre-compiled binaries - the required version for HIVE would be <strong>linux-x86_64</strong></p>
-<p>An example of this is <strong><a data-from-md="" title="https://github.com/COMBINE-lab/salmon/releases" href="https://github.com/COMBINE-lab/salmon/releases">salmon</a></strong>, a transcript level quantification application used for RNA-seq.  In order to run this, you&apos;ll need to download the file and extract the binary file.</p>
+<h1 id="hive-2-via-compiled-binary-beginner-to-intermediate">HIVE: 2. Via Compiled Binary&nbsp; (Beginner to Intermediate)</h1>
+<p>Some applications provide statically linked pre-compiled binary applications that can be downloaded and run. Oftentime, these are found in the applications Github Repository Releases section: They&apos;ll often be described as pre-compiled binaries - the required version for HIVE would be <strong>linux-x86_64</strong></p>
+<p>An example of this is <strong><a data-from-md="" title="https://github.com/COMBINE-lab/salmon/releases" href="https://github.com/COMBINE-lab/salmon/releases">salmon</a></strong>, a transcript level quantification application used for RNA-seq. In order to run this, you&apos;ll need to download the file and extract the binary file.</p>
 <p>Then ensure that the directory where the app exists is added to your PATH varianle</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
 " data-joplin-source-close="
 ```">$ export PATH=/home/plott/APPS/&lt;directory&gt;:$PATH</pre><pre class="hljs"><code>$ <span class="hljs-built_in">export</span> <span class="hljs-attribute">PATH</span>=/home/plott/APPS/&lt;directory&gt;:$PATH</code></pre></div>
 <p>After exporting the PATH, you should be able to call it directly from the command-prompt.</p>
-<h1 id="hive-3-via-container">HIVE: 3. Via Container</h1>
-<p>Here, I&apos;m going to use <code class="inline-code">samtools</code> as an example.</p>
-<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
+<h1 id="hive-3-via-container-intermediate-to-expert">HIVE: 3. Via Container&nbsp; (Intermediate to Expert)</h1>
+<p>In HPC and Bioinformatics, the use of containers has become a very common way of sharing and using utilities.&nbsp; Most commonly, it&apos;s applied in Pipelines, such as NextFlow, SnakeMake, or Common Workflow Language.&nbsp; The benefit is that instead of relying on you to compile a utility, someone can create a container, which is like a small virtual machine, and install the application in there.&nbsp; Then now matter what system you run the container on you&apos;ll get the expected behavior - ensuring forward, backwards, and cross compatibility.</p>
+<p>On your own computer, you can install Docker to create and run containers.&nbsp; However, on the HIVE HPC users aren&apos;t allowed to use Docker - because of issues with permissions.&nbsp; The alternative is a program called Singularity or Apptainer (Singularity was renamed to Apptainer).&nbsp; &nbsp;This allows users to download, mount, and run containers on the HPC.</p>
+<p>Here, I&apos;m going to use&nbsp;<code class="inline-code">samtools</code> as an example.</p>
+<p>You can look at Docker Hub and find a samtools container.&nbsp; I found <strong>dnalinux</strong> has a recent samtools version.</p>
+<p>I&apos;ll first show how to pull the container from Docker and then run an interactive shell, or run a specific command in the container after mounting my directory to the container.</p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
 ```">$ apptainer pull docker://dnalinux/samtools:latest
 INFO:    Converting OCI blobs to SIF format
@@ -1233,24 +1237,43 @@ INFO:    Creating SIF file...
 $ apptainer shell docker://dnalinux/samtools:latest
 Apptainer&gt; samtools
 ...
-Apptainer&gt; exit
+Apptainer&gt; <span class="hljs-built_in">exit</span>
 
 
-#Bind a directory and run a command
-$ apptainer run --bind /path/to/data:/data docker://dnalinux/samtools:latest samtools view -c /data/my_bam_file.bam
+<span class="hljs-comment">#Bind a directory and run a command</span>
+$ apptainer run --<span class="hljs-built_in">bind</span> /path/to/data:/data docker://dnalinux/samtools:latest samtools view -c /data/my_bam_file.bam
 </code></pre></div>
-<h1 id="hive-4-from-source-code-intermediate-to-expert-level">HIVE: 4: From Source Code  (Intermediate to Expert Level)</h1>
-<p>There are multiple build system on Linux.  The most common is the <code class="inline-code">make</code> and <code class="inline-code">autogen</code> system.  These utilize compilers to compile the source code specificially for your system. However, it can get very complicated very quickly.  Some of the standards tools, such as Samtools utilizes the <code class="inline-code">autogen</code> system to assess the current system and if all the dependencies are already installed.   If not, you&apos;ll need to pre-install these and then tell the compiler where these are.</p>
+<h1 id="hive-4-from-source-code-intermediate-to-expert-level">HIVE: 4: From Source Code (Intermediate to Expert Level)</h1>
+<p>There are multiple build system on Linux. The most common is the <code class="inline-code">make</code> and <code class="inline-code">autogen</code> system. These utilize compilers to compile the source code specificially for your system. However, it can get very complicated very quickly. Some of the standards tools, such as Samtools utilizes the <code class="inline-code">autogen</code> system to assess the current system and if all the dependencies are already installed. If not, you&apos;ll need to pre-install these and then tell the compiler where these are.&nbsp; &nbsp;You&apos;ll typically, download <strong>tar.gz</strong> archive files of source code from Github or the programmers site.&nbsp; Once, you&apos;ve decompressed and expanded the archive, you&apos;ll typically follow the author&apos;s installation instructions.</p>
 <p>A simple example may look something like this.</p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="" data-joplin-source-open="```
 " data-joplin-source-close="
-```">./configure --prefix=&lt;Install Directory&gt;  #Checks the configuration and then configures the compiler and installer scripts.
-make   #Compiles the application in the current source code directory
-make install  # Moves application and libraries to installation directory</pre><pre class="hljs"><code>./configure --prefix=&lt;<span class="hljs-keyword">Install</span> Directory&gt;  <span class="hljs-comment">#Checks the configuration and then configures the compiler and installer scripts.</span>
-make   <span class="hljs-comment">#Compiles the application in the current source code directory</span>
-make <span class="hljs-keyword">install</span>  <span class="hljs-comment"># Moves application and libraries to installation directory</span></code></pre></div>
+```">$ wget https://github.com/samtools/samtools/releases/download/1.23.1/samtools-1.23.1.tar.bz2
+$ tar xvf samtools-1.23.1.tar.bz2
+$ cd samtools-1.23.1
+
+$ ./configure --prefix=&lt;Install Directory&gt;  #Checks the configuration and then configures the 
+#compiler and installer scripts. The install directory structure will follow Linux canonical 
+#app structure. There will be a bin folder holding the binaries, a lib folder for the library 
+#files, an include folder for the source include files for the library files, and a share 
+#folder for man pages or other shared info.
+
+$ make   #Compiles the application in the current source code directory using the generated Makefile
+$ make install  # Moves application and libraries to installation directory</pre><pre class="hljs"><code><span class="hljs-variable">$ </span>wget <span class="hljs-symbol">https:</span>/<span class="hljs-regexp">/github.com/samtools</span><span class="hljs-regexp">/samtools/releases</span><span class="hljs-regexp">/download/</span><span class="hljs-number">1.23</span>.<span class="hljs-number">1</span>/samtools-<span class="hljs-number">1.23</span>.<span class="hljs-number">1</span>.tar.bz2
+<span class="hljs-variable">$ </span>tar xvf samtools-<span class="hljs-number">1.23</span>.<span class="hljs-number">1</span>.tar.bz2
+<span class="hljs-variable">$ </span>cd samtools-<span class="hljs-number">1.23</span>.<span class="hljs-number">1</span>
+
+<span class="hljs-variable">$ </span>./configure --prefix=&lt;Install Directory&gt;  <span class="hljs-comment">#Checks the configuration and then configures the </span>
+<span class="hljs-comment">#compiler and installer scripts. The install directory structure will follow Linux canonical </span>
+<span class="hljs-comment">#app structure. There will be a bin folder holding the binaries, a lib folder for the library </span>
+<span class="hljs-comment">#files, an include folder for the source include files for the library files, and a share </span>
+<span class="hljs-comment">#folder for man pages or other shared info.</span>
+
+<span class="hljs-variable">$ </span>make   <span class="hljs-comment">#Compiles the application in the current source code directory using the generated Makefile</span>
+<span class="hljs-variable">$ </span>make install  <span class="hljs-comment"># Moves application and libraries to installation directory</span></code></pre></div>
 <hr/>
-<h1 id="as-root-or-sudoer-on-your-own-system">As Root or Sudoer on your own system</h1>
+<h1 id="as-root-or-sudo-er-on-your-own-system">As Root or Sudo-er on your own system</h1>
+<p>&nbsp;</p>
 <hr/>
 <h1 id="windows-wsl2-installing-tools-from-repository">Windows WSL2 - Installing Tools from Repository</h1>
 <p>Ubuntu and other Debian variants use a tool called <code class="inline-code">apt</code> to interact with a repository. It allows you to search, update, upgrade, and install programs from the repository.</p>

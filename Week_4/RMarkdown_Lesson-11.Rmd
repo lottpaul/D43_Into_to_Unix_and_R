@@ -1,0 +1,26 @@
+---
+title: "R Notebook"
+output:
+  html_document:
+    df_print: paged
+---
+
+# Slide Presentations
+
+R Markdown renders to four presentation formats:
+
+-   [beamer_presentation](https://bookdown.org/yihui/rmarkdown/beamer-presentation.html) - PDF presentations with beamer
+
+-   [ioslides_presentation](https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html) - HTML presentations with ioslides
+
+-   [slidy_presentation](https://bookdown.org/yihui/rmarkdown/slidy-presentation.html) - HTML presentations with slidy
+
+-   [powerpoint_presentation](https://bookdown.org/yihui/rmarkdown/powerpoint-presentation.html) - PowerPoint presentation
+
+-   [revealjs::revealjs_presentation](https://bookdown.org/yihui/rmarkdown/revealjs.html) - HTML presentations with reveal.js
+
+Each format will intuitively divide your content into slides, with a new slide beginning at each first or second level header.
+
+Insert a horizontal rule (`***`) into your document to create a manual slide break. Create incremental bullets with `>-`, as in the .Rmd file below, which is available [here](https://posit.cloud/content/181959) on RStudio Cloud.
+
+![](https://d33wubrfki0l68.cloudfront.net/3dce2b9d01481844ca804ada940f69c1ce59410f/3b01c/lesson-images/slides-1-slideshow.png)

@@ -1,0 +1,133 @@
+---
+title: "Lesson3_Comments_and_Variables"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# R Comments and Variables
+
+## Comments
+
+In R code, we can leave comments by adding `#`. Note it has the same
+function in Python. Anything after the `#` is treated as a comment.
+Therefore, if you want to skip running some line of code, you can
+*comment* it and it won't be run in R.
+
+```{r eval=FALSE}
+example(vector)  # Get the Vector Examples
+
+#example(list)  
+```
+
+## R Variables
+
+### Variable Assignment
+
+Variables in R are case sensitive and must start with a letter or `.`.
+If you start a variable with a period, the second character must not be
+a digit. There is no limit to variable name length.
+
+In R documentation and tutorials, you'll see variables being defined
+using `<-`. This denotes the direction of assignment
+
+`x <- 10` \# Means that the value of 10 is being stored in x
+
+```{r}
+x<-10
+print(x)
+```
+
+Alternatively, you can reverse the expression to make a right-handed
+assignment. Note: This is different than Python, which requires
+left-handed assignments only.
+
+```{r}
+9 -> x
+print(x)
+```
+
+Finally, you'll also notice that R now recognizes `=` as an assignment
+operator.
+
+```{r}
+x = 120
+print(x)
+```
+
+It's important to remember, in most cases `=` is equivalent to `<-`.
+However, if you ever use both `<-` and `=` in an expression, the `<-`
+has precedence over `=` - meaning the `<-` will be evaluated first and
+then `=` will be evaluated second.
+
+```{r}
+y <- 20
+print(y)
+```
+
+Finally, `assign(name, value)` function is the equivalent of the `<-`
+assignment operator. It provides additional additional options for
+assignment. See `?assign` for more about the assign function.
+
+```{r}
+assign('x',256)
+x
+```
+
+### Listing Variables
+
+If you're not working in RStudio, you might not know what variables are
+assigned in an environment. You can list the variables in your current
+working session.
+
+```{r}
+ls()
+```
+
+An equivalent function to list the variables is `objects()`
+
+```{r}
+objects()
+```
+
+Both `ls()` and `object()` will return a vector (ie a type of list) of
+variable names in your current session.
+
+However, if you are working in RStudio the ***Environment*** pane (Upper
+Right) displays the variables that are stored in your environment. So,
+you can quickly look up and see at anytime what values are assigned and
+which variables are defined. If you select the **Grid** option from the
+Right side of the pane - you'll see some additional information
+
+![](images/rstudio-panes-labeled.jpeg)
+
+### Removing Variables
+
+At some point you may want to remove a variable that you aren't going to
+use anymore. This becomes vitally important, when you might have things
+running in the same directory because anytime R gets shutdown - it'll
+ask to save existing variables into a file `.RData`. When restarting the
+session in this directory, even for a different script - it'll load the
+variables that were previously stored from the `.RData` file.
+
+To remove a variable:
+
+```{r}
+rm(y)
+```
+
+or
+
+Select the variable **checkbox** and then use the broom in the
+***Environment*** pane to delete the variable
+
+------------------------------------------------------------------------

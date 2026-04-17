@@ -1,0 +1,645 @@
+---
+title: "Lesson 2 RStudio"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  html_document:
+    df_print: paged
+editor_options:
+  markdown:
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. RStudio IDE
+
+Ok. Let's take a look at RStudio IDE and see why we'd want to use it
+
+![](https://images.datacamp.com/image/upload/v1663778862/R_Studio_Interface_1336eacbe7.png)
+RStudio is an integrated development environment (IDE) for the R
+programming language. Some of its features include:
+
+Customizable workbench with all of the tools required to work with R in
+one place (console, source, plots, workspace, help, history, etc.).
+
+-   Syntax highlighting editor with code completion.
+
+-   Execute code directly from the source editor (line, selection, or
+    file).
+
+-   Full support for authoring Sweave and TeX documents.
+
+-   Runs on Windows, Mac, and Linux, and has a community-maintained
+    FreeBSD port.
+
+-   Can also be run as a server, enabling multiple users to access the
+    RStudio IDE using a web browser
+
+Let's spend some time getting familiar with RStudio
+
+-   [RStudio
+    Cheatsheet](https://rstudio.github.io/cheatsheets/html/rstudio-ide.html)
+
+Goto *File\>Help\>Cheatsheets\>RStudio IDE Cheatsheet* to open the main
+Rstudio Cheatsheet
+
+### Getting Familiar with the Windows of RStudio
+
+-   **Upper Left**
+    -   Script/Code Editor Window
+-   **Lower Left**
+    -   Console - R Console (Same as in RGui/Command Line) This is your
+        R session.
+    -   Terminal - Bash/OS Terminal
+    -   Background Jobs -
+    -   Render -
+-   **Upper Right**
+    -   Environment
+    -   History
+    -   Connections
+    -   Tutorial
+-   **Lower Right**
+    -   Files
+    -   Plots
+    -   Packages
+    -   Help
+    -   Viewer
+
+Additional Support:
+
+-   <https://docs.posit.co/ide/user/>
+
+-   <https://support.posit.co/hc/en-us/sections/200107586-Using-the-RStudio-IDE>
+
+------------------------------------------------------------------------
+
+# 2. Getting Started in RStudio IDE
+
+## Projects
+
+Once you've got Rstudio opened, you can create a new project or open an
+existing project.
+
+**Projects** in Rstudio provide an easy way to split your different
+analysis into separate environments and sessions. **Projects** can be
+created in a new directory, existing directory, or *checkout* a project
+from a code repository such as Github.
+
+### [Rstudio Projects](https://support.posit.co/hc/en-us/articles/200526207-Using-RStudio-Projects)
+
+When a project is opened within RStudio the following actions are taken:
+
+-   A new R session (process) is started
+
+-   The .Rprofile file in the project's main directory (if any) is
+    sourced by R
+
+-   The .RData file in the project's main directory is loaded (if
+    project options indicate that it should be loaded).
+
+-   The .Rhistory file in the project's main directory is loaded into
+    the RStudio History pane (and used for Console Up/Down arrow command
+    history).
+
+-   The current working directory is set to the project directory.
+
+-   Previously edited source documents are restored into editor tabs
+
+-   Other RStudio settings (e.g. active tabs, splitter positions, etc.)
+    are restored to where they were the last time the project was
+    closed.
+
+### Quitting a Project
+
+When you are within a project and choose to either Quit, close the
+project, or open another project the following actions are taken:
+
+-   .RData and/or .Rhistory are written to the project directory (if
+    current options indicate they should be)
+
+-   The list of open source documents is saved (so it can be restored
+    next time the project is opened)
+
+-   Other RStudio settings (as described above) are saved.
+
+-   The R session is terminated.
+
+To create a new **Project** directory: *File-\>New Project* (If you
+already have something open, you'll be prompted to save the current
+session history/results before creating a new session)
+
+------------------------------------------------------------------------
+
+# 3. To R Script or R Markdown
+
+When creating a new R file *File-\>New File* you'll notice that you have
+the option to creat an R script or R Markdown.
+
+You can think of these as similar to:
+
+**R script** - is equivalent to a Python .py file or other source code
+files. It contains the basic script/program but doesn't provide any
+place to format your results.
+
+**Example:**
+
+``` r
+# store the current directory
+initial.dir<-getwd()
+# change to the new directory
+setwd("/home/jim/psych/risk/adol")
+# load the necessary libraries
+library(nlme)
+# set the output file
+sink("adolrisk03.out")
+```
+
+**R Markdown** - also called a **R Notebook** allows you to
+interactively execute code blocks and intersperse the code blocks with
+formatted text, images, tables, or other Markdown. The page can then be
+rendered to HTML, PDF or Word document, so you can not only share your
+code but also the results.
+
+The difference between a R Markdown document and R Notebook is that when
+running a R Markdown document all the code is sent to the console all at
+once. Whereas, the R Notebook only executes one line at a time.
+
+Unless you are developing a package, running code in a non-interactive
+setting - it's recommended that you get use to using **R Markdown** or
+**R Notebooks**
+
+------------------------------------------------------------------------
+
+## R Markdown
+
+R Markdown provides an authoring framework for Researchers. You can use
+a single RMarkdown file to write, execute, and save code - as well, as
+generate high quality reports that can be shared with others.
+
+-   [R Markdown Tutorial](https://rmarkdown.rstudio.com/lesson-1.html)
+-   [R Markdown
+    Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf)
+-   [Book] [R Markdown: A Definitive Guide
+    Guide](https://bookdown.org/yihui/rmarkdown/)
+-   [Book] [R Markdown
+    Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/)
+
+Goto *File\>Help\>Cheatsheets\>RMarkdown Cheatsheet* to open the main
+RMarkdown Cheatsheet
+
+These lessons are written completely in R Markdown. You'll notice that
+anytime we want to run some code, we need to create a code block use:
+
+````         
+
+```{r}
+#Your Code 
+
+``` 
+````
+
+### Let's Get Comfortable with RMarkdown/Markdown
+
+During the Python portions of this Class, I mentioned Markdown and
+you've seen the Notebooks that used Markdown to format text cells.
+
+However, Markdown is such an important tool for Bioinformatics and
+Genomics, we're going to take some time and work through the RMarkdown
+Tutorial. Learning Markdown, ensure that you be able to produce
+reproducible results whether you're working in Python or R.
+
+RStudio's creator has a good Tutorial on R Markdown - Let's follow the
+links and learn more about why we should be using R Markdown for our
+projects.
+
+1.  [Introduction](RMarkdown_Lesson-1.Rmd)
+2.  [How It Works](RMarkdown_Lesson-2.Rmd)
+    -   [Example 1](RMarkdown_Example1.Rmd)
+3.  [Code Chunks](RMarkdown_Lesson-3.Rmd)
+    -   [Example 2](RMarkdown_Example2.Rmd)
+4.  [Inline Code](RMarkdown_Lesson-4.Rmd)
+    -   [Example 3](RMarkdown_Example3.Rmd)
+5.  [Code Languages](RMarkdown_Lesson-5.Rmd)
+    -   [Example 4](RMarkdown_Example4.Rmd)
+6.  [Parameters](RMarkdown_Lesson-6.Rmd)
+    -   [Example 5](RMarkdown_Example5.Rmd)
+7.  [Tables](RMarkdown_Lesson-7.Rmd)
+    -   [Example 6](RMarkdown_Example6.Rmd)
+8.  [Markdown Basics](RMarkdown_Lesson-8.Rmd)
+    -   [Example 7](RMarkdown_Example7.Rmd)
+9.  [Output Formats](RMarkdown_Lesson-9.Rmd)
+    -   [Example 8](RMarkdown_Example8.Rmd)
+10. [Notebooks](RMarkdown_Lesson-10.Rmd)
+    -   [Example 9](RMarkdown_Example9.Rmd)
+11. [Extra - Slide Presentations](RMarkdown_Lesson-11.Rmd)
+12. [Extra - Dashboards](RMarkdown_Lesson-12.Rmd)
+13. [Extra - Websites](RMarkdown_Lesson-13.Rmd)
+14. [Extra - Interactive Documents](RMarkdown_Lesson-14.Rmd)
+
+------------------------------------------------------------------------
+
+## Installing and Loading R Packages
+
+Like Python, the core libraries (ie Standard Libraries) provides basic
+functionality. But research community have developed a large huge number
+of packages that makes R a fundamental tool in research. R calles these
+*Packages*, whereas we called them *Modules* in Python
+
+You can find many packages hosted by the [Comprehensive R Archive
+Network (CRAN)](https://cran.r-project.org/), which is the default R
+repository.
+
+From the Menu, you can install a package by going to *Tools-\>Install
+Packages* or via R console
+
+To install packages from CRAN, you use
+`install.packages("<packages name>")`:
+
+```{r eval=FALSE}
+install.packages("RSQLite")
+```
+
+However, for Genomics the [Bioconductor](https://www.bioconductor.org/)
+project has become a fundamental repository for Genomics.
+
+```{r eval=FALSE}
+install.packages("BiocManager", dependencies=TRUE)
+```
+
+Once Bioconductor Manager is installed, you can install a Bioconductor
+package such as `GenomicRanges`
+
+```{r eval=FALSE}
+BiocManager::install("GenomicRanges")
+```
+
+You can also find packages on: -
+[Github](https://github.com/trending/r) -
+[RForge](https://r-forge.r-project.org/) -
+[Omegahat](https://www.omegahat.net/) -
+[ROpenSci](https://ropensci.org/)
+
+Once you've successfully installed a R packages, you'll need to load the
+package. In Python, we'd use `import <module_name>`.
+
+To load packages into R, you use `library("<package name>")`
+
+```{r}
+library("RSQLite")
+```
+
+------------------------------------------------------------------------
+
+## R Files and Directories
+
+### R Current Working Directory
+
+One thing we didn't cover much in the Python section is that programs
+typically run in a given directory. The directory that you start a
+program in is called the **Current Working Directory**, in order for the
+program to find the necessary files it needs to know where to look in
+the directory structure.
+
+If you start R in a certain folder, but want to open a file in a
+different folder. You'll need to either:
+
+1.  Set the Current Working Directory to where your files is at
+
+2.  Supply a file path to the file (relative or absolute)
+
+Here is an example of the Directory/File structure on different
+Operating Systems:
+
+![](https://i.stack.imgur.com/wQUDB.jpg)
+
+**Important:** Linux and Mac OSX have a directory structure that defines
+`/` as root. Windows uses **C:** as the boot drive and letters to define
+other drives (**B:**, **E:**, **Z:**, ...) . The root directory on the
+**C:** drive is then `C:\`
+
+------------------------------------------------------------------------
+
+There are couple ways to tell a program where the file is:
+
+### Absolute Path
+
+Absolute paths define the complete path and filename of the file. So to
+define the path relative to the root directory, we start with '/' or
+'C:'.
+
+**For Linux:** `/home/plott/Downloads/MyData.txt`
+
+**For Mac OSX:** `/Users/plott/Downloads/MyData.txt`
+
+**For Windows:** `C:\Users\plott\Downloads\MyData.txt`
+
+------------------------------------------------------------------------
+
+### Relative Path
+
+Relative paths are defined from where your current working directory
+is - which folder the program started in or is set to by default.
+
+When you first started R, it probably started in your Home Directory,
+and considers this your Current Working Directory. In the above
+examples, I used `/home/plott`, `/Users/plott` or `C:\Users\plott` as my
+Home directory for different operating systems.
+
+If I wanted to open `MyScript.txt`, I'd could supply the relative path,
+which is relative to my Current Working Directory
+
+**For Linux:** `Downloads/MyData.txt`
+
+**For Mac OSX:** `Downloads/MyData.txt`
+
+**For Windows:**`Downloads/MyData.txt`
+
+Note: Relative to the Current Working Directory - they are all the same
+irregardless of Operating System.
+
+What if you wanted to open a file in `/home`, `/Users`, or `C:\Users`
+directory, but wanted to use relative path.
+
+The `..` double-period denotes the directory just previous to the
+Current Working Directory.
+
+So if there was a file called `SharedData.txt` in the `/home` or
+`/Users` or `C:\Users` directory. We'd be able to get to it by:
+`../SharedData.txt` - This means first go to the directory just prior to
+your Current working directory and look for a file called
+`SharedData.txt`
+
+**Note:** If you wanted to go 2 directories up you could utilize `..`
+like: `../../SharedDate.txt`
+
+A single period `.` denotes your current directory, so
+`./SharedData.txt` is the same as just `SharedData.txt`
+
+------------------------------------------------------------------------
+
+### OK. Why do we need to know this
+
+Well, R and Python all use this idea of Current Working Directory. If
+you want to work on a file, but R complains that it can't find it. It's
+often because your current working directory isn't what you thought.
+
+#### To see your current working directory:
+
+Goto **File** Tab (Lower Right) *More-\>Go To Working Directory*
+
+or
+
+```{r}
+getwd()
+```
+
+#### To set your current working directory:
+
+Goto **File** Tab (Lower Right) Navigate to the directory you want as
+your Working Directory and press *More-\>Set As Working Directory*
+
+or
+
+```{r}
+setwd('C:/Users/Paul Lott/')
+```
+
+### Listing Files
+
+If you want to identify the files in a particular directory, you can
+navigate using the *Files* tab (*Lower-Right Corner*) or
+
+```{r}
+list.files(path='.')  #Get the files in your Current directory
+```
+
+### Additional R File and Directory Functions
+
++-------------------+----------------------------+----------------+
+| R Function        | Unix Command               | Description    |
++===================+============================+================+
+| getwd()           | pwd                        | Get the        |
+|                   |                            | current        |
+|                   |                            | working        |
+|                   |                            | directory      |
++-------------------+----------------------------+----------------+
+| set               | cd \<directory\>           |                |
+| wd(\<directory\>) |                            |                |
++-------------------+----------------------------+----------------+
+| lis               | ls                         | Lists all      |
+| t.files(path=".") |                            | files in a     |
+|                   |                            | given          |
+|                   |                            | directory      |
++-------------------+----------------------------+----------------+
+| li                | ls                         | List           |
+| st.dirs(path=".") |                            | directories    |
++-------------------+----------------------------+----------------+
+| fi                | touch \<fn\>               | Create an      |
+| le.create(\<fn\>) |                            | empty file     |
++-------------------+----------------------------+----------------+
+| file.exists(...)  |                            | Returns `TRUE` |
+|                   |                            | if file exists |
++-------------------+----------------------------+----------------+
+| fi                | rm \<fn\>                  | Delete a file  |
+| le.remove(\<fn\>) |                            |                |
++-------------------+----------------------------+----------------+
+| file              | mv \<from\> \<to\>         | Attempts to    |
+| .rename(\<from\>, |                            | rename         |
+| \<new\>)          |                            | filename       |
+|                   |                            | `<from>` to    |
+|                   |                            | `<new>`        |
++-------------------+----------------------------+----------------+
+| f                 | cat \<file1\> \<file2\>    | Appends File1  |
+| ile.append(file1, |                            | and File2      |
+| file2)            |                            |                |
++-------------------+----------------------------+----------------+
+| fi                | ls -alh                    | Provide        |
+| le.info(filename) |                            | information    |
+|                   |                            | about file     |
+|                   |                            | (size, isdir,  |
+|                   |                            | mode, time,    |
+|                   |                            | uid, gui,      |
+|                   |                            | username,      |
+|                   |                            | groupname)     |
++-------------------+----------------------------+----------------+
+| fi                | cp \<from\> \<to\>         | Copy a file    |
+| le.copy(\<from\>, |                            | `from` file to |
+| \<to\>)           |                            | `new` location |
++-------------------+----------------------------+----------------+
+| file              | ln -sf \<from\> \<to\>     | Create a       |
+| .                 |                            | symbolic link  |
+| symlink(\<from\>, |                            | to a `from`    |
+| \<new\>)          |                            | file to `new`  |
+|                   |                            | location       |
++-------------------+----------------------------+----------------+
+| dir.exists        |                            | Return `TRUE`  |
+| (\<directory\>)   |                            | if directory   |
+|                   |                            | exists         |
++-------------------+----------------------------+----------------+
+| dir.              | mkdir \<newdir\>           | Create a       |
+| c                 |                            | Directory      |
+| reate(\<newdir\>) |                            |                |
++-------------------+----------------------------+----------------+
+| sy                | chmod \<permission\>       | Change File    |
+| s.chmod(\<path\>, | \<path/fn\>                | permissions    |
+| mode=\            |                            |                |
+| \< Permission#\>) |                            | 4 = Read       |
+|                   |                            |                |
+|                   |                            | 2 = Write      |
+|                   |                            |                |
+|                   |                            | 1 = Execute    |
+|                   |                            |                |
+|                   |                            | 7 = (4+2+1) =  |
+|                   |                            | Read, Write,   |
+|                   |                            | Execute        |
+|                   |                            |                |
+|                   |                            | \<Users#,      |
+|                   |                            | Group#,        |
+|                   |                            | Everyone#\>    |
+|                   |                            |                |
+|                   |                            | 777 = RWE for  |
+|                   |                            | User /         |
+|                   |                            | Group/Everyone |
++-------------------+----------------------------+----------------+
+| basename(path)    | basename \<path\>          | Returns the    |
+|                   |                            | Filename       |
+|                   |                            | portion of the |
+|                   |                            | path           |
++-------------------+----------------------------+----------------+
+| dirname(path)     | dirname                    | Returns the    |
+|                   |                            | Directory      |
+|                   |                            | portion of the |
+|                   |                            | path           |
++-------------------+----------------------------+----------------+
+| unlink(x)         | rm \<directory\>           | Deletes files  |
+|                   |                            | or directories |
+|                   | or                         | specified by x |
+|                   |                            |                |
+|                   | rmdir \<directory\>        |                |
++-------------------+----------------------------+----------------+
+
+------------------------------------------------------------------------
+
+### Importance of Organizing Your Projects and Scripts
+
+As I just mentioned, `.RData` is where R will store or load the
+variables when you exit or open a session. If you're working on multiple
+projects, but they're all in the same directory - this means that
+`.RData` could contain variables from multiple different projects. You
+could inadvertently use the value stored in one project in another -
+leading to spurious results.
+
+The solution to this is to utilize different Working Directories for
+your project sections.
+
+Besides ensuring that the variables stored in `.RData` all came from
+your single analysis and on some other. It' also stores your command
+history for the single analysis in `.Rhistory`.
+
+This is very different than in Jupyter Lab - where if you restarted a
+Notebook - no variable values are restored from the previous time you
+ran the Notebook.
+
+**Remember**: If you're saving variables to .RData at the end of a
+Session - It essentially makes these variables persistent - they'll be
+restored when you re-open your session.
+
+------------------------------------------------------------------------
+
+# Exercise 1: Create a New Project Folder called `First_R` and then Create an R Markdown document in the folder.
+
+Create a Header, a Table, and Insert an Image.
+
+Copy the following block of code and then render the Markdown document:
+
+```         
+data(iris)
+y<-iris$Sepal.Length
+x<-iris$Species
+
+means<-tapply(y, x, mean)
+s.dev<-tapply(y, x, sd)
+xlevels<-1:nlevels(x)
+
+plot(xlevels, means, ylim=c(min(y), max(y)), pch=16, axes=F, xlab="Espécie", ylab="Comprimento da Sépala", type="n", xlim=c(0.5, nlevels(x)+0.5))
+
+axis(2, las=1)
+axis(1, xlevels, levels(x))
+box()
+
+#As asas:
+arrows(xlevels, means-s.dev, xlevels, means+s.dev, angle=90, code=3,
+length =  0.25 , col = "grey", lwd = 7.5 )
+
+#Os cockpits:
+points(xlevels, means, pch = 19, col="grey", cex = 6 )
+points(xlevels, means, pch = 19, cex = 1.5 )
+points(xlevels, means, pch = 8, cex = 2.5 )
+points(xlevels, means, pch = 1, cex = 4 )
+```
+
+------------------------------------------------------------------------
+
+## Getting Help
+
+R and Rstudio have built in help functionality similar to Jupyter
+Notebooks. There are multiple ways to get help for a function, object,
+or topic.
+
+`help(<command>)` - will open the help for the given command or topic in
+the Help tab
+
+```{r, eval=FALSE}
+help(solve)
+```
+
+Alternatively, you can shorten the command to: `?<command>`
+
+`help.start()` - will take you to the beginning help page - where you
+can then look through guides or search for a given topic
+
+```{r, eval=FALSE}
+help.start()
+```
+
+Don't forget about he ***Help*** tab in the (**Lower Right**). It' gives
+you access to all your help topics in a easy to navigate interface. It
+also provides quick access to **R Manuals.**
+
+If you want further help and infomration, check out
+<https://cran.r-project.org/web/packages/available_packages_by_name.html>
+
+### Searching for Help Topic
+
+`help.searc(<topic/command>)` - will search the help documentation for
+the command or topic you're searching for
+
+Alternatively, `??<topic/command>`
+
+```{r, eval=FALSE}
+help.search("data.frame")
+```
+
+### Getting Examples
+
+Many of the help topics have examples that are provided in the
+documentation. Sometimes, just seeing the examples can help you
+understand how a function works. If you want to run the examples from a
+topic:
+
+`example(<topic>)`
+
+```{r}
+example(vector)
+```
+
+If you are looking for help or examples on a given packages go to the
+Package Webpage and look for Vignettes or Examples
+
+stringr Cran Page:
+<https://cran.r-project.org/web/packages/stringr/index.html>
+
+------------------------------------------------------------------------

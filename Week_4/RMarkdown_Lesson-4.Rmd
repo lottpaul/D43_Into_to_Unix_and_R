@@ -1,0 +1,22 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Inline Code
+
+Code results can be inserted directly into the text of a .Rmd file by enclosing the code with `` `r` ``. The file below uses `` `r` `` twice to call `colorFunc`, which returns “heat.colors.” You can open the file [here](https://posit.cloud/content/181921) in RStudio Cloud.
+
+![](https://d33wubrfki0l68.cloudfront.net/4c3760f9341ec07761c95fb5f03e033fa73d206d/057ff/lesson-images/inline-1-heat.png)
+
+Using `` `r` `` makes it easy to update the report to refer to another function.
+
+![](https://d33wubrfki0l68.cloudfront.net/a446da54752a65600b467fc3afacfe2b42dbaa51/4eb70/lesson-images/inline-2-terrain.png)
+
+R Markdown will always
+
+-   display the results of inline code, but not the code
+
+-   apply relevant text formatting to the results
+
+As a result, inline output is indistinguishable from the surrounding text. Inline expressions do not take knitr options

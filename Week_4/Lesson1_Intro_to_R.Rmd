@@ -1,0 +1,50 @@
+---
+title: "Lesson1_Intro_to_R"
+author: "Paul Lott"
+date: "2024-05-13"
+output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 1. Introduction to R
+
+The plan for the R portion of the course is to provide a similar overview of Datatypes, Conditionals, Loops, Functions, and common R libraries. We unfortunately don't have enough time to make you an expert at R - but many of the concepts we learned in the Python section are applicable in R. So, while you'll not be an expert - you have the tools and with practice you can become an expert.
+
+R is not only a programming language, but also a free software environment for statistical computing and graphics. In the past 20 years, R has been adopted in the fields of bioinformatics and data analysis as a fundamental tool.
+
+Like Python, R is an interpreted language - where you share, download, and run script files. R provides a command-line interface and a Graphical User Interface. However, Third-party editors like **Rstudio** provide additional utilities that make it easier to program and use R.
+
+-   [Download R](https://cran.r-project.org/)
+-   [Download RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+
+Let's take a quick look at the R GUI/ R Command Line Console.
+
+![](https://users.ssc.wisc.edu/~hemken/Rworkshops/interface/RInterface.JPG)
+
+The R Console is where we can execute R commands. However, you'll notice that it's not a great place to keep track of Notes, Details, Code, or Plots.
+
+## R Example Dataset
+
+R has a lot of small example datasets available. [Datasets](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html)
+
+```{r cars}
+summary(cars)
+```
+
+The Graphical console is very basic and limited.
+
+The non-graphical console is even more basic and limited.
+
+# No - Don't Use R Gui/Console unless you need to.
+
+For reproducibility, you need something better - where we can test, develop, and document our project code similar to Jupyter.
+
+This is where **RStudio** really shines. OK - Let's take a look at **RStudio** in Lesson 2.
+
+## 

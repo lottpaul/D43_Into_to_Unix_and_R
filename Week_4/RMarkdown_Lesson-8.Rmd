@@ -1,0 +1,48 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Markdown Basics
+
+Format the text in your R Markdown file with [Pandoc’s Markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html), a set of markup annotations for plain text files. When you render your file, Pandoc transforms the marked up text into formatted text in your final file format, as below. Try it out with [this file](https://posit.cloud/content/181948) on RStudio Cloud.
+
+![](https://d33wubrfki0l68.cloudfront.net/59f29676ef5e4d74685e14f801bbc10c2dbd3cef/c0688/lesson-images/markdown-1-markup.png)
+
+You can use Pandoc’s Markdown to make:
+
+-   Headers
+
+-   Lists
+
+-   Links
+
+-   Images
+
+-   Block quotes
+
+-   Latex equations
+
+-   Horizontal rules
+
+-   Tables
+
+-   Footnotes
+
+-   Bibliographies and Citations
+
+-   Slide breaks
+
+-   Italicized text
+
+-   Bold text
+
+-   Superscripts
+
+-   Subscripts
+
+-   Strikethrough text
+
+Read more about markdown at [Pandoc’s Markdown](https://rmarkdown.rstudio.com/authoring_pandoc_markdown.html) or consult the quick reference in the [R Markdown Cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf)
+
+You can find the Cheatsheet in the RStudio Menu: Help-\>Cheat Sheets -\> R Markdown Cheat Sheet

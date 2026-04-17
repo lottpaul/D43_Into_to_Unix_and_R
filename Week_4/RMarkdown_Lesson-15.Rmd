@@ -1,0 +1,20 @@
+---
+title: "R Notebook"
+output: html_notebook
+---
+
+# Cheatsheets
+
+Use the cheatsheets that are built into the RStudio IDE to jog your memory about R Markdown.
+
+![](https://d33wubrfki0l68.cloudfront.net/374f4c769f97c4ded7300d521eb59b24168a7261/c72ad/lesson-images/cheatsheets-1-cheatsheet.png)
+
+Go to *File \> Help \> Cheatsheets \> R Markdown Cheat Sheet* to open the main [R Markdown cheatsheet](https://github.com/rstudio/cheatsheets/raw/main/rmarkdown-2.0.pdf), pictured above.
+
+![](https://d33wubrfki0l68.cloudfront.net/46ba24a18406d82a43000fe7a11546f7f145374d/c5692/lesson-images/cheatsheets-2-path.png)
+
+Go to *File \> Help \> Markdown Quick Reference* to open the *Markdown Quick Reference* in your help pane.
+
+![](https://d33wubrfki0l68.cloudfront.net/f697f7a6fd126e0ad928d41bdbd28996c54ee108/5ed53/lesson-images/cheatsheets-3-quick-reference.png)
+
+## Visit the [Formats](https://rmarkdown.rstudio.com/formats.html) and [Articles](https://rmarkdown.rstudio.com/articles.html) tabs to learn more
