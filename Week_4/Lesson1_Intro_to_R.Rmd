@@ -12,37 +12,61 @@ editor_options:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-The plan for the R/RStudio portion of the course is to provide an overview of RStudio, R Datatypes, Conditionals, Loops, Functions, and common R libraries. We unfortunately don't have enough time to make you an expert at R. The goal is to get you to be proficient in RStudio on the HIVE Cluster.
+The plan for the R/RStudio portion of the course is to provide an
+overview of RStudio, R Datatypes, Conditionals, Loops, Functions, and
+common R libraries. We unfortunately don't have enough time to make you
+an expert at R. The goal is to get you to be proficient in RStudio on
+the HIVE Cluster.
 
 # 1. Introduction to R
 
-R is not only a programming language, but also a free software environment for statistical computing and graphics. In the past 20 years, R has been adopted in the fields of bioinformatics and data analysis as a fundamental tool.
+R is not only a programming language, but also a free software
+environment for statistical computing and graphics. In the past 20
+years, R has been adopted in the fields of bioinformatics and data
+analysis as a fundamental tool.
 
-R is an interpreted language (meaning it's not compiled until you run it) - this makes it easy to share, download, and run script files from others. R provides a command-line interface and a Graphical User Interface. However, Third-party editors like **Rstudio** provide additional utilities that make it easier to program and use R.
+R is an interpreted language (meaning it's not compiled until you run
+it) - this makes it easy to share, download, and run script files from
+others. R provides a command-line interface and a Graphical User
+Interface. However, Third-party editors like **Rstudio** provide
+additional utilities that make it easier to program and use R.
 
 If you want to download and run R/Rstudio on your own computer:
+
 -   [Download R](https://cran.r-project.org/)
--   [Download RStudio Desktop](https://posit.co/download/rstudio-desktop/)
+
+-   [Download RStudio
+    Desktop](https://posit.co/download/rstudio-desktop)
 
 ## Allocating an Rstudio Instance on HIVE Ondemand
 
+1.  Login to HIVE OnDemand and select RStudio Server from the
+    Interactive Apps
 
+![](images/clipboard-495375131.png){width="189"}
 
-## Very Quick overview of R 
+2.  Provision the required amount of resources:
+
+![](images/clipboard-418530672.png){width="407"}
+
+3.  Click **"Launch"**
+4.  In "My Interactive Sessions", click on **"Connect to RStudio
+    Server"** after it has been setup
+
+## Very Quick overview of the Original R
 
 Let's take a quick look at the R GUI/ R Command Line Console.
 
 ![](https://users.ssc.wisc.edu/~hemken/Rworkshops/interface/RInterface.JPG)
 
-The R Console is where we can execute R commands. However, you'll notice that it's not a great place to keep track of Notes, Details, Code, or Plots.
+The R Console is where we can execute R commands. However, you'll notice
+that it's not a great place to keep track of Notes, Details, Code, or
+Plots.
 
 ## R Example Dataset
 
-R has a lot of small example datasets available. [Datasets](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html)
-
-```{r cars}
-summary(cars)
-```
+R has a lot of small example datasets available.
+[Datasets](https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/00Index.html)
 
 The Graphical console is very basic and limited.
 
@@ -50,8 +74,10 @@ The non-graphical console is even more basic and limited.
 
 # Don't Use R Gui/Console unless you need to.
 
-For reproducibility, you need something better - where we can test, develop, and document our project code.
+For reproducibility, you need something better - where we can test,
+develop, and document our project code.
 
-This is where **RStudio** really shines. OK - Let's take a look at **RStudio** in Lesson 2.
+This is where **RStudio** really shines. OK - Let's take a look at
+**RStudio** in Lesson 2.
 
-##
+## 

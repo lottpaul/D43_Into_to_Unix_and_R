@@ -16,11 +16,10 @@ knitr::opts_chunk$set(echo = TRUE)
 
 # 1. RStudio IDE
 
-Ok. Let's take a look at RStudio IDE and see why we'd want to use it
-
-![](https://images.datacamp.com/image/upload/v1663778862/R_Studio_Interface_1336eacbe7.png)
-RStudio is an integrated development environment (IDE) for the R
-programming language. Some of its features include:
+![](https://images.datacamp.com/image/upload/v1663778862/R_Studio_Interface_1336eacbe7.png)RStudio
+is not just a wrapper for the standard R console - it is an full fledged
+integrated development environment (IDE) for the R programming language.
+Some of its features include:
 
 Customizable workbench with all of the tools required to work with R in
 one place (console, source, plots, workspace, help, history, etc.).
@@ -29,6 +28,8 @@ one place (console, source, plots, workspace, help, history, etc.).
 
 -   Execute code directly from the source editor (line, selection, or
     file).
+
+-   Code Debugging
 
 -   Full support for authoring Sweave and TeX documents.
 
@@ -136,7 +137,7 @@ session history/results before creating a new session)
 # 3. To R Script or R Markdown
 
 When creating a new R file *File-\>New File* you'll notice that you have
-the option to creat an R script or R Markdown.
+the option to create an R script, R Notebook, or R Markdown.
 
 You can think of these as similar to:
 
@@ -157,27 +158,26 @@ library(nlme)
 sink("adolrisk03.out")
 ```
 
-**R Markdown** - also called a **R Notebook** allows you to
-interactively execute code blocks and intersperse the code blocks with
-formatted text, images, tables, or other Markdown. The page can then be
-rendered to HTML, PDF or Word document, so you can not only share your
-code but also the results.
+**R Notebook/Markdown** - allows you to interactively execute code
+blocks and intersperse the code blocks with formatted text, images,
+tables, or other Markdown. The page can then be rendered to HTML, PDF or
+Word document, so you can not only share your code but also the results.
 
-The difference between a R Markdown document and R Notebook is that when
+The difference between a R Markdown document vs R Notebook is that when
 running a R Markdown document all the code is sent to the console all at
 once. Whereas, the R Notebook only executes one line at a time.
 
 Unless you are developing a package, running code in a non-interactive
-setting - it's recommended that you get use to using **R Markdown** or
-**R Notebooks**
+setting - it's recommended that you get use to using **R Notebooks.** If
+you're creating a report, you'd use a **R Markdown** **Document**.
 
 ------------------------------------------------------------------------
 
-## R Markdown
+## R Markdown (The Syntax)
 
-R Markdown provides an authoring framework for Researchers. You can use
-a single RMarkdown file to write, execute, and save code - as well, as
-generate high quality reports that can be shared with others.
+R Markdown syntax provides an authoring framework for Researchers. You
+can use a single RMarkdown file to write, execute, and save code - as
+well, as generate high quality reports that can be shared with others.
 
 -   [R Markdown Tutorial](https://rmarkdown.rstudio.com/lesson-1.html)
 -   [R Markdown
@@ -201,7 +201,7 @@ anytime we want to run some code, we need to create a code block use:
 ``` 
 ````
 
-### Let's Get Comfortable with RMarkdown/Markdown
+### Let's Get Comfortable with R Markdown/Markdown syntax
 
 During the Python portions of this Class, I mentioned Markdown and
 you've seen the Notebooks that used Markdown to format text cells.
@@ -247,7 +247,7 @@ tinytex::install_tinytex()
 
 ------------------------------------------------------------------------
 
-## Installing and Loading R Packages
+# Installing and Loading R Packages
 
 Like Python, the core libraries (ie Standard Libraries) provides basic
 functionality. But research community have developed a large huge number
@@ -299,7 +299,68 @@ library("RSQLite")
 
 ------------------------------------------------------------------------
 
-## R Files and Directories
+# Getting Help in R/RStudio
+
+R and Rstudio have built in help functionality similar to Jupyter
+Notebooks. There are multiple ways to get help for a function, object,
+or topic.
+
+`help(<command>)` - will open the help for the given command or topic in
+the Help tab
+
+```{r, eval=FALSE}
+help(solve)
+```
+
+Alternatively, you can shorten the command to: `?<command>`
+
+`help.start()` - will take you to the beginning help page - where you
+can then look through guides or search for a given topic
+
+```{r, eval=FALSE}
+help.start()
+```
+
+Don't forget about he ***Help*** tab in the (**Lower Right**). It' gives
+you access to all your help topics in a easy to navigate interface. It
+also provides quick access to **R Manuals.**
+
+If you want further help and infomration, check out
+<https://cran.r-project.org/web/packages/available_packages_by_name.html>
+
+### Searching for Help Topic
+
+`help.searc(<topic/command>)` - will search the help documentation for
+the command or topic you're searching for
+
+Alternatively, `??<topic/command>`
+
+```{r, eval=FALSE}
+help.search("data.frame")
+```
+
+### Getting Examples
+
+Many of the help topics have examples that are provided in the
+documentation. Sometimes, just seeing the examples can help you
+understand how a function works. If you want to run the examples from a
+topic:
+
+`example(<topic>)`
+
+```{r}
+example(vector)
+```
+
+If you are looking for help or examples on a given packages go to the
+Package Webpage and look for Vignettes or Examples
+
+stringr Cran Page:
+<https://cran.r-project.org/web/packages/stringr/index.html>
+
+------------------------------------------------------------------------
+
+# R Files and Directories
 
 ### R Current Working Directory
 
@@ -388,9 +449,9 @@ A single period `.` denotes your current directory, so
 
 ### OK. Why do we need to know this
 
-Well, R and Python all use this idea of Current Working Directory. If
-you want to work on a file, but R complains that it can't find it. It's
-often because your current working directory isn't what you thought.
+Well, R uses this idea of Current Working Directory. If you want to work
+on a file, but R complains that it can't find it. It's often because
+your current working directory isn't what you thought.
 
 #### To see your current working directory:
 
@@ -413,6 +474,8 @@ or
 setwd('C:/Users/Paul Lott/')
 ```
 
+# File Handling In R
+
 ### Listing Files
 
 If you want to identify the files in a particular directory, you can
@@ -424,108 +487,128 @@ list.files(path='.')  #Get the files in your Current directory
 
 ### Additional R File and Directory Functions
 
-+------------------------+-------------------------+----------------+
-| R Function             | Unix Command            | Description    |
-+========================+=========================+================+
-| getwd()                | pwd                     | Get the        |
-|                        |                         | current        |
-|                        |                         | working        |
-|                        |                         | directory      |
-+------------------------+-------------------------+----------------+
-| setwd(\<directory\>)   | cd \<directory\>        |                |
-+------------------------+-------------------------+----------------+
-| list.files(path=".")   | ls                      | Lists all      |
-|                        |                         | files in a     |
-|                        |                         | given          |
-|                        |                         | directory      |
-+------------------------+-------------------------+----------------+
-| list.dirs(path=".")    | ls                      | List           |
-|                        |                         | directories    |
-+------------------------+-------------------------+----------------+
-| file.create(\<fn\>)    | touch \<fn\>            | Create an      |
-|                        |                         | empty file     |
-+------------------------+-------------------------+----------------+
-| file.exists(...)       |                         | Returns `TRUE` |
-|                        |                         | if file exists |
-+------------------------+-------------------------+----------------+
-| file.remove(\<fn\>)    | rm \<fn\>               | Delete a file  |
-+------------------------+-------------------------+----------------+
-| file.rename(\<from\>,  | mv \<from\> \<to\>      | Attempts to    |
-| \<new\>)               |                         | rename         |
-|                        |                         | filename       |
-|                        |                         | `<from>` to    |
-|                        |                         | `<new>`        |
-+------------------------+-------------------------+----------------+
-| file.append(file1,     | cat \<file1\> \<file2\> | Appends File1  |
-| file2)                 |                         | and File2      |
-+------------------------+-------------------------+----------------+
-| file.info(filename)    | ls -alh                 | Provide        |
-|                        |                         | information    |
-|                        |                         | about file     |
-|                        |                         | (size, isdir,  |
-|                        |                         | mode, time,    |
-|                        |                         | uid, gui,      |
-|                        |                         | username,      |
-|                        |                         | groupname)     |
-+------------------------+-------------------------+----------------+
-| file.copy(\<from\>,    | cp \<from\> \<to\>      | Copy a file    |
-| \<to\>)                |                         | `from` file to |
-|                        |                         | `new` location |
-+------------------------+-------------------------+----------------+
-| file.symlink(\<from\>, | ln -sf \<from\> \<to\>  | Create a       |
-| \<new\>)               |                         | symbolic link  |
-|                        |                         | to a `from`    |
-|                        |                         | file to `new`  |
-|                        |                         | location       |
-+------------------------+-------------------------+----------------+
-| dir.exists             |                         | Return `TRUE`  |
-| (\<directory\>)        |                         | if directory   |
-|                        |                         | exists         |
-+------------------------+-------------------------+----------------+
-| dir.                   | mkdir \<newdir\>        | Create a       |
-| create(\<newdir\>)     |                         | Directory      |
-+------------------------+-------------------------+----------------+
-| sys.chmod(\<path\>,    | chmod \<permission\>    | Change File    |
-| mode=\                 | \<path/fn\>             | permissions    |
-| \< Permission#\>)      |                         |                |
-|                        |                         | 4 = Read       |
-|                        |                         |                |
-|                        |                         | 2 = Write      |
-|                        |                         |                |
-|                        |                         | 1 = Execute    |
-|                        |                         |                |
-|                        |                         | 7 = (4+2+1) =  |
-|                        |                         | Read, Write,   |
-|                        |                         | Execute        |
-|                        |                         |                |
-|                        |                         | \<Users#,      |
-|                        |                         | Group#,        |
-|                        |                         | Everyone#\>    |
-|                        |                         |                |
-|                        |                         | 777 = RWE for  |
-|                        |                         | User /         |
-|                        |                         | Group/Everyone |
-+------------------------+-------------------------+----------------+
-| basename(path)         | basename \<path\>       | Returns the    |
-|                        |                         | Filename       |
-|                        |                         | portion of the |
-|                        |                         | path           |
-+------------------------+-------------------------+----------------+
-| dirname(path)          | dirname                 | Returns the    |
-|                        |                         | Directory      |
-|                        |                         | portion of the |
-|                        |                         | path           |
-+------------------------+-------------------------+----------------+
-| unlink(x)              | rm \<directory\>        | Deletes files  |
-|                        |                         | or directories |
-|                        | or                      | specified by x |
-|                        |                         |                |
-|                        | rmdir \<directory\>     |                |
-+------------------------+-------------------------+----------------+
++-----------------------+------------------------+----------------+
+| R Function            | Unix Command           | Description    |
++=======================+========================+================+
+| getwd()               | pwd                    | Get the        |
+|                       |                        | current        |
+|                       |                        | working        |
+|                       |                        | directory      |
++-----------------------+------------------------+----------------+
+| setwd(\<directory\>)  | cd \<directory\>       |                |
++-----------------------+------------------------+----------------+
+| list.files(path=".")  | ls                     | Lists all      |
+|                       |                        | files in a     |
+|                       |                        | given          |
+|                       |                        | directory      |
++-----------------------+------------------------+----------------+
+| list.dirs(path=".")   | ls                     | List           |
+|                       |                        | directories    |
++-----------------------+------------------------+----------------+
+| file.create(\<fn\>)   | touch \<fn\>           | Create an      |
+|                       |                        | empty file     |
++-----------------------+------------------------+----------------+
+| file.exists(...)      |                        | Returns `TRUE` |
+|                       |                        | if file exists |
++-----------------------+------------------------+----------------+
+| file.remove(\<fn\>)   | rm \<fn\>              | Delete a file  |
++-----------------------+------------------------+----------------+
+| file.rename(\<from\>, | mv \<from\> \<to\>     | Attempts to    |
+| \<new\>)              |                        | rename         |
+|                       |                        | filename       |
+|                       |                        | `<from>` to    |
+|                       |                        | `<new>`        |
++-----------------------+------------------------+----------------+
+| file.append(file1,    | cat \<file1\>          | Appends File1  |
+| file2)                | \<file2\>              | and File2      |
++-----------------------+------------------------+----------------+
+| file.info(filename)   | ls -alh                | Provide        |
+|                       |                        | information    |
+|                       |                        | about file     |
+|                       |                        | (size, isdir,  |
+|                       |                        | mode, time,    |
+|                       |                        | uid, gui,      |
+|                       |                        | username,      |
+|                       |                        | groupname)     |
++-----------------------+------------------------+----------------+
+| file.copy(\<from\>,   | cp \<from\> \<to\>     | Copy a file    |
+| \<to\>)               |                        | `from` file to |
+|                       |                        | `new` location |
++-----------------------+------------------------+----------------+
+| f                     | ln -sf \<from\> \<to\> | Create a       |
+| ile.symlink(\<from\>, |                        | symbolic link  |
+| \<new\>)              |                        | to a `from`    |
+|                       |                        | file to `new`  |
+|                       |                        | location       |
++-----------------------+------------------------+----------------+
+| dir.exists            |                        | Return `TRUE`  |
+| (\<directory\>)       |                        | if directory   |
+|                       |                        | exists         |
++-----------------------+------------------------+----------------+
+| dir.                  | mkdir \<newdir\>       | Create a       |
+| create(\<newdir\>)    |                        | Directory      |
++-----------------------+------------------------+----------------+
+| sys.chmod(\<path\>,   | chmod \<permission\>   | Change File    |
+| mode=\                | \<path/fn\>            | permissions    |
+| \< Permission#\>)     |                        |                |
+|                       |                        | 4 = Read       |
+|                       |                        |                |
+|                       |                        | 2 = Write      |
+|                       |                        |                |
+|                       |                        | 1 = Execute    |
+|                       |                        |                |
+|                       |                        | 7 = (4+2+1) =  |
+|                       |                        | Read, Write,   |
+|                       |                        | Execute        |
+|                       |                        |                |
+|                       |                        | \<Users#,      |
+|                       |                        | Group#,        |
+|                       |                        | Everyone#\>    |
+|                       |                        |                |
+|                       |                        | 777 = RWE for  |
+|                       |                        | User /         |
+|                       |                        | Group/Everyone |
++-----------------------+------------------------+----------------+
+| basename(path)        | basename \<path\>      | Returns the    |
+|                       |                        | Filename       |
+|                       |                        | portion of the |
+|                       |                        | path           |
++-----------------------+------------------------+----------------+
+| dirname(path)         | dirname                | Returns the    |
+|                       |                        | Directory      |
+|                       |                        | portion of the |
+|                       |                        | path           |
++-----------------------+------------------------+----------------+
+| unlink(x)             | rm \<directory\>       | Deletes files  |
+|                       |                        | or directories |
+|                       | or                     | specified by x |
+|                       |                        |                |
+|                       | rmdir \<directory\>    |                |
++-----------------------+------------------------+----------------+
 
 ------------------------------------------------------------------------
 
-### Importance of Organizing Your Projects and Scripts
+# Calling Unix/Linux Apps from Inside R/RStudio
+
+Within R/Rstudio you can run Unix/Linux commands and applications.
+Within RStudio R Notebooks/Markdown documents, you'll create a code
+block with {bash} instead of {r}. The commands in the code block will be
+executed in the Unix Terminal.
+
+```{bash}
+cat Lesson1_Intro_to_R.Rmd | sort | uniq | wc
+```
+
+Alternatively, if you want to call Unix directly from your R code,
+you'll use a `system()` or `system2()` function calls.
+
+```{r}
+system('cat Lesson1_Intro_to_R.Rmd | sort | uniq | wc')
+```
+
+------------------------------------------------------------------------
+
+# Importance of Organizing Your Projects and Scripts
 
 As I just mentioned, `.RData` is where R will store or load the
 variables when you exit or open a session. If you're working on multiple
@@ -553,9 +636,10 @@ restored when you re-open your session.
 
 # Exercise 1: Create a New Project Folder called `First_R` and then Create an R Markdown document in the folder.
 
-Create a Header, a Table, and Insert an Image.
+Create a **Header**, a **Table**, and **Insert an Image**.
 
-Copy the following block of code and then render the Markdown document:
+Copy the following block of code and then render the **Markdown
+document**:
 
 ```         
 data(iris)
@@ -585,63 +669,4 @@ points(xlevels, means, pch = 1, cex = 4 )
 
 ------------------------------------------------------------------------
 
-## Getting Help
-
-R and Rstudio have built in help functionality similar to Jupyter
-Notebooks. There are multiple ways to get help for a function, object,
-or topic.
-
-`help(<command>)` - will open the help for the given command or topic in
-the Help tab
-
-```{r, eval=FALSE}
-help(solve)
-```
-
-Alternatively, you can shorten the command to: `?<command>`
-
-`help.start()` - will take you to the beginning help page - where you
-can then look through guides or search for a given topic
-
-```{r, eval=FALSE}
-help.start()
-```
-
-Don't forget about he ***Help*** tab in the (**Lower Right**). It' gives
-you access to all your help topics in a easy to navigate interface. It
-also provides quick access to **R Manuals.**
-
-If you want further help and infomration, check out
-<https://cran.r-project.org/web/packages/available_packages_by_name.html>
-
-### Searching for Help Topic
-
-`help.searc(<topic/command>)` - will search the help documentation for
-the command or topic you're searching for
-
-Alternatively, `??<topic/command>`
-
-```{r, eval=FALSE}
-help.search("data.frame")
-```
-
-### Getting Examples
-
-Many of the help topics have examples that are provided in the
-documentation. Sometimes, just seeing the examples can help you
-understand how a function works. If you want to run the examples from a
-topic:
-
-`example(<topic>)`
-
-```{r}
-example(vector)
-```
-
-If you are looking for help or examples on a given packages go to the
-Package Webpage and look for Vignettes or Examples
-
-stringr Cran Page:
-<https://cran.r-project.org/web/packages/stringr/index.html>
-
-------------------------------------------------------------------------
+## 
