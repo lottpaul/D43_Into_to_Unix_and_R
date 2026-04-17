@@ -4,161 +4,7 @@
 					<head>
 						<meta charset="UTF-8"/>
 						<meta name="viewport" content="width=device-width, initial-scale=1"/>
-						<style>.markdown-alert {
-  padding: 0.5rem 1rem;
-  margin-bottom: 16px;
-  color: inherit;
-  border-left: .25em solid #888;
-}
-
-.markdown-alert > :first-child {
-  margin-top: 0;
-}
-
-.markdown-alert > :last-child {
-  margin-bottom: 0;
-}
-
-.markdown-alert .markdown-alert-title {
-  display: flex;
-  font-weight: 500;
-  align-items: center;
-  line-height: 1;
-}
-
-.markdown-alert .markdown-alert-title .octicon {
-  margin-right: 0.5rem;
-  display: inline-block;
-  overflow: visible !important;
-  vertical-align: text-bottom;
-  fill: currentColor;
-}
-
-.markdown-alert.markdown-alert-note {
-  border-left-color: var(--color-note);
-}
-
-.markdown-alert.markdown-alert-note .markdown-alert-title {
-  color: var(--color-note);
-}
-
-.markdown-alert.markdown-alert-important {
-  border-left-color: var(--color-important);
-}
-
-.markdown-alert.markdown-alert-important .markdown-alert-title {
-  color: var(--color-important);
-}
-
-.markdown-alert.markdown-alert-warning {
-  border-left-color: var(--color-warning);
-}
-
-.markdown-alert.markdown-alert-warning .markdown-alert-title {
-  color: var(--color-warning);
-}
-
-.markdown-alert.markdown-alert-tip {
-  border-left-color: var(--color-tip);
-}
-
-.markdown-alert.markdown-alert-tip .markdown-alert-title {
-  color: var(--color-tip);
-}
-
-.markdown-alert.markdown-alert-caution {
-  border-left-color: var(--color-caution);
-}
-
-.markdown-alert.markdown-alert-caution .markdown-alert-title {
-  color: var(--color-caution);
-}</style><style>:root {
-  --color-note: #0969da;
-  --color-tip: #1a7f37;
-  --color-warning: #9a6700;
-  --color-severe: #bc4c00;
-  --color-caution: #d1242f;
-  --color-important: #8250df;
-}</style><style>/* Copy from https://github.com/SaswatPadhi/pseudocode.js/blob/v2.2.0/static/pseudocode.css */
-
-.ps-root {
-  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
-  font-size: 1em;
-  font-weight: 100;
-  -webkit-font-smoothing: antialiased !important;
-}
-
-.ps-root .ps-algorithm {
-  margin: 0.8em 0;
-  /* algorithm environment has borders; algorithmic has not */
-  border-top: 3px solid black;
-  border-bottom: 2px solid black;
-}
-
-.ps-root .ps-algorithm.with-caption > .ps-line:first-child {
-  border-bottom: 2px solid black;
-}
-
-.ps-root .katex {
-  text-indent: 0;
-  font-size: 1em;
-}
-
-.ps-root .MathJax_CHTML,
-.ps-root .MathJax {
-  text-indent: 0;
-  font-size: 1em !important;
-}
-
-.ps-root .ps-line {
-  margin: 0;
-  padding: 0;
-  line-height: 1.2;
-}
-
-.ps-root .ps-funcname {
-  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
-  font-weight: normal;
-  font-variant: small-caps;
-  font-style: normal;
-  text-transform: none;
-}
-
-.ps-root .ps-keyword {
-  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
-  font-weight: bold;
-  font-variant: normal;
-  font-style: normal;
-  text-transform: none;
-}
-
-.ps-root .ps-comment {
-  font-family: KaTeX_Main, 'Times New Roman', Times, serif;
-  font-weight: normal;
-  font-variant: normal;
-  font-style: normal;
-  text-transform: none;
-}
-
-/* line number support */
-
-.ps-root .ps-linenum {
-  font-size: 0.8em;
-  line-height: 1em;
-  width: 1.6em;
-  text-align: right;
-  display: inline-block;
-  position: relative;
-  padding-right: 0.3em;
-}
-
-.ps-root .ps-algorithmic.with-linenum .ps-line.ps-code {
-  text-indent: -1.6em;
-}
-
-.ps-root .ps-algorithmic.with-linenum .ps-line.ps-code > span {
-  text-indent: 0em;
-}</style><style>.jsdraw--editButton {
+						<style>.jsdraw--editButton {
   display: inline-block;
   opacity: 0;
   overflow: hidden;
@@ -1281,8 +1127,8 @@ username@login2 $</code></pre></div>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
 ```">#Start Screen Session
-username@login2 $ screen -UURd</pre><pre class="hljs"><code><span class="hljs-comment">#Start Screen Session</span>
-username@login2 $ screen -UURd</code></pre></div>
+username@login2 $ screen -URRd</pre><pre class="hljs"><code><span class="hljs-comment">#Start Screen Session</span>
+username@login2 $ screen -URRd</code></pre></div>
 <p><strong>!! Don&apos;t Run anything of significance on the Head Node!!</strong>&nbsp;The head node is only meant to allow you to manage your other Slurm SSH sessions</p>
 <hr/>
 <h3 id="requesting-a-slurm-interactive-session">Requesting a Slurm Interactive Session</h3>
@@ -1291,8 +1137,8 @@ username@login2 $ screen -UURd</code></pre></div>
 <p><strong>Notation:</strong>&nbsp; In commands, I use <code class="inline-code">&lt;....&gt;</code> to denote a parameter or option that you need to enter.&nbsp; Please do not include the brackets <code class="inline-code">&lt;&gt;</code></p>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
-```">salloc --mem=&lt;Amount of Memory&gt;  --time=&lt;Amount of Time&gt; --nodes=&lt;How many sessions&gt;  --cpu-per-task=&lt;Amount of CPUs&gt; --partition=high
-</pre><pre class="hljs"><code>salloc --mem=&lt;Amount of Memory&gt;  --<span class="hljs-keyword">time</span>=&lt;Amount of Time&gt; --nodes=&lt;How many sessions&gt;  --cpu-per-task=&lt;Amount of CPUs&gt; --partition=high
+```">salloc --mem=&lt;Amount of Memory&gt;  --time=&lt;Amount of Time&gt; --nodes=&lt;How many sessions&gt;  --cpus-per-task=&lt;Amount of CPUs&gt; --partition=high
+</pre><pre class="hljs"><code>salloc --mem=&lt;Amount of Memory&gt;  --<span class="hljs-keyword">time</span>=&lt;Amount of Time&gt; --nodes=&lt;How many sessions&gt;  --cpus-per-task=&lt;Amount of CPUs&gt; --partition=high
 </code></pre></div>
 <ol>
 <li>Memory (GB): <code class="inline-code">--mem=32g</code></li>
@@ -1329,6 +1175,20 @@ username@hive-dc-7-6-50 $</code></pre></div>
 ```">salloc: Relinquishing job allocation 7603513
 salloc: Job allocation 7603513 has been revoked.</pre><pre class="hljs"><code>salloc: Relinquishing job allocation 7603513
 salloc: Job allocation 7603513 has been revoked.</code></pre></div>
+<hr/>
+<h2 id="partition-high-vs-low"><span style="color: rgb(0, 0, 0);" class="jop-noMdConv">Partition: High vs Low</span></h2>
+<p><span style="color: rgb(0, 0, 0);" class="jop-noMdConv">For <strong>publicgrp</strong> there are two different partitions that can make a lot of difference regarding how long it takes for your job to start.</span></p>
+<ul>
+<li><span style="color: rgb(0, 0, 0);" class="jop-noMdConv"><strong>High:</strong>&nbsp; The HIVE has 128 CPUs and 2000GB RAM available to anyone one the cluster to reserve for a given amount of time.&nbsp; Each job is limited to 8 CPUs, 128 GB RAM.&nbsp; If you select <code class="inline-code">--partition=high</code> your job request will be put in a queue for these resources and you will be guaranteed those resources for your required amount of time.</span></li>
+<li><strong><span style="color: rgb(0, 0, 0);" class="jop-noMdConv">Low:</span></strong>&nbsp; <span style="color: rgb(0, 0, 0);" class="jop-noMdConv">During a typical day, many of the HIVE resources may not be used. Those resources are made available to the Low Partition on a first call basis and with the caveat that if someone with higher access requests those resources - your job will be cancelled and those resources will be made available to them.</span></li>
+</ul>
+<p>So, when it comes to requesting resources from the publicgrp, if your job can wait 48-72hrs to start and requires a fixed amount of time - use High.</p>
+<p>If you want access quickly, choose Low.</p>
+<p><span style="color: rgb(53, 152, 219);" class="jop-noMdConv"><strong>For this course, I&apos;d suggest using:</strong></span></p>
+<div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
+" data-joplin-source-close="
+```">$ salloc --mem=4g --partition=low --cpus-per-task=1 --nodes=1 --time=0-02:00:00</pre><pre class="hljs"><code>$ salloc --mem=4g --partition=low --cpus-per-task=1 --nodes=1 --<span class="hljs-keyword">time</span>=0-02:00:00</code></pre></div>
+<p>&nbsp;This minimal request for resources is going to be allocated a lot faster than something larger.</p>
 <hr/>
 <h3 id="gnu-screen-or-tmux-session-managers">GNU Screen or Tmux (Session Managers)</h3>
 <p>If you ran&nbsp;<code class="inline-code">screen -URRd</code> or <code class="inline-code">tmux attach</code> on the Login Node and you get disconnected, you&apos;ll be able to get back to this session by re-logging in to the Hive and then retyping the corresponding <code class="inline-code">screen -UURd</code> or <code class="inline-code">tmux attach</code> you used prior.</p>
@@ -1549,7 +1409,7 @@ python my_analysis.py</code></pre></div>
 <div class="joplin-editable"><pre class="joplin-source" data-joplin-language="bash" data-joplin-source-open="```bash
 " data-joplin-source-close="
 ```">$ sbatch my_analysis.sh</pre><pre class="hljs"><code>$ sbatch my_analysis.sh</code></pre></div>
-<p>&nbsp;</p>
+<p>You can then use <code class="inline-code">squeue</code> to monitor scheduled tasks</p>
 <hr/>
 <h2 id="additional-help">Additional Help</h2>
 <ol>
