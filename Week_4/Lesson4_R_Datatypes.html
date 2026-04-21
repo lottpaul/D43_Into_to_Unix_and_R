@@ -363,25 +363,26 @@ display: none;
 <li><p><strong>Commenting:</strong> Comments start with <code>#</code>,
 the <code>#</code> mark can at any position on the line. Everything on
 the line after the <code>#</code> is considered a comment</p></li>
-<li><p><strong>Variable Assignment:</strong> Variables can be assigned
-in three ways. <code>=</code>, <code>&lt;-</code>, or <code>-&gt;</code>
-. Variables start with alphabetic characters and can contain
-alphanumeric characters, and/or underscores. Variables names are
-case-sensitive.</p>
+<li><p><strong>Variables:</strong> Variables can be assigned in three
+ways. <code>=</code>, <code>&lt;-</code>, or <code>-&gt;</code> .
+Variables start with alphabetic characters and can contain alphanumeric
+characters, and/or underscores. Variables names are case-sensitive.</p>
 <ul>
-<li><p>&lt;variable&gt;=&lt;value&gt; :</p></li>
-<li><p>&lt;variable&gt; &lt;- &lt;value&gt;</p></li>
-<li><p>&lt;value&gt; -&gt; &lt;variable&gt;</p></li>
+<li><p>variable <strong>=</strong> value :</p></li>
+<li><p>variable <strong>&lt;-</strong> value</p></li>
+<li><p>value <strong>-&gt;</strong> variable</p></li>
 </ul></li>
 <li><p><strong>Functions:</strong> Functions in R are called with the
-function name followed by <strong>(</strong>, arguments, and/or
-paramenters and completed with <strong>)</strong></p>
+function name followed directly by an opening parenthese
+<strong>(</strong> Then comes the arguments, and/or paramenters
+separated by commas and its completed with a closing parenthese
+<strong>)</strong></p>
 <ul>
-<li>&lt;function name&gt;(&lt;options/parameters&gt;)</li>
+<li>function name(options/parameters separated by commas)</li>
 </ul></li>
-<li><p><strong>Printing with Print:</strong> If you want to print out a
-variable value or string, the print() function takes the variable or
-string</p>
+<li><p><strong>Printing with the <code>print</code> function:</strong>
+If you want to print out a variable value or string, the print()
+function takes the variable or string</p>
 <ul>
 <li><p><code>print(x) # This will print the value of x</code></p></li>
 <li><p><code>print(&quot;Hello World&quot;)  # Will print Hello World</code></p></li>
@@ -414,10 +415,10 @@ the data, which determines how the data is represented.</p>
 <h3>Datatypes</h3>
 <p>R has six basic fundamental datatypes. These are single instances of
 fundamental computer datatypes stored in memory.</p>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="48%" />
-<col width="48%" />
+<col width="47%" />
+<col width="47%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -691,12 +692,12 @@ sprintf(&quot;Is X Equal to Y: %s&quot;, x==y)</code></pre>
 <pre><code>## [1] &quot;Is X Greater Than or Equal to Y: FALSE&quot;</code></pre>
 <pre class="r"><code>sprintf(&quot;Is X Less Than or Equal to Y: %s&quot;, x&lt;=y)</code></pre>
 <pre><code>## [1] &quot;Is X Less Than or Equal to Y: TRUE&quot;</code></pre>
-<table style="width:93%;">
+<table style="width:89%;">
 <colgroup>
 <col width="22%" />
-<col width="23%" />
-<col width="23%" />
-<col width="23%" />
+<col width="22%" />
+<col width="22%" />
+<col width="22%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -711,8 +712,8 @@ sprintf(&quot;Is X Equal to Y: %s&quot;, x==y)</code></pre>
 <td>&amp;</td>
 <td>E lement-wise AND operator</td>
 <td>Returns True if both elements are TRUE</td>
-<td><p><code>c( TR  U E,  F AL SE , T R  UE)   &amp; c(FALSE  ,  T RUE, TRUE)</code></p>
-<p>Returns: <code>FALSE  ,  F ALSE, TRUE</code></p></td>
+<td><p><code>c( TR  U E,  F AL SE ,  T R  UE)   &amp;  c(FALSE  , T RUE, TRUE)</code></p>
+<p>Returns: <code>FALSE  , F ALSE, TRUE</code></p></td>
 </tr>
 <tr class="even">
 <td>&amp;&amp;</td>
@@ -726,8 +727,8 @@ sprintf(&quot;Is X Equal to Y: %s&quot;, x==y)</code></pre>
 <td>|</td>
 <td>E lement-wise OR operator</td>
 <td>Returns TRUE if one or more element is TRUE</td>
-<td><p><code>c( TR  U E,  F AL SE , T R  UE)   &amp; c(FALSE  ,  T RUE, TRUE)</code></p>
-<p>Returns: <code>TR UE  , TRUE, TRUE</code></p></td>
+<td><p><code>c( TR  U E,  F AL SE ,  T R  UE)   &amp;  c(FALSE  , T RUE, TRUE)</code></p>
+<p>Returns: <code>TR UE , TRUE, TRUE</code></p></td>
 </tr>
 <tr class="even">
 <td>||</td>
@@ -1138,10 +1139,10 @@ other datatypes - you’ll need to remember that <strong>R is
 <div id="character-string-functions" class="section level3">
 <h3>Character String Functions</h3>
 <p>Some of the most useful character/string function in R.</p>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="38%" />
-<col width="58%" />
+<col width="37%" />
+<col width="56%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1342,7 +1343,6 @@ chromosomes (X,Y). To save space, a choice was made to only distribute
 the 5’ to 3’ strand in a computer format called FASTA. The data from the
 3’ to 5’ wasn’t lost - because it was just the complement of the 5’ to
 3’ strand in reverse.</p>
-<p><code>{#&gt; chr1} #NNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNNACTTTACCTAACCCAGAGGGA #&gt; chr2 #NNNNNNNNNNNNNNNNNNNNNNNNNACGATTAGCGA</code></p>
 <p>If a gene’s coding sequence starts on 5’ to 3’ strand with an
 <strong>ATG</strong> then it’s easy to find and you can pass it to
 function that parse the coding regions. If you didn’t take the reverse
@@ -1385,7 +1385,7 @@ print(rev_comp)</code></pre>
 </div>
 </div>
 <div id="extending-base-string-functionality-package-stringi-andor-stringr" class="section level2">
-<h2>Extending base String Functionality (Package: stringi and/or
+<h2>Extending Base String Functionality (Package: stringi and/or
 stringr)</h2>
 <p>However, using <code>stringi</code> library, we can perform the
 operation in a single command</p>
@@ -1398,9 +1398,32 @@ Vignette</a></p>
 <hr />
 </div>
 </div>
+<div id="importing-fasta-file-in-r-using-seqinr" class="section level1">
+<h1>Importing FASTA File in R using seqinr</h1>
+<p><a href="https://cran.r-project.org/web/packages/seqinr/refman/seqinr.html">SeqinR</a></p>
+<pre class="r"><code>install.packages(&quot;seqinr&quot;, repos = &quot;http://cran.us.r-project.org&quot;)</code></pre>
+<pre><code>## Installing package into &#39;/home/plott/R/x86_64-conda-linux-gnu/4.4&#39;
+## (as &#39;lib&#39; is unspecified)</code></pre>
+<pre class="r"><code>library(seqinr)
+my_fasta &lt;- read.fasta(file = &quot;~/D43_Unix/Genomics/chr20.fa&quot;, seqtype = &quot;DNA&quot;, as.string = TRUE)
+
+print(getLength(my_fasta))  # Get length of sequence(s)</code></pre>
+<pre><code>## [1] 63025520</code></pre>
+<pre class="r"><code>print(getName(my_fasta))    # Get Name of sequence(s)</code></pre>
+<pre><code>## [1] &quot;20&quot;</code></pre>
+<pre class="r"><code>fasta_string = getSequence(my_fasta[[1]], as.string=TRUE)  #Get the sequence
+fasta_substring = toupper(substr(fasta_string, 1000000, 1000100))  # Extract substring
+print(fasta_substring)</code></pre>
+<pre><code>## [1] &quot;GTGGGAGAGAACTGGAACAAGAACCCAGTGCTCTTTCTGCTCTACCCACTGACCCATCCTCTCACGCATCATACACCCATACTCCCATCCACCCACCTTCC&quot;</code></pre>
+<pre class="r"><code>dna_seq = s2c(fasta_substring)
+rev_comp = rev(comp(dna_seq))
+c2s(rev_comp)</code></pre>
+<pre><code>## [1] &quot;ggaaggtgggtggatgggagtatgggtgtatgatgcgtgagaggatgggtcagtgggtagagcagaaagagcactgggttcttgttccagttctctcccac&quot;</code></pre>
+<hr />
+</div>
 <div id="stringr" class="section level1">
 <h1>Stringr</h1>
-<p>In addition to working with Unicode and Internation encoded text,
+<p>In addition to working with Unicode and International encoded text,
 <code>stringr</code> also provides equivalent functions to the R-base
 character functions and provides many additional functions.</p>
 <p>Let’s take a look a <code>stringr</code> library.</p>
@@ -1416,10 +1439,10 @@ expressions.</p>
 <p>Remember, we briefly discussed Regular Expressions in Unix. They are
 a way to search or match different text patterns. (The second page of
 Stringr Cheatsheet is dedicated to Regular Expressions) .</p>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="48%" />
-<col width="48%" />
+<col width="47%" />
+<col width="47%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1498,10 +1521,10 @@ print(str_detect(dna, &#39;ttcc&#39;))</code></pre>
 </div>
 <div id="subsetting-extracting-matching-strings" class="section level3">
 <h3>Subsetting &amp; Extracting Matching Strings</h3>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="48%" />
-<col width="48%" />
+<col width="47%" />
+<col width="47%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1556,10 +1579,10 @@ print(str_detect(dna, &#39;ttcc&#39;))</code></pre>
 </div>
 <div id="mutate-strings" class="section level3">
 <h3>Mutate Strings</h3>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="48%" />
-<col width="48%" />
+<col width="47%" />
+<col width="47%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -1623,10 +1646,10 @@ print(paste(&quot;str_sub:&quot;, x))</code></pre>
 </div>
 <div id="join-and-split-strings" class="section level3">
 <h3>Join and Split Strings</h3>
-<table style="width:97%;">
+<table style="width:94%;">
 <colgroup>
-<col width="48%" />
-<col width="48%" />
+<col width="47%" />
+<col width="47%" />
 </colgroup>
 <thead>
 <tr class="header">

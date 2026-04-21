@@ -1,6 +1,7 @@
 ---
-title: "R Notebook"
+title: "RMarkdown Lesson 2"
 output:
+  pdf_document: default
   html_document:
     df_print: paged
 editor_options:

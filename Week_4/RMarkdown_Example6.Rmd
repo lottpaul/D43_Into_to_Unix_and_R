@@ -5,12 +5,16 @@ output: html_document
 
 Several packages support making beautiful tables with R, such as
 
-* [xtable](https://cran.r-project.org/web/packages/xtable/)
-* [stargazer](https://cran.r-project.org/web/packages/stargazer/)
-* [pander](http://rapporter.github.io/pander/)
-* [tables](https://cran.r-project.org/web/packages/tables/)
-* [ascii](http://eusebe.github.io/ascii/)
-* etc.
+-   [xtable](https://cran.r-project.org/web/packages/xtable/)
+-   [stargazer](https://cran.r-project.org/web/packages/stargazer/)
+-   [pander](http://rapporter.github.io/pander/)
+-   [tables](https://cran.r-project.org/web/packages/tables/)
+-   [ascii](http://eusebe.github.io/ascii/)
+-   etc.
+
+| Header 1 | Header 2 |
+|----------|----------|
+| Entry    |          |
 
 It is also very easy to make tables with knitr's `kable` function:
 

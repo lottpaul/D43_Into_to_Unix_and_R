@@ -1,0 +1,153 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={RMarkdown Lesson 2},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{RMarkdown Lesson 2}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{How It Works}\label{how-it-works}
+
+This is an R Markdown file, a plain text file that has the extension
+\texttt{.Rmd}. You can open a copy
+\href{https://posit.cloud/content/181856}{here} on RStudio Cloud.
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/aa8ef57652bb9b7d6aa18f6c38b6b45a510a8960/1d9d3/lesson-images/how-1-file.png}}
+
+Notice that the file contains three types of content:
+
+\begin{itemize}
+\item
+  An (optional) YAML header surrounded by \texttt{-\/-\/-}s
+\item
+  R code chunks surrounded by
+  \texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}}s
+\item
+  text mixed with simple text formatting
+\end{itemize}
+
+\subsection{A Notebook Interface}\label{a-notebook-interface}
+
+When you open the file in the RStudio IDE, it becomes a
+\href{https://bookdown.org/yihui/rmarkdown/notebook.html}{notebook
+interface for R}. You can run each code chunk by clicking the
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/18153fb9953057ee5cff086122bd26f9cee8fe93/3aba9/images/notebook-run-chunk.png}}
+icon. RStudio executes the code and display the results inline with your
+file.
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/07a00dd9669405f3cba06ef333db180295466252/7b153/lesson-images/how-2-chunk.png}}
+
+\subsection{Rendering output}\label{rendering-output}
+
+To generate a report from the file, run the \texttt{render} command:
+
+\begin{verbatim}
+library(rmarkdown) 
+render("1-example.Rmd")
+\end{verbatim}
+
+Better still, use the ``Knit'' button in the RStudio IDE to render the
+file and preview the output with a single click or keyboard shortcut
+(⇧⌘K).
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/96ec0c54c6d64ea2ec3665db9b3b781962ff6339/5cee1/lesson-images/how-3-output.png}}
+
+R Markdown generates a new file that contains selected text, code, and
+results from the .Rmd file. The new file can be a finished
+\href{https://bookdown.org/yihui/rmarkdown/html-document.html}{web
+page},
+\href{https://bookdown.org/yihui/rmarkdown/pdf-document.html}{PDF},
+\href{https://bookdown.org/yihui/rmarkdown/word-document.html}{MS Word}
+document,
+\href{https://bookdown.org/yihui/rmarkdown/ioslides-presentation.html}{slide
+show},
+\href{https://bookdown.org/yihui/rmarkdown/notebook.html}{notebook},
+\href{https://bookdown.org/yihui/rmarkdown/tufte-handouts.html}{handout},
+\href{https://bookdown.org/}{book},
+\href{https://rmarkdown.rstudio.com/flexdashboard/index.html}{dashboard},
+\href{https://bookdown.org/yihui/rmarkdown/r-package-vignette.html}{package
+vignette} or \href{https://rmarkdown.rstudio.com/formats.html}{other
+format}.
+
+\subsection{How it works}\label{how-it-works-1}
+
+When you run \texttt{render}, R Markdown feeds the .Rmd file to
+\href{http://yihui.name/knitr/}{knitr}, which executes all of the code
+chunks and creates a new markdown (.md) document which includes the code
+and its output.
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/61d189fd9cdf955058415d3e1b28dd60e1bd7c9b/b739c/lesson-images/rmarkdownflow.png}}
+
+The markdown file generated by knitr is then processed by
+\href{http://pandoc.org/}{pandoc} which is responsible for creating the
+finished format.
+
+This may sound complicated, but R Markdown makes it extremely simple by
+encapsulating all of the above processing into a single \texttt{render}
+function.
+
+\end{document}

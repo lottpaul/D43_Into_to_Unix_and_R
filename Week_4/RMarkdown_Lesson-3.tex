@@ -1,0 +1,199 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{-\maxdimen} % remove section numbering
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{color}
+\usepackage{fancyvrb}
+\newcommand{\VerbBar}{|}
+\newcommand{\VERB}{\Verb[commandchars=\\\{\}]}
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+% Add ',fontsize=\small' for more characters per line
+\usepackage{framed}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\newenvironment{Shaded}{\begin{snugshade}}{\end{snugshade}}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{#1}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  pdftitle={R Notebook},
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\title{R Notebook}
+\author{}
+\date{\vspace{-2.5em}}
+
+\begin{document}
+\maketitle
+
+\section{Code Chunks}\label{code-chunks}
+
+The R Markdown file below contains three code chunks. You can open it
+\href{https://posit.cloud/content/181911}{here} in RStudio Cloud.
+
+\pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/4b052d1dc45c9fb6f95caaca375636f792713192/c4043/lesson-images/code-1-options.png}}
+
+You can quickly insert chunks like these into your file with
+
+\begin{itemize}
+\item
+  the keyboard shortcut \textbf{Ctrl + Alt + I} (OS X: \textbf{Cmd +
+  Option + I})
+
+\begin{Shaded}
+\begin{Highlighting}[]
+\FunctionTok{ls}\NormalTok{()}
+\end{Highlighting}
+\end{Shaded}
+
+\begin{verbatim}
+## character(0)
+\end{verbatim}
+\item
+  the Add Chunk
+  \pandocbounded{\includegraphics[keepaspectratio]{https://d33wubrfki0l68.cloudfront.net/b8b19518e688e3ca1390e0a1588916f04908d33f/8a4dc/images/notebook-insert-chunk.png}}
+  command in the editor toolbar
+
+  \texttt{\{bash\}\ echo\ =\ FALSE\}\ ls}
+\end{itemize}
+
+or by typing the chunk delimiters
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}\{r\}} and
+\texttt{\textasciigrave{}\textasciigrave{}\textasciigrave{}}.
+
+```\{r\} include = FALSE\}
+
+```
+
+When you render your .Rmd file, R Markdown will run each code chunk and
+embed the results beneath the code chunk in your final report.
+
+\subsection{Chunk Options}\label{chunk-options}
+
+Chunk output can be customized with
+\href{http://yihui.name/knitr/options/}{knitr options}, arguments set in
+the \texttt{\{\}} of a chunk header. Above, we use five arguments:
+
+\begin{itemize}
+\item
+  \texttt{include\ =\ FALSE} prevents code and results from appearing in
+  the finished file. R Markdown still runs the code in the chunk, and
+  the results can be used by other chunks.
+\item
+  \texttt{echo\ =\ FALSE} prevents code, but not the results from
+  appearing in the finished file. This is a useful way to embed figures.
+\item
+  \texttt{message\ =\ FALSE} prevents messages that are generated by
+  code from appearing in the finished file.
+\item
+  \texttt{warning\ =\ FALSE} prevents warnings that are generated by
+  code from appearing in the finished.
+\item
+  \texttt{fig.cap\ =\ "..."} adds a caption to graphical results.
+\end{itemize}
+
+See the
+\href{https://www.rstudio.com/wp-content/uploads/2015/03/rmarkdown-reference.pdf}{R
+Markdown Reference Guide} for a complete list of knitr chunk options.
+
+\subsection{Global Options}\label{global-options}
+
+To set global options that apply to every chunk in your file, call
+\texttt{knitr::opts\_chunk\$set} in a code chunk. Knitr will treat each
+option that you pass to \texttt{knitr::opts\_chunk\$set} as a global
+default that can be overwritten in individual chunk headers.
+
+\subsection{Caching}\label{caching}
+
+If document rendering becomes time consuming due to long computations
+you can use knitr caching to improve performance.
+\href{http://yihui.name/knitr/options}{\emph{Knitr chunk and package
+options}} describes how caching works and the
+\href{http://yihui.name/knitr/demo/cache/}{\emph{Cache examples}}
+provide additional details.
+
+\end{document}
