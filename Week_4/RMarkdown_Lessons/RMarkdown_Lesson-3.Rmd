@@ -22,13 +22,15 @@ You can quickly insert chunks like these into your file with
 
 -   the Add Chunk ![](https://d33wubrfki0l68.cloudfront.net/b8b19518e688e3ca1390e0a1588916f04908d33f/8a4dc/images/notebook-insert-chunk.png) command in the editor toolbar
 
-    `{bash} echo = FALSE} ls`
+    ```{bash} echo = FALSE}
+    ls
+    ```
 
 or by typing the chunk delimiters ```` ```{r} ```` and ```` ``` ````.
 
-\`\`\`{r} include = FALSE}
+```{r} include = FALSE}
 
-\`\`\`
+```
 
 When you render your .Rmd file, R Markdown will run each code chunk and embed the results beneath the code chunk in your final report.
 

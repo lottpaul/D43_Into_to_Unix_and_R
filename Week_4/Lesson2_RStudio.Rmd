@@ -485,108 +485,89 @@ list.files(path='.')  #Get the files in your Current directory
 
 ### Additional R File and Directory Functions
 
-+------------------+------------------+------------------+
-| R Function       | Unix Command     | Description      |
-+==================+==================+==================+
-| getwd()          | pwd              | Get the current  |
-|                  |                  | working          |
-|                  |                  | directory        |
-+------------------+------------------+------------------+
-| s e t            | cd \<directory\> |                  |
-| w                |                  |                  |
-| d(\<directory\>) |                  |                  |
-+------------------+------------------+------------------+
-| l i s            | ls               | Lists all files  |
-| t                |                  | in a given       |
-| .files(path=".") |                  | directory        |
-+------------------+------------------+------------------+
-| l i              | ls               | List directories |
-| s                |                  |                  |
-| t.dirs(path=".") |                  |                  |
-+------------------+------------------+------------------+
-| f i              | touch \<fn\>     | Create an empty  |
-| l                |                  | file             |
-| e.create(\<fn\>) |                  |                  |
-+------------------+------------------+------------------+
-| file.exists(...) |                  | Returns `TRUE`   |
-|                  |                  | if file exists   |
-+------------------+------------------+------------------+
-| f i              | rm \<fn\>        | Delete a file    |
-| l                |                  |                  |
-| e.remove(\<fn\>) |                  |                  |
-+------------------+------------------+------------------+
-| f i l e          | mv \<from\>      | Attempts to      |
-| .                | \<to\>           | rename filename  |
-| rename(\<from\>, |                  | `<from>` to      |
-| \<new\>)         |                  | `<new>`          |
-+------------------+------------------+------------------+
-| f                | cat \<file1\>    | Appends File1    |
-| i                | \<file2\>        | and File2        |
-| le.append(file1, |                  |                  |
-| file2)           |                  |                  |
-+------------------+------------------+------------------+
-| f i              | ls -alh          | Provide          |
-| l                |                  | information      |
-| e.info(filename) |                  | about file       |
-|                  |                  | (size, isdir,    |
-|                  |                  | mode, time, uid, |
-|                  |                  | gui, username,   |
-|                  |                  | groupname)       |
-+------------------+------------------+------------------+
-| f i              | cp \<from\>      | Copy a file      |
-| l                | \<to\>           | `from` file to   |
-| e.copy(\<from\>, |                  | `new` location   |
-| \<to\>)          |                  |                  |
-+------------------+------------------+------------------+
-| f i l e .        | ln -sf \<from\>  | Create a         |
-| s                | \<to\>           | symbolic link to |
-| ymlink(\<from\>, |                  | a `from` file to |
-| \<new\>)         |                  | `new` location   |
-+------------------+------------------+------------------+
-| dir.exists       |                  | Return `TRUE` if |
-| (\<directory\>)  |                  | directory exists |
-+------------------+------------------+------------------+
-| dir. c           | mkdir \<newdir\> | Create a         |
-| r                |                  | Directory        |
-| eate(\<newdir\>) |                  |                  |
-+------------------+------------------+------------------+
-| s y              | chmod            | Change File      |
-| s                | \<permission\>   | permissions      |
-| .chmod(\<path\>, | \<path/fn\>      |                  |
-| mode=\           |                  | 4 = Read         |
-| \<               |                  |                  |
-| Permission#\>)   |                  | 2 = Write        |
-|                  |                  |                  |
-|                  |                  | 1 = Execute      |
-|                  |                  |                  |
-|                  |                  | 7 = (4+2+1) =    |
-|                  |                  | Read, Write,     |
-|                  |                  | Execute          |
-|                  |                  |                  |
-|                  |                  | \<Users#,        |
-|                  |                  | Group#,          |
-|                  |                  | Everyone#\>      |
-|                  |                  |                  |
-|                  |                  | 777 = RWE for    |
-|                  |                  | User /           |
-|                  |                  | Group/Everyone   |
-+------------------+------------------+------------------+
-| basename(path)   | basename         | Returns the      |
-|                  | \<path\>         | Filename portion |
-|                  |                  | of the path      |
-+------------------+------------------+------------------+
-| dirname(path)    | dirname          | Returns the      |
-|                  |                  | Directory        |
-|                  |                  | portion of the   |
-|                  |                  | path             |
-+------------------+------------------+------------------+
-| unlink(x)        | rm \<directory\> | Deletes files or |
-|                  |                  | directories      |
-|                  | or               | specified by x   |
-|                  |                  |                  |
-|                  | rmdir            |                  |
-|                  | \<directory\>    |                  |
-+------------------+------------------+------------------+
++----------------------+----------------------+----------------------+
+| R Function           | Unix Command         | Description          |
++======================+======================+======================+
+| getwd()              | pwd                  | Get the current      |
+|                      |                      | working directory    |
++----------------------+----------------------+----------------------+
+| s e t w              | cd \<directory\>     |                      |
+| d(\<directory\>)     |                      |                      |
++----------------------+----------------------+----------------------+
+| l i s t              | ls                   | Lists all files in a |
+| .files(path=".")     |                      | given directory      |
++----------------------+----------------------+----------------------+
+| l i s                | ls                   | List directories     |
+| t.dirs(path=".")     |                      |                      |
++----------------------+----------------------+----------------------+
+| f i l                | touch \<fn\>         | Create an empty file |
+| e.create(\<fn\>)     |                      |                      |
++----------------------+----------------------+----------------------+
+| file.exists(...)     |                      | Returns `TRUE` if    |
+|                      |                      | file exists          |
++----------------------+----------------------+----------------------+
+| f i l                | rm \<fn\>            | Delete a file        |
+| e.remove(\<fn\>)     |                      |                      |
++----------------------+----------------------+----------------------+
+| f i l e .            | mv \<from\> \<to\>   | Attempts to rename   |
+| rename(\<from\>,     |                      | filename `<from>` to |
+| \<new\>)             |                      | `<new>`              |
++----------------------+----------------------+----------------------+
+| f i le.append(file1, | cat \<file1\>        | Appends File1 and    |
+| file2)               | \<file2\>            | File2                |
++----------------------+----------------------+----------------------+
+| f i l                | ls -alh              | Provide information  |
+| e.info(filename)     |                      | about file (size,    |
+|                      |                      | isdir, mode, time,   |
+|                      |                      | uid, gui, username,  |
+|                      |                      | groupname)           |
++----------------------+----------------------+----------------------+
+| f i l                | cp \<from\> \<to\>   | Copy a file `from`   |
+| e.copy(\<from\>,     |                      | file to `new`        |
+| \<to\>)              |                      | location             |
++----------------------+----------------------+----------------------+
+| f i l e . s          | ln -sf \<from\>      | Create a symbolic    |
+| ymlink(\<from\>,     | \<to\>               | link to a `from`     |
+| \<new\>)             |                      | file to `new`        |
+|                      |                      | location             |
++----------------------+----------------------+----------------------+
+| dir.exists           |                      | Return `TRUE` if     |
+| (\<directory\>)      |                      | directory exists     |
++----------------------+----------------------+----------------------+
+| dir. c r             | mkdir \<newdir\>     | Create a Directory   |
+| eate(\<newdir\>)     |                      |                      |
++----------------------+----------------------+----------------------+
+| s y s                | chmod \<permission\> | Change File          |
+| .chmod(\<path\>,     | \<path/fn\>          | permissions          |
+| mode=\               |                      |                      |
+| \< Permission#\>)    |                      | 4 = Read             |
+|                      |                      |                      |
+|                      |                      | 2 = Write            |
+|                      |                      |                      |
+|                      |                      | 1 = Execute          |
+|                      |                      |                      |
+|                      |                      | 7 = (4+2+1) = Read,  |
+|                      |                      | Write, Execute       |
+|                      |                      |                      |
+|                      |                      | \<Users#, Group#,    |
+|                      |                      | Everyone#\>          |
+|                      |                      |                      |
+|                      |                      | 777 = RWE for User / |
+|                      |                      | Group/Everyone       |
++----------------------+----------------------+----------------------+
+| basename(path)       | basename \<path\>    | Returns the Filename |
+|                      |                      | portion of the path  |
++----------------------+----------------------+----------------------+
+| dirname(path)        | dirname              | Returns the          |
+|                      |                      | Directory portion of |
+|                      |                      | the path             |
++----------------------+----------------------+----------------------+
+| unlink(x)            | rm \<directory\>     | Deletes files or     |
+|                      |                      | directories          |
+|                      | or                   | specified by x       |
+|                      |                      |                      |
+|                      | rmdir \<directory\>  |                      |
++----------------------+----------------------+----------------------+
 
 ------------------------------------------------------------------------
 

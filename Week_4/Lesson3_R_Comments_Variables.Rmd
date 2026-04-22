@@ -49,6 +49,8 @@ researcher may be using your code to perform a similar analysis.
 Comments can be an invaluable tool to provide insights into your code
 and analysis.
 
+------------------------------------------------------------------------
+
 ## R Creating, Assigning, and Deleting Variables
 
 ### Variable Assignment
@@ -68,8 +70,7 @@ print(x)
 ```
 
 Alternatively, you can reverse the expression to make a right-handed
-assignment. Note: This is different than Python, which requires
-left-handed assignments only.
+assignment.
 
 ```{r}
 9 -> x
