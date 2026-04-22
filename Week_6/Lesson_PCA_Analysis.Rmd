@@ -1,27 +1,33 @@
 ---
 title: "R Notebook"
 output: html_notebook
+editor_options: 
+  markdown: 
+    wrap: 72
 ---
-# PCA Analysis:  Multi-dimensional Reduction
 
-For this example, we're going to perform a PCA analysis of the 1000Genomes
-Dataset. We'll restrict our analysis just to Chromosome 1 in order to make it
-faster, but the same analysis can be performed using the complete dataset.
+# PCA Analysis: Multi-dimensional Reduction
 
+For this example, we're going to perform a PCA analysis of the
+1000Genomes Dataset. We'll restrict our analysis just to Chromosome 1 in
+order to make it faster, but the same analysis can be performed using
+the complete dataset.
 
-Here we'll set the environment PATH variables for the PLINK application 
+Here we'll set the environment PATH variables for the PLINK application
+
 ```{r}
 Sys.setenv(PATH = paste("/cvmfs/hpc.ucdavis.edu/sw/spack/environments/main/view/generic/plink-1.9-beta7.1/bin/", Sys.getenv("PATH"), sep = ":"))
 ```
 
-
 # Preparing the VCF File
-The provided chr1.vcf.gz file is missing some IDs for variants. 
-PLINK uses a variant name/ID to identify markers for operations where we remove
-variants.
 
-1. Add Variant ID (chr1:1221122:A:C) name to each variant in the VCF
-2. Import the VCF into PLINK
+The provided chr1.vcf.gz file is missing some IDs for variants. PLINK
+uses a variant name/ID to identify markers for operations where we
+remove variants.
+
+1.  Add Variant ID (chr1:1221122:A:C) name to each variant in the VCF
+2.  Import the VCF into PLINK
+
 ```{bash}
 zgrep '^#' chr1.vcf.gz > chr1_vid.vcf
 zgrep -v '^#' chr1.vcf.gz | awk -v OFS="\t" '{ $3=$1":"$2":"$4":"$5; print}' >> chr1_vid.vcf
@@ -30,24 +36,37 @@ plink --vcf chr1_vid.vcf --make-bed --out chr1_vid
 
 # Cleaning Variants
 
-We need to do markers and individual QC.
- 1. geno:  Filter markers based on missing genotyping rate > 5%
- 2. mind:  Filter samples with a missing rate greater than > 10%
- 3. maf:   Filter variants with a variant allele frequency less than 5%
- 4. nonfounders: removes individuals with at least one parental ID
- 5. allow-no-sez: allows samples with no sex defined in the BIM file
+We need to do markers and individual QC. 1. geno: Filter markers based
+on missing genotyping rate \> 5% 2. mind: Filter samples with a missing
+rate greater than \> 10% 3. maf: Filter variants with a variant allele
+frequency less than 5% 4. nonfounders: removes individuals with at least
+one parental ID 5. allow-no-sez: allows samples with no sex defined in
+the BIM file
 
 ```{bash}
 plink --bfile chr1_vid --geno 0.05 --mind 0.1 --maf 0.05 --nonfounders --allow-no-sex --make-bed --out chr1_cleaned
 ```
 
-#LD Pruning
-Linkage disequilibrium (LD) pruning is a preprocessing step in genetic analyses where highly correlated variants (typically SNPs that are inherited together due to physical proximity on a chromosome) are systematically removed, leaving a subset of approximately independent markers. This is particularly important prior to performing principal component analysis (PCA), because PCA assumes that variables are not overly redundant. If dense clusters of correlated SNPs are retained, they can disproportionately influence the principal components, causing the analysis to reflect local genomic structure (such as long haplotype blocks) rather than true genome-wide patterns of variation. By pruning SNPs in high LD, the resulting dataset better represents independent genetic signals, allowing PCA to more accurately capture population structure, ancestry differences, and other broad-scale patterns without bias from correlated regions.
+#LD Pruning Linkage disequilibrium (LD) pruning is a preprocessing step
+in genetic analyses where highly correlated variants (typically SNPs
+that are inherited together due to physical proximity on a chromosome)
+are systematically removed, leaving a subset of approximately
+independent markers. This is particularly important prior to performing
+principal component analysis (PCA), because PCA assumes that variables
+are not overly redundant. If dense clusters of correlated SNPs are
+retained, they can disproportionately influence the principal
+components, causing the analysis to reflect local genomic structure
+(such as long haplotype blocks) rather than true genome-wide patterns of
+variation. By pruning SNPs in high LD, the resulting dataset better
+represents independent genetic signals, allowing PCA to more accurately
+capture population structure, ancestry differences, and other
+broad-scale patterns without bias from correlated regions.
 
 Plink performs the pruning in 2 steps:
 
- - First, Create a list of variants to keep or remove based on R-squared value
- - Second, Extract the variants you want to keep for the PCA analysis.
+-   First, Create a list of variants to keep or remove based on
+    R-squared value
+-   Second, Extract the variants you want to keep for the PCA analysis.
 
 ```{bash}
 plink --bfile chr1_cleaned --indep-pairwise 50 5 0.2 --out pruning_results
@@ -55,9 +74,11 @@ plink --bfile chr1_cleaned --extract pruning_results.prune.in --make-bed --out c
 ```
 
 # Calculating Distance between all Samples
-Calculate the Hamming Distance or Identity-by-State Matrix between all samples.
-This leads to a large matrix that is 2318 rows x 2318 columns. This matrix is 
-too complex to plot in a simple manner, so we need to reduce it.
+
+Calculate the Hamming Distance or Identity-by-State Matrix between all
+samples. This leads to a large matrix that is 2318 rows x 2318 columns.
+This matrix is too complex to plot in a simple manner, so we need to
+reduce it.
 
 ```{bash}
 plink --bfile chr1_pruned --distance-matrix --out dataForPCA
@@ -66,6 +87,7 @@ plink --bfile chr1_pruned --distance-matrix --out dataForPCA
 # PCA Analysis
 
 ## Import the datasets
+
 ```{r}
 ## Load data
 dist_populations<-read.table("dataForPCA.mdist",header=F)
@@ -77,14 +99,28 @@ famInd <- data.frame(IID=read.table("dataForPCA.mdist.id")[,2])
 
 ## Perform PCA
 
-Principal component analysis (PCA) is a method for simplifying complex datasets by transforming many correlated variables into a smaller set of new variables—called principal components—that capture the main patterns of variation in the data. You can think of it as finding the directions in which the data varies the most, allowing you to summarize and visualize high-dimensional data in just a few dimensions (often two or three). In R, the cmdscale function performs a closely related technique called classical multidimensional scaling (MDS), which can be used to obtain PCA-like results when applied to an appropriate distance matrix. Instead of working directly on the raw data matrix, cmdscale starts with a matrix of pairwise distances between samples (for example, genetic distances), then uses eigen decomposition to project those distances into a lower-dimensional space. The resulting coordinates represent each sample in terms of principal axes that approximate the original distance relationships, effectively capturing the major structure in the data similar to PCA.
+Principal component analysis (PCA) is a method for simplifying complex
+datasets by transforming many correlated variables into a smaller set of
+new variables—called principal components—that capture the main patterns
+of variation in the data. You can think of it as finding the directions
+in which the data varies the most, allowing you to summarize and
+visualize high-dimensional data in just a few dimensions (often two or
+three). In R, the cmdscale function performs a closely related technique
+called classical multidimensional scaling (MDS), which can be used to
+obtain PCA-like results when applied to an appropriate distance matrix.
+Instead of working directly on the raw data matrix, cmdscale starts with
+a matrix of pairwise distances between samples (for example, genetic
+distances), then uses eigen decomposition to project those distances
+into a lower-dimensional space. The resulting coordinates represent each
+sample in terms of principal axes that approximate the original distance
+relationships, effectively capturing the major structure in the data
+similar to PCA.
 
 ```{r}
 ## Perform PCA using the cmdscale function 
 # Time intensive step - takes a few minutes
 mds_populations <- cmdscale(dist_populations,eig=T,5)
 ```
-
 
 ## Create DataFrames with IDs
 
@@ -94,16 +130,13 @@ eigenvec_populations <- cbind(fam,famInd,mds_populations$points)
 ```
 
 ## Get Proportion of variation captured by each eigenvector
+
 ```{r}
 ## Proportion of variation captured by each eigen vector
 eigen_percent <- round(((mds_populations$eig)/sum(mds_populations$eig))*100,2)
 ```
 
-
-
 # Plotting PCA Analysis Results
-
-
 
 ```{r}
 # Visualize PCA in tidyverse
