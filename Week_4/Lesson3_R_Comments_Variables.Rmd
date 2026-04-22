@@ -43,11 +43,11 @@ functions, why you chose to do something, or maybe some insights you
 discovered about using a function (ie. #This function requires that the
 file end with a `.vcf.bgz` suffix.
 
-You may ask why do you need to leave a comment - you know what it does.
-One reason is that in 6 months to a year, you may forget - or another
-researcher may be using your code to perform a similar analysis.
-Comments can be an invaluable tool to provide insights into your code
-and analysis.
+> You may ask why do you need to leave a comment - you know what it
+> does. One reason is that in 6 months to a year, you may forget - or
+> another researcher may be using your code to perform a similar
+> analysis. Comments can be an invaluable tool to provide insights into
+> your code and analysis.
 
 ------------------------------------------------------------------------
 
