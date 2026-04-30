@@ -42,7 +42,7 @@ if (x=="Gastric" && y=="H.pylori"){
 } 
 ```
 
-We already reviewed the mathematical operators "`>`", "`>=`", "`<`", "`<=`", "`==`". They test an mathematical expression and return TRUE or FALSE depending on the mathematical comparison between the value on the left and the value on the right. We'll use them to write an example conditional statement.
+We already reviewed the comparison operators "`>`", "`>=`", "`<`", "`<=`", "`==`". They test an mathematical expression and return TRUE or FALSE depending on the comparison between the value on the left and the value on the right. We'll use them to write an example conditional statement.
 
 ```{r}
 x <- 210

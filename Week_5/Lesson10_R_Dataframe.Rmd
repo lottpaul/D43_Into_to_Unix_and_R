@@ -292,3 +292,55 @@ We're going to then jump back in to exploring the [**Tidyverse**](https://www.ti
 Import the Palmer Penguins dataset from above. You'll notice that the Species, Island, and Sex are all categorical. Convert Species, Island, and Sex columns to Categorical `factor`
 
 Get the summary information (mean, median, max, min, quartile) for each species.
+
+------------------------------------------------------------------------
+
+# For Loops and DataFrames
+
+**data.frame**
+
+`seq_len()` is a variation of `seq()` function that creates a vector sequences. `nrow()` returns an integer of the number of rows in the data.frame. `ncol()` returns an integer of number of columns in the data.frame
+
+```{r}
+penguins = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
+for (i in seq_len(nrow(penguins))) {
+  for (j in seq_len(ncol(penguins))) {
+    current_element <- penguins[i, j]
+    print(paste("The [", i, ",", j, "] element is:", current_element))
+    break
+  }
+  
+  
+  if (i==5){  # Only print out 5 rows
+    break
+  }
+}
+```
+
+**Creating a new columns based on loop**
+
+```{r}
+for (i in seq_len(nrow(penguins))) {
+  penguins[i,'species_island'] = paste(penguins[i,'species'], "", penguins[i,'island'])
+}
+ 
+penguins
+```
+
+### Exercise 1: For-Loop Palmers Penguins
+
+Using the Palmers Penguins dataset, import the dataframe and use a for loop to count the number of Males and Females. If the `sex` is not available (`NA`) then proceed to the next element.
+
+```{r}
+penguins = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
+head(penguins)
+```
+
+```{r}
+males = 0
+
+count = c(0,0)
+#for (i in ){
+#  
+#}
+```

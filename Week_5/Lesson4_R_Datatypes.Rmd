@@ -121,30 +121,14 @@ how the data is represented.
 R has six basic fundamental datatypes. These are single instances of
 fundamental computer datatypes stored in memory.
 
-+---------------+-------------------------------------------+
-| R Datatype    | Description                               |
-+===============+===========================================+
-| **Complex**   | Set of all the complex numbers (9+2i,     |
-|               | where i is the imaginary part)            |
-+---------------+-------------------------------------------+
-| **Raw**       | Byte encoded                              |
-+---------------+-------------------------------------------+
-| **Logical     | Logical/Boolean either TRUE or FALSE      |
-| (aka          |                                           |
-| Boolean)**    |                                           |
-+---------------+-------------------------------------------+
-| **Numeric**   | Decimal values are called numeric in R.   |
-|               | It is the default R data type for numbers |
-|               | in R. Example: 10.4, 55, 78.121E-2        |
-+---------------+-------------------------------------------+
-| **Integer**   | Integer data types which are the set of   |
-|               | all integers. (Must have suffix `L`)      |
-|               | Example: 10L, 1L, 55L                     |
-+---------------+-------------------------------------------+
-| **Character   | Alphabet and Special Characters (ASCII)   |
-| (aka          | Example: "Hello", "World"                 |
-| String)**     |                                           |
-+---------------+-------------------------------------------+
+| R Datatype                 | Description                                                                                                          |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------|
+| **Complex**                | Set of all the complex numbers (9+2i, where i is the imaginary part)                                                 |
+| **Raw**                    | Byte encoded                                                                                                         |
+| **Logical (aka Boolean)**  | Logical/Boolean either TRUE or FALSE                                                                                 |
+| **Numeric**                | Decimal values are called numeric in R. It is the default R data type for numbers in R. Example: 10.4, 55, 78.121E-2 |
+| **Integer**                | Integer data types which are the set of all integers. (Must have suffix `L`) Example: 10L, 1L, 55L                   |
+| **Character (aka String)** | Alphabet and Special Characters (ASCII) Example: "Hello", "World"                                                    |
 
 ### Helpful Functions to determine datatypes and classes
 
@@ -287,83 +271,54 @@ sprintf("Is X Greater Than or Equal to Y: %s", x>=y)
 sprintf("Is X Less Than or Equal to Y: %s", x<=y)
 ```
 
-+----------+----------+----------+----------+
-| Operator | Name     | D e      | Example  |
-|          |          | s        |          |
-|          |          | cription |          |
-+==========+==========+==========+==========+
-| &        | E l e    | Returns  | `c( T R  |
-|          | m        | True if  |  UE , F  |
-|          | ent-wise | both     | A LS E , |
-|          | AND      | elements |  TR  UE) |
-|          | operator | are TRUE |   &  c ( |
-|          |          |          | F AL S E |
-|          |          |          |  , T R U |
-|          |          |          | E,TRUE)` |
-|          |          |          |          |
-|          |          |          | Returns: |
-|          |          |          | `F       |
-|          |          |          | A LS E , |
-|          |          |          |  F A L S |
-|          |          |          | E, TRUE` |
-+----------+----------+----------+----------+
-| &&       | AND      | Returns  | TRUE &&  |
-|          | operator | TRUE if  | TRUE     |
-|          |          | both s   | Returns  |
-|          |          | t        | TRUE     |
-|          |          | atements |          |
-|          |          | are TRUE | TRUE &&  |
-|          |          |          | FALSE    |
-|          |          |          | Returns  |
-|          |          |          | FALSE    |
-|          |          |          |          |
-|          |          |          | FALSE && |
-|          |          |          | TRUE     |
-|          |          |          | Returns  |
-|          |          |          | FALSE    |
-+----------+----------+----------+----------+
-| \|       | E l e    | Returns  | `c       |
-|          | m        | TRUE if  | (  TRUE  |
-|          | ent-wise | one or   | ,  F ALS |
-|          | OR       | more     |  E  ,    |
-|          | operator | element  | T RUE  ) |
-|          |          | is TRUE  |  & c (FA |
-|          |          |          |  L S E , |
-|          |          |          |  T R U E |
-|          |          |          | , TRUE)` |
-|          |          |          |          |
-|          |          |          | Returns: |
-|          |          |          | `TR  UE  |
-|          |          |          |  , T R U |
-|          |          |          | E, TRUE` |
-+----------+----------+----------+----------+
-| \|\|     | OR       | Returns  | TRUE &&  |
-|          | operator | TRUE if  | TRUE     |
-|          |          | at least | Returns  |
-|          |          | one      | TRUE     |
-|          |          | s        |          |
-|          |          | tatement | TRUE &&  |
-|          |          | is TRUE  | FALSE    |
-|          |          |          | Returns  |
-|          |          |          | TRUE     |
-|          |          |          |          |
-|          |          |          | FALSE && |
-|          |          |          | TRUE     |
-|          |          |          | Returns  |
-|          |          |          | TRUE     |
-+----------+----------+----------+----------+
-| !        | Logical  | Negates  | ! FALSE  |
-|          | NOT      | any s    | Returns  |
-|          |          | t        | TRUE     |
-|          |          | atement: |          |
-|          |          | Returns  | ! TRUE   |
-|          |          | TRUE if  | Returns  |
-|          |          | s        | FALSE    |
-|          |          | tatement |          |
-|          |          | is FALSE |          |
-|          |          | and vice |          |
-|          |          | versa    |          |
-+----------+----------+----------+----------+
++-----------+-----------------+-----------------+-----------------+
+| O perator | Name            | D e s c ription | Example         |
++===========+=================+=================+=================+
+| &         | E l e m         | Returns True if | `c( T R   UE    |
+|           | ent-wise AND    | both e lements  |  , F A LS  E ,  |
+|           | operator        | are TRUE        |  TR   UE )  &   |
+|           |                 |                 | c ( F AL S E  , |
+|           |                 |                 |  T R U E,TRUE)` |
+|           |                 |                 |                 |
+|           |                 |                 | Returns:        |
+|           |                 |                 | `F A LS E ,  F  |
+|           |                 |                 |  A L S E, TRUE` |
++-----------+-----------------+-----------------+-----------------+
+| &&        | AND operator    | Returns TRUE if | TRUE && TRUE    |
+|           |                 | both s t a      | Returns TRUE    |
+|           |                 | tements are     |                 |
+|           |                 | TRUE            | TRUE && FALSE   |
+|           |                 |                 | Returns FALSE   |
+|           |                 |                 |                 |
+|           |                 |                 | FALSE && TRUE   |
+|           |                 |                 | Returns FALSE   |
++-----------+-----------------+-----------------+-----------------+
+| \|        | E l e m         | Returns TRUE if | `c ( TRUE       |
+|           | ent-wise OR     | one or more     |  ,  F ALS   E   |
+|           | operator        | element is TRUE | , T  RUE ) & c  |
+|           |                 |                 | (FA  L S E ,  T |
+|           |                 |                 |  R U E , TRUE)` |
+|           |                 |                 |                 |
+|           |                 |                 | Returns:        |
+|           |                 |                 | `TR  UE  ,      |
+|           |                 |                 |  T R U E, TRUE` |
++-----------+-----------------+-----------------+-----------------+
+| \|\|      | OR operator     | Returns TRUE if | TRUE && TRUE    |
+|           |                 | at least one s  | Returns TRUE    |
+|           |                 | t atement is    |                 |
+|           |                 | TRUE            | TRUE && FALSE   |
+|           |                 |                 | Returns TRUE    |
+|           |                 |                 |                 |
+|           |                 |                 | FALSE && TRUE   |
+|           |                 |                 | Returns TRUE    |
++-----------+-----------------+-----------------+-----------------+
+| !         | Logical NOT     | Negates any s t | ! FALSE Returns |
+|           |                 | a tement:       | TRUE            |
+|           |                 | Returns TRUE if |                 |
+|           |                 | s t atement is  | ! TRUE Returns  |
+|           |                 | FALSE and vice  | FALSE           |
+|           |                 | versa           |                 |
++-----------+-----------------+-----------------+-----------------+
 
 ------------------------------------------------------------------------
 
@@ -672,35 +627,20 @@ datatypes - you'll need to remember that **R is 1-based** not 0-based.
 
 Some of the most useful character/string function in R.
 
-+------------------------+-----------------------------------+
-| R Function             | Description                       |
-+========================+===================================+
-| print(x)               | Print its arguments               |
-+------------------------+-----------------------------------+
-| paste(x,x)             | Concatenate String                |
-+------------------------+-----------------------------------+
-| sprintf(x)             | C-style format a string           |
-+------------------------+-----------------------------------+
-| substr(x, start, stop) | Get Substring                     |
-+------------------------+-----------------------------------+
-| nchar(x)               | Get String Length                 |
-+------------------------+-----------------------------------+
-| sub(pattern,           | Replace substring with            |
-| replacment, x)         |                                   |
-+------------------------+-----------------------------------+
-| tolower(x)             | Convert string to lowercase       |
-+------------------------+-----------------------------------+
-| toupper(x)             | Convert string to uppercase       |
-+------------------------+-----------------------------------+
-| trimws(x)              | Strip whitespace characters       |
-+------------------------+-----------------------------------+
-| strrep(x)              | Repeat string n times             |
-+------------------------+-----------------------------------+
-| strsplit(x)            | Split up string                   |
-+------------------------+-----------------------------------+
-| chartr(x)              | Translate characters in           |
-|                        | characters string                 |
-+------------------------+-----------------------------------+
+| R Function                  | Description                               |
+|-----------------------------|-------------------------------------------|
+| print(x)                    | Print its arguments                       |
+| paste(x,x)                  | Concatenate String                        |
+| sprintf(x)                  | C-style format a string                   |
+| substr(x, start, stop)      | Get Substring                             |
+| nchar(x)                    | Get String Length                         |
+| sub(pattern, replacment, x) | Replace substring with                    |
+| tolower(x)                  | Convert string to lowercase               |
+| toupper(x)                  | Convert string to uppercase               |
+| trimws(x)                   | Strip whitespace characters               |
+| strrep(x)                   | Repeat string n times                     |
+| strsplit(x)                 | Split up string                           |
+| chartr(x)                   | Translate characters in characters string |
 
 Here's some example code to show the basic built-in functions.
 
@@ -886,21 +826,15 @@ viewing window. It looks like it's a named List.
 
 There are many additional function in `seqinr`.
 
-+---------------+-------------------------------------------+
-| Function      | Description                               |
-+===============+===========================================+
-| getLength( )  | Returns the total length of the Fasta     |
-|               | sequence                                  |
-+---------------+-------------------------------------------+
-| getName()     | Return the sequence names                 |
-+---------------+-------------------------------------------+
-| s2c()         | Convert the Sequence String to a Vector   |
-|               | of single characters                      |
-+---------------+-------------------------------------------+
-| c2s()         | Convert the character Vector to String    |
-+---------------+-------------------------------------------+
+| Function     | Description                                                  |
+|--------------|--------------------------------------------------------------|
+| getLength( ) | Returns the total length of the Fasta sequence               |
+| getName()    | Return the sequence names                                    |
+| s2c()        | Convert the Sequence String to a Vector of single characters |
+| c2s()        | Convert the character Vector to String                       |
 
-: SeqInR Functions
+[Additional SeqInR
+Functions](https://cran.r-project.org/web/packages/seqinr/refman/seqinr.html)
 
 ```{r}
 
@@ -927,6 +861,168 @@ dotPlot(dna_seq, rev_comp)
 
 ------------------------------------------------------------------------
 
+## Starting Review: 4/27/2026
+
+### Atomic Datatypes
+
+R has six basic fundamental datatypes. These are single instances of
+fundamental computer datatypes stored in memory.
+
+| R Datatype                 | Description                                                                                                          |
+|----------------------------|----------------------------------------------------------------------------------------------------------------------|
+| **Complex**                | Set of all the complex numbers (9+2i, where i is the imaginary part)                                                 |
+| **Raw**                    | Byte encoded                                                                                                         |
+| **Logical (aka Boolean)**  | Logical/Boolean either TRUE or FALSE                                                                                 |
+| **Numeric**                | Decimal values are called numeric in R. It is the default R data type for numbers in R. Example: 10.4, 55, 78.121E-2 |
+| **Integer**                | Integer data types which are the set of all integers. (Must have suffix `L`) Example: 10L, 1L, 55L                   |
+| **Character (aka String)** | Alphabet and Special Characters (ASCII) Example: "Hello", "World"                                                    |
+
+### String and String Libraries
+
+-   Basic R Character String Functions
+-   Stringi Library Functions
+-   SeqinR Library Functions for Fasta
+
+### Reverse Complement
+
+#### Step 1: Complement Sequence
+
+```{r}
+dna <- 'ACGTTTAC'
+complement = chartr("ACGT", "TGCA", dna) 
+print(complement)
+```
+
+#### Step 2: Reversing Sequence
+
+```{r}
+library(stringi)
+rev_comp = stri_reverse(complement)
+print(rev_comp)
+```
+
+## Additional Tutorials & Books:
+
+-   **R for Data Science:** <https://r4ds.hadley.nz/>
+    ([Espanol](https://es.r4ds.hadley.nz/))
+
+-   **Guide to R:**
+    <https://bookdown.org/yih_huynh/Guide-to-R-Book/tidyverse.html>
+
+-   **Statistical Inference via Data Science:**
+    <https://moderndive.com/>
+
+-   **R Graphics Cookbook:**
+    <https://r-graphics.org/recipe-bar-graph-adjust-width>
+
+-   **Text Mining with R:** <https://www.tidytextmining.com/>
+
+-   **R Markdown Cookbook:**
+    <https://bookdown.org/yihui/rmarkdown-cookbook/>
+
+-   **R Markdown - The Definitive Guide:**
+    <https://bookdown.org/yihui/rmarkdown/>
+
+-   **R Programming for Data Science:**
+    <https://bookdown.org/rdpeng/rprogdatascience/>
+
+-   **Efficient R Programming:**
+    <https://csgillespie.github.io/efficientR/>
+
+-   **Advanced R:** <https://adv-r.hadley.nz/>
+
+-   **Fundamentals of Data Visualization:**
+    <https://clauswilke.com/dataviz/>
+
+-   **Hands-on Programming with R:**
+    <https://rstudio-education.github.io/hopr/>
+
+-   **bookdown - Authoring Books and Technical Documents with R
+    Markdown:** <https://bookdown.org/yihui/bookdown/>
+
+-   **Big Book of R:** <https://www.bigbookofr.com/>
+
+-   **RStudio Resource Books:**
+    <https://www.rstudio.com/resources/books/>
+
+-   **Bookdown.org:** <https://bookdown.org/>
+
+-   **Rstudio Learn:** <https://education.rstudio.com/learn/beginner/>
+
+------------------------------------------------------------------------
+
+## Libros tutoriales y hojas de trucos en español
+
+-   [BaseR
+    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/base-r_es.pdf)
+
+-   [Descriptive Statistics
+    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/estadistica-descriptiva-con-R.pdf)
+
+-   [R Markdown
+    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/rmarkdown_es.pdf)
+
+-   [RStudio
+    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/rstudio-ide_es.pdf)
+
+-   [R Syntax
+    Comparison](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/syntax_es.pdf)
+
+-   CRAN Documentation
+
+    -   **“R para Principiantes”**, the Spanish version of “R for
+        Beginners”, translated by Jorge A. Ahumada
+        ([PDF](https://cran.r-project.org/doc/contrib/rdebuts_es.pdf)).
+
+    -   A Spanish translation of **“An Introduction to R”** by Andrés
+        González and Silvia González
+        ([PDF](https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf),
+        [Texinfo
+        sources](https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.zip)).
+
+    -   **“Gráficos Estadísticos con R”** by Juan Carlos Correa and
+        Nelfi González
+        ([PDF](https://cran.r-project.org/doc/contrib/grafi3.pdf)).
+
+    -   **“Cartas sobre Estadística de la Revista Argentina de
+        Bioingeniería”** by Marcelo R. Risk
+        ([PDF](https://cran.r-project.org/doc/contrib/Risk-Cartas-sobre-Estadistica.pdf)).
+
+    -   **“Introducción al uso y programación del sistema estadístico
+        R”** by Ramón Díaz-Uriarte, transparencies prepared for a
+        16-hours course on R, addressed mainly to biologists and
+        bioinformaticians
+        ([PDF](https://cran.r-project.org/doc/contrib/curso-R.Diaz-Uriarte.pdf)).
+
+    -   **“Generacion automatica de reportes con R y LaTeX”** by Mario
+        Alfonso Morales Rivera
+        ([PDF](https://cran.r-project.org/doc/contrib/Rivera-Tutorial_Sweave.pdf)).
+
+    -   **“Metodos Estadisticos con R y R Commander”** by Antonio Jose
+        Saez Castillo
+        ([PDF](https://cran.r-project.org/doc/contrib/Saez-Castillo-RRCmdrv21.pdf),
+        [ZIP](https://cran.r-project.org/doc/contrib/Saez-Castillo-Datos.zip),
+        2010-07-08).
+
+    -   **“Optimización Matemática con R: Volumen I”** by Enrique
+        Gabriel Baquela and Andrés Redchuk
+        ([PDF](https://cran.r-project.org/doc/contrib/Optimizacion_Matematica_con_R_Volumen_I.pdf),
+        161 pages).
+
+    -   **“Introducción al uso de R y R Commander para el análisis
+        estadístico de datos en ciencias sociales”** by Rosario Collatón
+        Chicana
+        ([PDF](https://cran.r-project.org/doc/contrib/Chicana-Introduccion_al_uso_de_R.pdf),
+        128 pages, 2014-05-11).
+
+    -   **“El arte de programar en R”** by Julio Sergio Santana and
+        Efraín Mateos Farfán
+        ([PDF](https://cran.r-project.org/doc/contrib/Santana_El_arte_de_programar_en_R.pdf),
+        197 pages, 2014-12-15;
+        [online](https://www.imta.gob.mx/biblioteca/libros_html/el-arte-de-programar-en-r/)).
+
+------------------------------------------------------------------------
+
 # Stringr
 
 In addition to working with Unicode and International encoded text,
@@ -942,12 +1038,9 @@ Let's take a look a `stringr` library.
 
 ### Basic String Function
 
-+------------------------+-------------------------------------+
-| Functions              | Description                         |
-+========================+=====================================+
-| str_length(x)          | Returns number of characters        |
-|                        | Equivalent to nchar()               |
-+------------------------+-------------------------------------+
+| Functions     | Description                                        |
+|---------------|----------------------------------------------------|
+| str_length(x) | Returns number of characters Equivalent to nchar() |
 
 ### Detecting Matches
 
@@ -961,33 +1054,17 @@ regular expression for DNA might look something like this
 `[ACGTNacgtn]+` , which would match any string with any composition of
 A, C, G, T or N of one or more character length.
 
-+-------------------------+---------------------------------------+
-| Functions               | Description                           |
-+=========================+=======================================+
-| str_detect(x, pattern,  | Detect the presence of a pattern.     |
-| negate=FALSE)           | Returns Boolean                       |
-+-------------------------+---------------------------------------+
-| str_starts(x, pattern,  | Detect the presence of a pattern at   |
-| negate=FALSE)           | the beginning of string               |
-+-------------------------+---------------------------------------+
-| str_ends(x, pattern,    | Detect the presence of a pattern at   |
-| negate=FALSE)           | the ending of string                  |
-+-------------------------+---------------------------------------+
-| str_which(x, pattern,   | Find the indexes of strings that      |
-| negate=FALSE)           | contain a pattern match               |
-+-------------------------+---------------------------------------+
-| str_locate(x, pattern)  | Locate the first position of pattern  |
-|                         | matches in a string                   |
-+-------------------------+---------------------------------------+
-| str_locate_all(x,       | Locate the all positions of pattern   |
-| pattern)                | matches in a string                   |
-+-------------------------+---------------------------------------+
-| str_count(x, pattern)   | Count the number of matches in a      |
-|                         | string                                |
-+-------------------------+---------------------------------------+
+| Functions                            | Description                                                 |
+|--------------------------------------|-------------------------------------------------------------|
+| str_detect(x, pattern, negate=FALSE) | Detect the presence of a pattern. Returns Boolean           |
+| str_starts(x, pattern, negate=FALSE) | Detect the presence of a pattern at the beginning of string |
+| str_ends(x, pattern, negate=FALSE)   | Detect the presence of a pattern at the ending of string    |
+| str_which(x, pattern, negate=FALSE)  | Find the indexes of strings that contain a pattern match    |
+| str_locate(x, pattern)               | Locate the first position of pattern matches in a string    |
+| str_locate_all(x, pattern)           | Locate the all positions of pattern matches in a string     |
+| str_count(x, pattern)                | Count the number of matches in a string                     |
 
 ```{r}
-{r}
 if (!requireNamespace("stringr", quietly = TRUE)) {
   install.packages("stringr", repos = "http://cran.us.r-project.org")
 }
@@ -1038,26 +1115,14 @@ print(str_count(dna, 'g'))
 
 ### Subsetting & Extracting Matching Strings
 
-+---------------------------+----------------------------------------+
-| Functions                 | Description                            |
-+===========================+========================================+
-| str_sub(x, start, end)    | Extract substring                      |
-+---------------------------+----------------------------------------+
-| str_subset(x, pattern,    | Return string that contains a match    |
-| negate=FALSE)             |                                        |
-+---------------------------+----------------------------------------+
-| str_extract(x, pattern)   | Return first match found in each       |
-|                           | string                                 |
-+---------------------------+----------------------------------------+
-| str_extract_all(x,        | Return every match found in each       |
-| pattern)                  | string                                 |
-+---------------------------+----------------------------------------+
-| str_match(x, pattern)     | Locate the first match found in each   |
-|                           | string as matrix                       |
-+---------------------------+----------------------------------------+
-| str_match_all(x, pattern) | Locate the all matches found in each   |
-|                           | string as matrix                       |
-+---------------------------+----------------------------------------+
+| Functions                            | Description                                           |
+|--------------------------------------|-------------------------------------------------------|
+| str_sub(x, start, end)               | Extract substring                                     |
+| str_subset(x, pattern, negate=FALSE) | Return string that contains a match                   |
+| str_extract(x, pattern)              | Return first match found in each string               |
+| str_extract_all(x, pattern)          | Return every match found in each string               |
+| str_match(x, pattern)                | Locate the first match found in each string as matrix |
+| str_match_all(x, pattern)            | Locate the all matches found in each string as matrix |
 
 ```{r}
 print(paste("Substring:", str_sub(dna, 0,100)))
@@ -1073,36 +1138,17 @@ print(paste("All String Matches:", str_match_all(dna, 'ttcg')))
 
 ### Mutate Strings
 
-+-----------------------------------+------------------------+
-| Functions                         | Description            |
-+===================================+========================+
-| str_sub()\<-value                 | Identify with str_sub  |
-|                                   | then replace           |
-+-----------------------------------+------------------------+
-| str_replace(string, pattern,      | Replace the first      |
-| replacement)                      | match in string        |
-+-----------------------------------+------------------------+
-| str_replace_all(string, pattern,  | Replace all matches in |
-| replacement)                      | string                 |
-+-----------------------------------+------------------------+
-| str_remove(string, pattern)       | Remove first match in  |
-|                                   | string                 |
-+-----------------------------------+------------------------+
-| str_remove_all(string, pattern)   | Remove all matches in  |
-|                                   | string                 |
-+-----------------------------------+------------------------+
-| str_to_lower(string)              | Convert string to      |
-|                                   | uppercase              |
-+-----------------------------------+------------------------+
-| str_to_upper(string)              | Convert string to      |
-|                                   | lowercase              |
-+-----------------------------------+------------------------+
-| str_to_title(string)              | Convert string to      |
-|                                   | camelcase              |
-+-----------------------------------+------------------------+
-| str_trim(string)                  | Remove leading and     |
-|                                   | ending whitespace      |
-+-----------------------------------+------------------------+
+| Functions                                     | Description                          |
+|-----------------------------------------------|--------------------------------------|
+| str_sub()\<-value                             | Identify with str_sub then replace   |
+| str_replace(string, pattern, replacement)     | Replace the first match in string    |
+| str_replace_all(string, pattern, replacement) | Replace all matches in string        |
+| str_remove(string, pattern)                   | Remove first match in string         |
+| str_remove_all(string, pattern)               | Remove all matches in string         |
+| str_to_lower(string)                          | Convert string to uppercase          |
+| str_to_upper(string)                          | Convert string to lowercase          |
+| str_to_title(string)                          | Convert string to Camelcase          |
+| str_trim(string)                              | Remove leading and ending whitespace |
 
 ```{r}
 x = "Hello World"
@@ -1126,27 +1172,15 @@ print(str_trim(text))
 
 ### Join and Split Strings
 
-+----------------------------+--------------------------------------+
-| Functions                  | Description                          |
-+============================+======================================+
-| str_c(..., sep="",         | Combines multiple strings to a       |
-| collapse=NULL)             | single string (like paste0)          |
-+----------------------------+--------------------------------------+
-| str_flatten(string,        | Combined multiple strings to a       |
-| pattern, replacement)      | single string                        |
-+----------------------------+--------------------------------------+
-| str_dup(string,n)          | Repeat string n times                |
-+----------------------------+--------------------------------------+
-| str_unique(string)         | Remove duplicate strings             |
-+----------------------------+--------------------------------------+
-| str_split_fixed(string,    | Split vector of strings into matrix  |
-| pattern)                   | of strings                           |
-+----------------------------+--------------------------------------+
-| str_split(string)          | Return a list of substrings          |
-+----------------------------+--------------------------------------+
-| str_glue(string)           | Creates a string from string and     |
-|                            | expressions                          |
-+----------------------------+--------------------------------------+
+| Functions                                 | Description                                                |
+|-------------------------------------------|------------------------------------------------------------|
+| str_c(..., sep="", collapse=NULL)         | Combines multiple strings to a single string (like paste0) |
+| str_flatten(string, pattern, replacement) | Combined multiple strings to a single string               |
+| str_dup(string,n)                         | Repeat string n times                                      |
+| str_unique(string)                        | Remove duplicate strings                                   |
+| str_split_fixed(string, pattern)          | Split vector of strings into matrix of strings             |
+| str_split(string)                         | Return a list of substrings                                |
+| str_glue(string)                          | Creates a string from string and expressions               |
 
 ```{r}
 print(str_c("Letter: ", letters))
@@ -1194,8 +1228,18 @@ acaaacaccccttcacaaataaattaaaacgtaaaagaattacatcaagccttggtcctg
 aggattttataaagaaagtagatttggcggttgttgttcaaaagtctcctgaaaagaaaa
 tcgagaggctcaaccaaatggatcaaaatggtcaggtggtgaatactacta"
 
-print(dna)
+cleaned = str_replace_all(dna, '\n','')
 
+cleaned = str_replace_all(cleaned, 'n', '')
+
+g_count = str_count(cleaned, 'g')
+c_count = str_count(cleaned, 'c')
+
+print(g_count)
+print(c_count)
+
+gc = (g_count+c_count)/str_length(dna)
+print(gc)
 ```
 
 ------------------------------------------------------------------------
@@ -1204,6 +1248,9 @@ Get the GC Percentage of Chromosome 20 with all N (ambiguous characters)
 removed.
 
 ```{r}
+
+library(seqinr)
+my_fasta <- read.fasta(file = "~/D43_Unix/Genomics/chr20.fa", seqtype = "DNA", as.string = TRUE)
 
 fasta_string = getSequence(my_fasta[[1]], as.string=TRUE)  #Get the sequence
 ```

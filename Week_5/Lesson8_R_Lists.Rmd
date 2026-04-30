@@ -22,7 +22,7 @@ Lists on the other hand can contain any different datatype or datastructure - so
 You can create a list using the `list()` function.
 
 ```{r}
-my_list = list("Hello", c(1,2,3), 1:20, TRUE, 2L)
+my_list = list(c("Hello", "World"), c(1,2,3), 1:20, TRUE, 2L)
 print(my_list)
 ```
 
@@ -37,7 +37,9 @@ print(my_list[1])
 To actually access the character string, we need to use the `[[]]` double brackets
 
 ```{r}
-my_list[[1]]
+a = my_list[[1]]
+print(a)
+a[1]
 ```
 
 ## Changing List Elements

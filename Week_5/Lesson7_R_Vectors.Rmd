@@ -10,126 +10,6 @@ editor_options:
     wrap: 72
 ---
 
-## Additional Tutorials & Books:
-
--   **R for Data Science:** <https://r4ds.hadley.nz/>
-    ([Espanol](https://es.r4ds.hadley.nz/))
-
--   **Guide to R:**
-    <https://bookdown.org/yih_huynh/Guide-to-R-Book/tidyverse.html>
-
--   **Statistical Inference via Data Science:**
-    <https://moderndive.com/>
-
--   **R Graphics Cookbook:**
-    <https://r-graphics.org/recipe-bar-graph-adjust-width>
-
--   **Text Mining with R:** <https://www.tidytextmining.com/>
-
--   **R Markdown Cookbook:**
-    <https://bookdown.org/yihui/rmarkdown-cookbook/>
-
--   **R Markdown - The Definitive Guide:**
-    <https://bookdown.org/yihui/rmarkdown/>
-
--   **R Programming for Data Science:**
-    <https://bookdown.org/rdpeng/rprogdatascience/>
-
--   **Efficient R Programming:**
-    <https://csgillespie.github.io/efficientR/>
-
--   **Advanced R:** <https://adv-r.hadley.nz/>
-
--   **Fundamentals of Data Visualization:**
-    <https://clauswilke.com/dataviz/>
-
--   **Hands-on Programming with R:**
-    <https://rstudio-education.github.io/hopr/>
-
--   **bookdown - Authoring Books and Technical Documents with R
-    Markdown:** <https://bookdown.org/yihui/bookdown/>
-
--   **Big Book of R:** <https://www.bigbookofr.com/>
-
--   **RStudio Resource Books:**
-    <https://www.rstudio.com/resources/books/>
-
--   **Bookdown.org:** <https://bookdown.org/>
-
--   **Rstudio Learn:** <https://education.rstudio.com/learn/beginner/>
-
-------------------------------------------------------------------------
-
-## Libros tutoriales y hojas de trucos en español
-
--   [BaseR
-    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/base-r_es.pdf)
-
--   [Descriptive Statistics
-    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/estadistica-descriptiva-con-R.pdf)
-
--   [R Markdown
-    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/rmarkdown_es.pdf)
-
--   [RStudio
-    Cheatsheet](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/rstudio-ide_es.pdf)
-
--   [R Syntax
-    Comparison](https://github.com/rstudio/cheatsheets/blob/main/translations/spanish/syntax_es.pdf)
-
--   CRAN Documentation
-
-    -   **“R para Principiantes”**, the Spanish version of “R for
-        Beginners”, translated by Jorge A. Ahumada
-        ([PDF](https://cran.r-project.org/doc/contrib/rdebuts_es.pdf)).
-
-    -   A Spanish translation of **“An Introduction to R”** by Andrés
-        González and Silvia González
-        ([PDF](https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.pdf),
-        [Texinfo
-        sources](https://cran.r-project.org/doc/contrib/R-intro-1.1.0-espanol.1.zip)).
-
-    -   **“Gráficos Estadísticos con R”** by Juan Carlos Correa and
-        Nelfi González
-        ([PDF](https://cran.r-project.org/doc/contrib/grafi3.pdf)).
-
-    -   **“Cartas sobre Estadística de la Revista Argentina de
-        Bioingeniería”** by Marcelo R. Risk
-        ([PDF](https://cran.r-project.org/doc/contrib/Risk-Cartas-sobre-Estadistica.pdf)).
-
-    -   **“Introducción al uso y programación del sistema estadístico
-        R”** by Ramón Díaz-Uriarte, transparencies prepared for a
-        16-hours course on R, addressed mainly to biologists and
-        bioinformaticians
-        ([PDF](https://cran.r-project.org/doc/contrib/curso-R.Diaz-Uriarte.pdf)).
-
-    -   **“Generacion automatica de reportes con R y LaTeX”** by Mario
-        Alfonso Morales Rivera
-        ([PDF](https://cran.r-project.org/doc/contrib/Rivera-Tutorial_Sweave.pdf)).
-
-    -   **“Metodos Estadisticos con R y R Commander”** by Antonio Jose
-        Saez Castillo
-        ([PDF](https://cran.r-project.org/doc/contrib/Saez-Castillo-RRCmdrv21.pdf),
-        [ZIP](https://cran.r-project.org/doc/contrib/Saez-Castillo-Datos.zip),
-        2010-07-08).
-
-    -   **“Optimización Matemática con R: Volumen I”** by Enrique
-        Gabriel Baquela and Andrés Redchuk
-        ([PDF](https://cran.r-project.org/doc/contrib/Optimizacion_Matematica_con_R_Volumen_I.pdf),
-        161 pages).
-
-    -   **“Introducción al uso de R y R Commander para el análisis
-        estadístico de datos en ciencias sociales”** by Rosario Collatón
-        Chicana
-        ([PDF](https://cran.r-project.org/doc/contrib/Chicana-Introduccion_al_uso_de_R.pdf),
-        128 pages, 2014-05-11).
-
-    -   **“El arte de programar en R”** by Julio Sergio Santana and
-        Efraín Mateos Farfán
-        ([PDF](https://cran.r-project.org/doc/contrib/Santana_El_arte_de_programar_en_R.pdf),
-        197 pages, 2014-12-15;
-        [online](https://www.imta.gob.mx/biblioteca/libros_html/el-arte-de-programar-en-r/)).
-
 ------------------------------------------------------------------------
 
 # R Objects - Vectors
@@ -143,14 +23,14 @@ can combine these together to create more complex data structures.
 R objects combine multiple instances of a basic datatypes to create more
 complex data structures.
 
-| R Datastructure | Description |
-|----|----|
-| vector | A vector contains an ordered collection indexed by the integers 1, 2, …, n, where n is the length of the vector. |
-| factor | A factor is a special kind of vector which contains underlying numeric values 1, 2, …, n, but each of these n values has an associated character label (which may or may not be the numeric value). |
-| matrix | A matrix contains a two-dimensional collection of numeric or character values indexed by pairs of integers (i, j). |
-| array | An array contains an n-dimensional collection of numeric or character values indexed by n-tuples of integers (e.g., (i,j,k) for a 3-dimensional array). |
-| list | A list contains an ordered collection of objects, and the objects in the list can be of different types. |
-| data.frame | A data.frame is a type of list commonly used to store datasets, with a row for each observation and a column for each variable, and each variable can be of a different type (e.g., numeric, character, etc.). |
+| R Datastructure | Description                                                                                                                                                                                                    |
+|-------------|-----------------------------------------------------------|
+| vector          | A vector contains an ordered collection indexed by the integers 1, 2, …, n, where n is the length of the vector.                                                                                               |
+| factor          | A factor is a special kind of vector which contains underlying numeric values 1, 2, …, n, but each of these n values has an associated character label (which may or may not be the numeric value).            |
+| matrix          | A matrix contains a two-dimensional collection of numeric or character values indexed by pairs of integers (i, j).                                                                                             |
+| array           | An array contains an n-dimensional collection of numeric or character values indexed by n-tuples of integers (e.g., (i,j,k) for a 3-dimensional array).                                                        |
+| list            | A list contains an ordered collection of objects, and the objects in the list can be of different types.                                                                                                       |
+| data.frame      | A data.frame is a type of list commonly used to store datasets, with a row for each observation and a column for each variable, and each variable can be of a different type (e.g., numeric, character, etc.). |
 
 ## R's Big Secret
 
@@ -302,8 +182,7 @@ print(seq(1,10,length.out=25))
 
 ### Indexing Vectors
 
-Vectors can be indexed using the `[]`, similar to Python. Vectors are
-somewhat similar to what we saw with Python Lists and Pandas.Series.
+Vectors can be indexed using the `[]`
 
 Note: **R is 1-based.** The first element is at position 1
 
@@ -313,7 +192,9 @@ operators to subset vectors.
 ```{r}
 (x = seq(1,10,length.out=25))
 
-(x[15])
+print(x[15])
+
+print(x[2]*3)
 
 print(x[1:10])
 
@@ -322,8 +203,8 @@ print(x[c(1,3,5,25)])
 print(x[x>1.5 & x<3.75])
 ```
 
-R is that negative indices in R are not considered from the reverse end
-of the vector - but rather negative values denote indices that should be
+Negative indices in R are not considered from the reverse end of the
+vector - but rather negative values denote indices that should be
 excluded.
 
 ```{r}
@@ -396,7 +277,7 @@ Vector 2 = c(11,12,13)
 
 ```{r}
 x = 1:12
-y = 11:15
+y = c(0.1, 0.2, 0.29, 1, 4)
 
 print(x)
 print(y)
@@ -424,10 +305,10 @@ Arrays).
 
 **Selecting multiple elements**
 
-Use `[` to select any number of elements from a vector. To illustrate,
-I’ll apply `[` to 1D atomic vectors, and then in the later section about
-more complex objects and more dimensions we'll go over how it works with
-those.
+Use `[]` to select any number of elements from a vector. To illustrate,
+I’ll apply `[]` to 1D atomic vectors, and then in the later section
+about more complex objects and more dimensions we'll go over how it
+works with those.
 
 Let’s explore the different types of subsetting with a simple vector,
 `x`.
@@ -478,6 +359,7 @@ There are six things that you can use to subset a vector:
     because you can write an expression that uses a logical vector:
 
     ```{r}
+    print(x)
     x[c(TRUE, TRUE, FALSE, FALSE)] 
     x[x > 3] 
 
@@ -498,6 +380,7 @@ There are six things that you can use to subset a vector:
     in the output:
 
     ```{r}
+    print(x)
     x[c(TRUE, TRUE, NA, FALSE)]
     ```
 
@@ -548,7 +431,7 @@ Vectors also have some unique behavior when we want to change the length
 of the vector.
 
 However, in R - it just extends the list and will insert **NA** in the
-positions where the list was previously undefined.
+positions where the vector was previously undefined.
 
 ```{r}
 x = c(1)
@@ -567,24 +450,56 @@ print(x)
 
 ------------------------------------------------------------------------
 
+# - Start 4/29/2026
+
 ## Element-wise Logical AND/OR Operators for Vectors
 
-Remember, R loves vectors. Element-wise AND Operator `&` evaluates for
-each item and returns a logical vector. Whereas, Logical AND operator
-only returns a single `TRUE` or `FALSE`
+Remember, R loves vectors. When we use a comparison operator with a
+vector the result is a vector of logicals
+
+```{r}
+x = c(1,2,3,4)
+x>2
+```
+
+Element-wise AND Operator `&` evaluates for each item and returns a
+logical vector.
+
+Whereas, Logical AND operator only returns a single `TRUE` or `FALSE`
 
 If we use `&` of `|` - we may get a logical vector back - because the
 AND/OR is evaluated for each item.
 
-`{r} c(TRUE, TRUE) & c(TRUE, FALSE)}`
+```{r}
+c(TRUE, TRUE) & c(TRUE, FALSE)
+```
 
-Whereas, if we are using the `&&` or `||` we only get back a `TRUE` or
-`FALSE`
-
-`{r} c(TRUE, TRUE) && c(TRUE, FALSE)}`
+While we may not always think about writing the logical vector above.
+Here is an example where we're using comparison operators to and logical
+operators to select a subset of the original vector.
 
 ```{r}
-c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
+x = c(3.4, 20)
+
+print(x>2)
+print(x<15)
+
+x>2 & x<15
+```
+
+```{r}
+x[x>2 | x<15]
+```
+
+Whereas, if we are using the `&&` or `||` - we'll get an error because
+`&&` or `||` only want to return a single `TRUE` or `FALSE`
+
+```{r error=TRUE}
+c(TRUE, TRUE) && c(TRUE, FALSE)
+```
+
+```{r}
+c(TRUE, TRUE, FALSE, FALSE) | c(TRUE, FALSE, TRUE, FALSE)
 ```
 
 ## Any or All
@@ -595,28 +510,31 @@ c(TRUE, TRUE, FALSE, FALSE) & c(TRUE, FALSE, TRUE, FALSE)
 `all()` is the complement function to `any()`. It will only return
 `TRUE` if all the values are `TRUE`.
 
-`{r} any(c(TRUE, TRUE) & c(TRUE, FALSE))}`
+```{r}
+any(c(TRUE, FALSE))
+```
 
-`{r} all(c(TRUE, TRUE) & c(TRUE, FALSE))}`
+```{r}
+all(c(TRUE, TRUE))
+```
 
 ## %in% Operator
 
-Checks if an element belongs is in the vector and returns a logical
-vector, where TRUE represents the position where the value are in the
-vector
+Checks if an element is in the vector and returns a logical vector,
+where TRUE represents the position where the value are in the vector
 
 ```{r}
 x = c(1,2,3,4,5,6,7,8)
 y = c(2,4,6,8,10,12,14,16)
 
 x %in% y
+```
 
+```{r}
 (subset = x[x %in% y])  # Return the subset of values from X that are in Y
 ```
 
 ------------------------------------------------------------------------
-
-**End 4/29/2025**
 
 # Named Vectors
 
@@ -628,6 +546,8 @@ Hashes.
 
 ## Creating a Named Vector
 
+All at once, with Names:
+
 ```{r}
 x = c("Lines"=10, "Yards"=2)
 print(x)
@@ -635,7 +555,11 @@ print(x)
 
 or
 
-In two steps, we first create the vector and then associate names/keys
+In two steps,
+
+1.  we first create the vector
+2.  then associate names/keys
+
 with the values in the vector
 
 ```{r}
@@ -648,6 +572,10 @@ print(x)
 
 Notice that we have two names that are the same.
 
+```{r}
+
+```
+
 ## Accessing the Value
 
 To get the value from the array, we can then use the name/key.
@@ -656,11 +584,9 @@ We can use the indexing operator `[]` to get the name and value by
 indices. Or we can use the name like we did in Python.
 
 ```{r}
-x = c("Lines"=10, "Yards"=2)
+print(x[3])
 
-print(x[2])
-
-print(x['Yards'])
+print(x['Lines'])
 ```
 
 You'll notice that it's returning both the `Name` and `Value`. If we
@@ -806,6 +732,6 @@ The `what` argument should be the typeof data: `integer()`, `double()`,
 x = c(1, 1, 2, 34, 2.8, 2008, 2E20)
 write(x, file='numeric_vector.txt')
 
-x = scan('numeric_vector.txt', what=double())
-x
+y = scan('numeric_vector.txt', what=double())
+y
 ```

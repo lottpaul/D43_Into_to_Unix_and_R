@@ -47,22 +47,26 @@ the BIM file
 plink --bfile chr1_vid --geno 0.05 --mind 0.1 --maf 0.05 --nonfounders --allow-no-sex --make-bed --out chr1_cleaned
 ```
 
-#LD Pruning Linkage disequilibrium (LD) pruning is a preprocessing step
-in genetic analyses where highly correlated variants (typically SNPs
-that are inherited together due to physical proximity on a chromosome)
-are systematically removed, leaving a subset of approximately
-independent markers. This is particularly important prior to performing
-principal component analysis (PCA), because PCA assumes that variables
-are not overly redundant. If dense clusters of correlated SNPs are
-retained, they can disproportionately influence the principal
-components, causing the analysis to reflect local genomic structure
-(such as long haplotype blocks) rather than true genome-wide patterns of
-variation. By pruning SNPs in high LD, the resulting dataset better
-represents independent genetic signals, allowing PCA to more accurately
-capture population structure, ancestry differences, and other
-broad-scale patterns without bias from correlated regions.
+# LD Pruning
 
-Plink performs the pruning in 2 steps:
+Linkage disequilibrium (LD) pruning is a preprocessing step in genetic
+analyses where highly correlated variants (typically SNPs that are
+inherited together due to physical proximity on a chromosome) are
+systematically removed, leaving a subset of approximately independent
+markers.
+
+This is particularly important prior to performing principal component
+analysis (PCA), because PCA assumes that variables are not overly
+redundant. If dense clusters of correlated SNPs are retained, they can
+disproportionately influence the principal components, causing the
+analysis to reflect local genomic structure (such as long haplotype
+blocks) rather than true genome-wide patterns of variation. By pruning
+SNPs in high LD, the resulting dataset better represents independent
+genetic signals, allowing PCA to more accurately capture population
+structure, ancestry differences, and other broad-scale patterns without
+bias from correlated regions.
+
+PLINK performs the pruning in 2 steps:
 
 -   First, Create a list of variants to keep or remove based on
     R-squared value
@@ -105,7 +109,9 @@ new variables—called principal components—that capture the main patterns
 of variation in the data. You can think of it as finding the directions
 in which the data varies the most, allowing you to summarize and
 visualize high-dimensional data in just a few dimensions (often two or
-three). In R, the cmdscale function performs a closely related technique
+three).
+
+In R, the `cmdscale` function performs a closely related technique
 called classical multidimensional scaling (MDS), which can be used to
 obtain PCA-like results when applied to an appropriate distance matrix.
 Instead of working directly on the raw data matrix, cmdscale starts with

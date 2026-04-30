@@ -107,37 +107,26 @@ for (i in x){
 }
 ```
 
-**data.frame**
-
-`seq_len()` is a variation of `seq()` function that creates a vector
-sequences. `nrow()` returns an integer of the number of rows in the
-data.frame. `ncol()` returns an integer of number of columns in the
-data.frame
-
 ```{r}
-penguins = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
-for (i in seq_len(nrow(penguins))) {
-  for (j in seq_len(ncol(penguins))) {
-    current_element <- penguins[i, j]
-    print(paste("The [", i, ",", j, "] element is:", current_element))
+for (i in 1:10){
+  #print(i)
+  if (i>5){
     break
   }
-  
-  
-  if (i==5){  # Only print out 5 rows
-    break
-  }
+  print(i)
 }
+print("Next Part")
 ```
 
-**Creating a new columns based on loop**
-
 ```{r}
-for (i in seq_len(nrow(penguins))) {
-  penguins[i,'species_island'] = paste(penguins[i,'species'], "", penguins[i,'island'])
+for (i in 1:10){
+  #print(i)
+  if (i>5){
+    next
+  }
+  print(i)
 }
- 
-penguins
+print("Next Part")
 ```
 
 ------------------------------------------------------------------------
@@ -161,8 +150,13 @@ while(condition){
 ![](images/while-flowdiagram.png)
 
 ```{r}
+x = 0
 while(TRUE){
-  x = 1
+  x = x + 1
+  if (x==3){
+    break
+  }
+  print(x)
 }
 ```
 
@@ -227,7 +221,7 @@ the `while` loop examples. Even though they have the same conditional -
 the results are different.
 
 ```{r}
-x = 12
+#x = 12
 repeat{
   x<-x+1
   print(x)
@@ -239,30 +233,10 @@ repeat{
 
 ------------------------------------------------------------------------
 
-### Exercise 1: For-Loop Palmers Penguins
-
-Using the Palmers Penguins dataset, import the dataframe and use a for
-loop to count the number of Males and Females. If the `sex` is not
-available (`NA`) then proceed to the next element.
+### Exercise 1: Write a function to take integer N less than 1000 and return every number within the range 1 to N that is a multiple of 29.
 
 ```{r}
-penguins = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
-head(penguins)
-```
-
-```{r}
-males = 0
-
-count = c(0,0)
-#for (i in ){
-#  
-#}
-```
-
-### Exercise 2: Write a function to take integer N less than 1000 and return every number within the range 1 to N that is a multiple of 29.
-
-```{r}
-
+1:1000
 ```
 
 ### Optional Exercise: Write a function to translate DNA or RNA into Amino Acid Sequence using the Standard Codon Table.
@@ -281,6 +255,10 @@ ugAAcugcAcAAcugAAgAuguAAcucuAgAAucAucucuAcuAgAAccgcAuAuggcAc
 AcAAAcAccccuucAcAAAuAAAuuAAAAcguAAAAgAAuuAcAucAAgccuugguccug
 AggAuuuuAuAAAgAAAguAgAuuuggcgguuguuguucAAAAgucuccugAAAAgAAAA
 ucgAgAggcucAAccAAAuggAucAAAAuggucAgguggugAAuAcuAcuA"
+```
+
+```{r}
+dna = 'ACGCGTTTAagaaacgttttatACGGGACT'
 ```
 
 In R, we can use a Named Vector to store the same thing.
@@ -308,7 +286,11 @@ codon = paste(Base1[[1]], Base2[[1]], Base3[[1]], sep="")
 aa = AAs[[1]]
 names(aa) = codon
 
-aa[['ATG']]
+aa[['AuG']]
+```
+
+```{r}
+aa
 ```
 
 ```{r}

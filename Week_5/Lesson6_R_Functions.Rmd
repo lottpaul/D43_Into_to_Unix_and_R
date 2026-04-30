@@ -25,7 +25,7 @@ x = function(arguments){
   return(result)
 }
 
-y = x()  #Using your function
+y = x("Hello")  #Using your function
 ```
 
 ### Example
@@ -36,7 +36,7 @@ y = x()  #Using your function
 library(stringr)
 library(stringi)
 
-dna = "ACGTT"
+dna = "ACGtT"
 
 dna = str_to_upper(dna)
   
@@ -53,12 +53,12 @@ rev_comp = function(dna, to_upper){
   # - dna is DNA character sequence
   # - to_upper is a Logical (TRUE/FALSE) to change the sequence to upper case
   
-  if (to_upper){
+  if (to_upper){  #Changes to upper
     dna = str_to_upper(dna)
   }
   
-  complement = chartr("ACGTN", "TGCAN", dna) 
-  rc = stri_reverse(complement)
+  complement = chartr("ACGTN", "TGCAN", dna) #Complement
+  rc = stri_reverse(complement)  #Reverse Sequence
   return(rc)
 }
 
@@ -71,7 +71,7 @@ rev_comp("GGGTTAG", TRUE)
 
 ## Default Arguments
 
-Similar to Python, you can add default values for function arguments by assigning them a value. If the value is not supplied by the user then the *default* value is used.
+You can add default values for function arguments by assigning them a value. If the value is not supplied by the user then the *default* value is used.
 
 ```{r}
 library(stringi)
@@ -87,6 +87,8 @@ rev_comp = function(dna, to_upper=TRUE){
   
   return(rc)
 }
+
+rev_comp("ACTGGGAG")
 ```
 
 ```{r}
@@ -101,7 +103,7 @@ concat = function(...){
   return(val)
 }
 
-concat('1', '2', '4')
+concat('1', '2', '4', 'Hello')
 ```
 
 ```{r}
