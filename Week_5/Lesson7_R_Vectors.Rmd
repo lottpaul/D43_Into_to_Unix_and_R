@@ -24,7 +24,7 @@ R objects combine multiple instances of a basic datatypes to create more
 complex data structures.
 
 | R Datastructure | Description                                                                                                                                                                                                    |
-|-------------|-----------------------------------------------------------|
+|-----------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | vector          | A vector contains an ordered collection indexed by the integers 1, 2, …, n, where n is the length of the vector.                                                                                               |
 | factor          | A factor is a special kind of vector which contains underlying numeric values 1, 2, …, n, but each of these n values has an associated character label (which may or may not be the numeric value).            |
 | matrix          | A matrix contains a two-dimensional collection of numeric or character values indexed by pairs of integers (i, j).                                                                                             |
