@@ -1,0 +1,76 @@
+---
+title: "Lesson14.1 R Tidyverse"
+author: "Paul Lott"
+date: "2024-05-13"
+output:
+  pdf_document: default
+  html_document: default
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Recommended Online/Book for further Tidyverse and R:
+
+-   **R Para Ciencia de Datos** <https://es.r4ds.hadley.nz/>
+
+-   **R for Data Science (2e)** <https://r4ds.hadley.nz/>
+
+-   **Review of R:** <https://intro2r.com/>
+
+# R Tidyverse
+
+[Tidyverse](https://www.tidyverse.org/) is a collection of libraries and tools developed for data science. They all share a particular design philosophy and syntax - to make data science using R easier and more powerful. We've already seen a Tidyverse library - `stringr`.
+
+There are 8 core libraries that make up the Tidyverse:
+
+1.  **tibble:** is a modern re-imagining of the data frame, keeping what time has proven to be effective, and throwing out what it has not. Tibbles are data.frames that are lazy and surly: they do less and complain more forcing you to confront problems earlier, typically leading to cleaner, more expressive code. [Go to docs...](https://tibble.tidyverse.org/)
+
+2.  **readr:** provides a fast and friendly way to read rectangular data (like csv, tsv, and fwf). It is designed to flexibly parse many types of data found in the wild, while still cleanly failing when data unexpectedly changes.  [Go to docs...](https://readr.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/data-import.pdf){.uri} (English)
+
+    -   [Cheatsheet (Espanol)](https://rstudio.github.io/cheatsheets/translations/spanish/data-import_es.pdf)
+
+3.  **dplyr:** provides a grammar of data manipulation, providing a consistent set of verbs that solve the most common data manipulation challenges. [Go to docs...](https://dplyr.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/data-transformation.pdf) (English)
+
+    -   [Cheatsheet (Espanol)](https://rstudio.github.io/cheatsheets/translations/spanish/data-transformation_es.pdf)
+
+    -   [Data Wrangling Cheatsheet](https://www.rstudio.com/wp-content/uploads/2015/02/data-wrangling-cheatsheet.pdf)
+
+4.  **ggplot2**: is a system for declaratively creating graphics, based on The Grammar of Graphics. You provide the data, tell ggplot2 how to map variables to aesthetics, what graphical primitives to use, and it takes care of the details. [Go to docs...](https://ggplot2.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/data-visualization.pdf) (English)
+
+    -   [Cheatsheet (Espanol)](https://rstudio.github.io/cheatsheets/translations/spanish/data-visualization_es.pdf)
+
+5.  **tidyr:** provides a set of functions that help you get to tidy data. Tidy data is data with a consistent form: in brief, every variable goes in a column, and every column is a variable. [Go to docs...](https://tidyr.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/tidyr.pdf) (English)
+
+    -   [RPubs (Espanol)](https://rpubs.com/jaortega/151936)
+
+6.  **purr:** enhances R’s functional programming (FP) toolkit by providing a complete and consistent set of tools for working with functions and vectors. Once you master the basic concepts, purrr allows you to replace many for loops with code that is easier to write and more expressive. [Go to docs...](https://purrr.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/purrr.pdf) (English)
+
+    -   [Cheatsheet (Espanol)](https://rstudio.github.io/cheatsheets/translations/spanish/purrr_es.pdf)
+
+    -   [Cheatsheet Webpage](https://rstudio.github.io/cheatsheets/html/purrr.html?_gl=1*131pv2z*_ga*Mjc0NDk5OTM0LjE3MTU4Nzg2NTk.*_ga_2C0WZ1JHG0*MTcxNTk2MDIxMC4zLjEuMTcxNTk2MDI4My4wLjAuMA..)
+
+7.  **stringr:** provides a cohesive set of functions designed to make working with strings as easy as possible. It is built on top of stringi, which uses the ICU C library to provide fast, correct implementations of common string manipulations. [Go to docs...](https://stringr.tidyverse.org/)
+
+    -   [Cheatsheet](https://rstudio.github.io/cheatsheets/strings.pdf) (English)
+
+    -   [Cheatsheet (Espanol)](https://rstudio.github.io/cheatsheets/translations/spanish/strings_es.pdf)
+
+    -   [Cheatsheet Webpage](https://rstudio.github.io/cheatsheets/html/strings.html)
+
+8.  **forcats:** provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values. [Go to docs...](https://forcats.tidyverse.org/)
+
+We'll spend the next few weeks learning about these packages.
+
+------------------------------------------------------------------------

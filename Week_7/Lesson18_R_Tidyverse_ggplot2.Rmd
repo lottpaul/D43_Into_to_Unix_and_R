@@ -523,14 +523,14 @@ ggplot(penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point()
 
 You can adjust the labels of your plot using `labs()`
 
-| Label Arguments | Description | Example |
-|----|----|----|
-| x | x-axis label | labs(x="Flipper Length (mm)") |
-| y | y-axis label | labs(y="Body Mass (g)") |
-| title | Plot Title above the plot | labs(title="Palmer Penguins") |
-| subtitle | Plot subtitle below the title | labs(subtitle="Flipper Length vs Body Mass") |
-| caption | Caption below the plot | labs(caption="Figure 1") |
-| alt | Alternative text | labs(alt="Alternative Text") |
+| Label Arguments | Description                   | Example                                      |
+|-----------------|-------------------------------|----------------------------------------------|
+| x               | x-axis label                  | labs(x="Flipper Length (mm)")                |
+| y               | y-axis label                  | labs(y="Body Mass (g)")                      |
+| title           | Plot Title above the plot     | labs(title="Palmer Penguins")                |
+| subtitle        | Plot subtitle below the title | labs(subtitle="Flipper Length vs Body Mass") |
+| caption         | Caption below the plot        | labs(caption="Figure 1")                     |
+| alt             | Alternative text              | labs(alt="Alternative Text")                 |
 
 ```{r}
 (gg = ggplot(penguins,aes(species,body_mass_g, color=species)) + geom_boxplot())
