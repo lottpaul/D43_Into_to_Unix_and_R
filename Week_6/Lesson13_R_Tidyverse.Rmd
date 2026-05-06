@@ -71,6 +71,6 @@ There are 8 core libraries that make up the Tidyverse:
 
 8.  **forcats:** provides a suite of useful tools that solve common problems with factors. R uses factors to handle categorical variables, variables that have a fixed and known set of possible values. [Go to docs...](https://forcats.tidyverse.org/)
 
-We'll spend the next few weeks learning about these packages.
+We'll spend the next week learning about these packages.
 
 ------------------------------------------------------------------------

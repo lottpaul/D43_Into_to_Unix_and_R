@@ -1,15 +1,650 @@
 ---
-title: "Lesson 14 R Tidyverse - ggplot2"
-author: "Paul Lott"
-date: "2024-05-17"
+title: "Lesson17_GDC_Tidyverse_dplyr.Rmd"
 output:
-  pdf_document: default
   html_document: default
+  pdf_document: default
+date: "2025-05-06"
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+# Exploring TCGA Breast Cancer Clinical Data with tidyr, dplyr, and ggplot2
+
+Objectives:
+
+-   Find and Download Large Clinical Datasets from Repository
+
+-   Use `dplyr` to filter, select, mutate, summarize, and group data
+
+-   Use `tidyr` to clean and reshape datasets
+
+-   Handle missing values and inconsistent data encodings
+
+-   Create publication style visualizations using `ggplot2`
+
+-   Interpret biological and clinical trends from breast cancer clinical metadata
+
+## Getting your Dataset for the following sections
+
+We are going to work with some real datasets for the following Lessons. We'll be importing, cleaning, exploring, and plotting variables from the dataset.
+
+Please feel free to use a dataset that you have or download the same one I'll be using for the class.
+
+[GDC TCGA-BRCA Breast Cancer Clinical Dataset](https://portal.gdc.cancer.gov/auth/api/v0/clinical_tar)
+
+While we're going to go through the process of finding, downloading, importing a dataset from TCGA. Please note that there are R libraries that are specific for the task and provide ready access to the curated datasets. However, we want to work through the process so we can gain experience and knowledge of what we'll need to do when we are working on our own datasets.
+
+## What is TCGA?
+
+The Cancer Genome Atlas (TCGA) is a landmark cancer genomics project that profiled thousands of tumors across many cancer types.
+
+The TCGA-BRCA project contains:
+
+-   Clinical information
+
+-   Histological subtype information
+
+-   Demographics
+
+-   Treatment records
+
+-   Molecular sequencing data
+
+-   Follow-up information
+
+Clinical datasets are often:
+
+-   Large
+
+-   Messy
+
+-   Inconsistent
+
+-   Missing values
+
+-   Repeated measurements
+
+This makes them ideal for learning data wrangling.
+
+## Getting Clinical Data from GDC Portal
+
+The [Genomic Data Commons](https://portal.gdc.cancer.gov/) is a repository of harmonized cancer datasets that is available for researcher. The Data Commons provides the ability to search for data from different projects and cancer sites.
+
+![](images/GDC_Data_Commons.png)
+
+Select **Projects** from the top left menu bar. To search for the project you're interested in.
+
+I'm going to be using data from the TCGA-BRCA project. There are multiple ways to narrow down your projects you'll be using. 1) If you know the project designation you could use any of the search bars. 2) If you want to narrow the projects by primary site, program, disease type.
+
+![](images/GDC_Projects.png)
+
+Once, you've selected your Project. You should see a Project page
+
+![](images/GDC_Project_TCGA_BRCA.png)
+
+We're goint to select **Clinical** download button and select **TSV**. Which will download a file called **clinical.project-tcga-brca.2026-05-06.tar.gz** to your computer.
+
+```{r}
+url = 'https://portal.gdc.cancer.gov/auth/api/v0/clinical_tar'
+```
+
+Once the file is downloaded to your local computer, we need to expand the gzipped tarball. You can do this either on your own machine, or we'll upload it to the Rstudio Server and do it there.
+
+We're going to use the R function called `untar()` to expand our file and extract a single file called **clinical.tsv**
+
+```{r}
+untar('clinical.project-tcga-brca.2026-05-06.tar.gz')
+
+```
+
+#### **Step1: Importing Tidyverse and Datasets**
+
+The `tidyverse` is a collection of packages designed for data science.
+
+Today we will focus on:
+
+| Package | Purpose                     |
+|---------|-----------------------------|
+| dplyr   | Data manipulation           |
+| tidyr   | Data cleaning and reshaping |
+| ggplot2 | Visualization               |
+| readr   | Importing files             |
+
+```{r}
+library(tidyverse)
+clinical <- read_tsv("clinical.tsv")
+```
+
+#### Step 2: Inspecting the Dataset
+
+Let's view the dataset
+
+```{r}
+clinical
+```
+
+If we want to get a by-column view of the table, we can use the `glimpse()` function in `dplyr` . It makes it easy to see each column in the data frame
+
+```{r}
+glimpse(clinical)
+```
+
+We may also want to see how many rows and columns, specifically there are. You can use `dim(...)` function to get the dimensions of the data frame
+
+```{r}
+dim(clinical)
+```
+
+If you want to get the column names, you can use the `colnames(...)` function. Recall, this also works to rename columns - if we make an assignment to `colname(...)`
+
+```{r}
+colnames(clinical)
+```
+
+You can also check for missing values using `summary()` or `colSums()`
+
+```{r}
+summary(clinical)
+```
+
+```{r}
+colSums(is.na(clinical))
+```
+
+##### Discussion questions:
+
+-   How many rows are present?
+
+-   How many variables are present?
+
+-   Why are there repeated patient IDs?
+
+-   Why might clinical datasets contain many columns?
+
+-   What values are used for missing values?
+
+    -   How can we change the `read_tsv` function call in order improve the import?
+
+```{r}
+clinical = read_tsv('clinical.tsv', na=c("", "NA", "'--"))
+glimpse(clinical)
+```
+
+## Using Dplyr to Arrange, Manipulate, and Mutate Data Frames
+
+dplyr provides functions to manipulate data. The common syntax of `dplyr` is:
+
+1.  First argument is always the data frame that you want to manipulate
+
+2.  Subsequent arguments describe which columns you want to manipulate and how you want to manipulate them.
+
+3.  The result will always be a new data frame
+
+**dplyr** will never modify an input dataset - but will always return a new tibble data frame.
+
+**dplyr** verbs are organized into 4 group based upon operating on: **rows**, **columns**, **groups**, or **tables**
+
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Group Type | dplyr Function | Description                                                                                                                                                                                                  |
++============+================+==============================================================================================================================================================================================================+
+|            | \|\>, %\>%     | Pipe operator. Inserts the left-hand side as the first argument in the right-hand side call. [Small differences exist between \|\> and %\>%.](https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/) |
+|            |                |                                                                                                                                                                                                              |
+|            |                | Note: `|>` was only added in R version 4.10                                                                                                                                                                  |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | %in%           | Checks presence of element exists in a vector or list                                                                                                                                                        |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **ROW**    | filter()       | Allows you to keep rows based on the values of a column                                                                                                                                                      |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | arrange()      | Changes the order of the rows based on the values of the columns                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | distinct()     | Finds all the unique rows in a dataset                                                                                                                                                                       |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | count()        | Returns the count of unique items                                                                                                                                                                            |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **COLUMN** | mutate()       | Add new columns that are calculated from the existing columns                                                                                                                                                |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | select()       | Easily select variables by name in the dataframe                                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | rename()       | Allows you to rename a few variables                                                                                                                                                                         |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | relocate()     | Move variables around                                                                                                                                                                                        |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **GROUP**  | group_by()     | Divide your dataset into groups meaningful for your analysis                                                                                                                                                 |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | summarize()    | Calculate a single summary statistic, reduces the data frame to have a single row for each group                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | slice\_        | Allows you extract specific rows within each group                                                                                                                                                           |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_head(n=n)` Takes the first n rows from each group                                                                                                                                                 |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_tail(n=n)` Takes the last n rows from each group                                                                                                                                                  |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_min(x, n=n)` Takes n rows with the smallest value of column x                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_max(x, n=n)` Takes n rows with the largest value of columns x                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   `slice_sample(n=n)` Gets n random rows                                                                                                                                                                   |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | .by            | Group arguments and works with all previous functions()                                                                                                                                                      |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+|            | ungroup()      | Remove grouping from data frame                                                                                                                                                                              |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| **TABLE**  | \_join()       | Combine multiple datasets X and Y using \_join functionality. See <https://r4ds.hadley.nz/joins> for examples and information about performing:                                                              |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   left_join() - Keeps observations in X - adds columns to current rows                                                                                                                                     |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   inner_join() - Only keeps observations from X that have matching key in Y                                                                                                                                |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   right_join() - Only keeps observations in Y                                                                                                                                                              |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   full_join() - Keeps all observations in X and Y (adds columns and rows)                                                                                                                                  |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   semi_join() - Returns rows in X that have a match in Y                                                                                                                                                   |
+|            |                |                                                                                                                                                                                                              |
+|            |                | -   anti_join() - Returns rows in X that don't have a match in Y                                                                                                                                             |
++------------+----------------+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+
+There are some small differences between `|>` and `%>%`. The `|>` is the simpler of the two, while `%>%` provides additional options. <https://www.tidyverse.org/blog/2023/04/base-vs-magrittr-pipe/>
+
+------------------------------------------------------------------------
+
+If we use the pipe `|>` argument, the first argument (table variable) is filled in automatically.
+
+**Note:** `|>` was introduced in 4.1, and is equivalent to `%>%`. You'll see many older tutorials using the old `%>%` operator instead of the newer `|>` R native pipe operator.
+
+------------------------------------------------------------------------
+
+## Selecting Columns - Creating Subset
+
+Clinical datasets are often too large to analyze easily all at once. There is also a lot of missing variables that have no data.
+
+We'll begin by selecting a subset of useful variables.
+
+```{r}
+clinical_small <- clinical |>
+  select(
+    cases.submitter_id,
+    demographic.gender,
+    demographic.race,
+    demographic.ethnicity,
+    demographic.vital_status,
+    demographic.days_to_death,
+    demographic.age_at_index,
+    diagnoses.age_at_diagnosis,
+    diagnoses.tumor_grade,
+    diagnoses.ajcc_pathologic_stage,
+    diagnoses.classification_of_tumor
+  )
+```
+
+Remember, from Unix that piping takes the **output** from the first argument and passes it to the **input** of the next.
+
+`select(....)` then takes the columns that you want to extract and return the subset, which is assigned to `clinical_small`
+
+------------------------------------------------------------------------
+
+## Filtering Rows
+
+Before filtering rows on a value, it's best to understand what the column contains. Are there are any mis-coded values, such as ("MM", "femAle", 'Mister').
+
+#### distinct()
+
+`distinct()` will return unique rows in the dataset. If you supply a single column it'll return the unique column entries. If you supply multiple columns, it'll find only the unique column pairs. If you want to keep the other columns, you can add the argument `.keep_all=TRUE`
+
+`distinct(...)` takes the column name and then returns the unique values as a `tibble`
+
+```{r}
+clinical_small |> distinct(demographic.gender)
+```
+
+```{r}
+clinical_small |> distinct(demographic.race)
+```
+
+```{r}
+clinical_small |> distinct(demographic.race, demographic.ethnicity)
+```
+
+```{r}
+clinical |> distinct(cases.case_id)
+```
+
+```{r}
+clinical_uniq = clinical |> distinct(cases.case_id, .keep_all=TRUE)
+```
+
+------------------------------------------------------------------------
+
+If you need a `vector` of unique items, instead of a `tibble` use the `pull` function, which returns the value as a `vector` . Then we can pass it to `unique()` function which works on a vector and returns a vector of only the unique items.
+
+```{r}
+clinical_small |> pull(demographic.gender) |> unique()
+```
+
+```{r}
+clinical_small |> pull(demographic.vital_status) |> unique()
+```
+
+```{r}
+clinical_small |> pull(diagnoses.ajcc_pathologic_stage) |> unique()
+```
+
+------------------------------------------------------------------------
+
+### Filter()
+
+#### filter(df, conditions ...)
+
++----------------------+-----------------------------------------------------------+
+| Operator             | Description                                               |
++======================+===========================================================+
+| \<, \<=, \>, \>=, == | Mathematical comparison operators                         |
++----------------------+-----------------------------------------------------------+
+| \|                   | OR                                                        |
++----------------------+-----------------------------------------------------------+
+| &                    | AND                                                       |
++----------------------+-----------------------------------------------------------+
+| xor()                | Exclusive OR (Excludes things in both)                    |
++----------------------+-----------------------------------------------------------+
+| %in%                 | Checks left value/argument is in the right value/argument |
++----------------------+-----------------------------------------------------------+
+| is.na(), !is.na()    | Is NA or is not NA()                                      |
++----------------------+-----------------------------------------------------------+
+| !                    | Negates expression                                        |
++----------------------+-----------------------------------------------------------+
+
+The `condition...` can be one or more conditional statements that evaluate the values in one or more columns. The output from `filter()` is a new `tibble` data frame.
+
+`filter(...)` allows you to keep rows based using logical comparisons. If the comparison is `TRUE` for the value, then the row will be returned.
+
+### Example: Only Female Patients
+
+```{r}
+female_patients <- clinical_small |> filter(demographic.gender == "female")
+```
+
+### Example: Only Deceased Patients
+
+```{r}
+deceased_patients <- clinical_small |> filter(demographic.vital_status == "Dead")
+```
+
+### Example: Stage III Tumors
+
+Above, we see that there are multiple types of Stage III, so rather than having to write a separate comparison for each type, we can use stringr's `str_detect` function
+
+```{r}
+stage3 <- clinical_small |>  filter(str_detect(diagnoses.ajcc_pathologic_stage, "Stage III"))
+```
+
+The conditionals can be combined using the logical operator `&` (AND) or `|` (OR). If you separate the conditions using commas, `filter()` will interpret them as AND operators.
+
+In addition to the standard comparison operators, **dplyr** accepts the `%in%` operator, which allows you to search from a list or vector of items.
+
+#### count()
+
+`count()` will return the number of unique rows or columns pairs as a new column **n**
+
+```{r}
+clinical_small |> count(demographic.gender)
+```
+
+```{r}
+clinical_small |> count(demographic.race)
+```
+
+```{r}
+clinical_small |> count(demographic.age_at_index)
+```
+
+------------------------------------------------------------------------
+
+### 
+
+------------------------------------------------------------------------
+
+## Arranging and Sorting
+
+We can sort the dataset using `arrange()` function. By default arrange, will sort the values in ascending order.
+
+`arrange()` sorts the rows based on the values in a column(s). By providing multiple columns you can perform more complicated sorting. If you want to sort a column in descending order, you surround the column name with `desc()` function.
+
+```{r}
+age_ascending = clinical_small |> arrange(diagnoses.age_at_diagnosis)
+```
+
+If you want to change it to descending order, use the `desc()` function
+
+```{r}
+age_descending = clinical_small |> arrange(diagnoses.age_at_diagnosis)
+```
+
+------------------------------------------------------------------------
+
+## Cleaning The Data with tidyr
+
+Real clinical datasets are often incomplete and messy.
+
+#### mutate() - create a new column or change an existing column
+
+`mutate()` is a core method and adds one or more new columns to the the right-hand side of the dataset. It also allows you to change existing values.
+
+### Replacing Missing Values
+
+When we imported the data, we saw that the NA values in TCGA datasets are represented by `'--` . However, they weren't automatically interpreted as NA. We needed to add an additional parameter to the `read_tsv` function.
+
+`na_if(., "--")` changes all the items in the vector that is passed to it and match the value '--' to NA
+
+```{r eval=FALSE}
+clinical |> mutate(cases.days_to_lost_to_followup=na_if(cases.days_to_lost_to_followup,'--'))
+```
+
+For the whole table we use `across(everything(),  comparison)`
+
+`across()` applies the function to many columns.
+
+`everything()` selects all the all columns in the dataset
+
+```{r eval=FALSE}
+clinical_clean <- clinical |> mutate(across(everything(), ~na_if(., "--")))
+
+```
+
+### Changing Values / Creating New Columns
+
+In this dataset, the age at diagnosis is stored in days. So, if we want to get the age at diagnosis in years
+
+```{r}
+clinical_small = clinical_small|> mutate(age_years = diagnoses.age_at_diagnosis / 365)
+```
+
+Using mutate(), you can also select a subset of columns to be kept in the output dataset using the `.keep` argument. The `.keep` argument will take the following options
+
+-   `"all"` retains all columns from `.data`. This is the default.
+
+-   `"used"` retains only the columns used in `...` to create new columns. This is useful for checking your work, as it displays inputs and outputs side-by-side.
+
+-   `"unused"` retains only the columns *not* used in `...` to create new columns. This is useful if you generate new columns, but no longer need the columns used to generate them.
+
+-   `"none"` doesn't retain any extra columns from `.data`. Only the grouping variables and columns created by `...` are kept.
+
+### Recoding Values
+
+Dplyr provides a `recode` function that gives you a simple function to select how you want to recode your vector/column.
+
+```{r}
+clinical_small$demographic.gender |> recode(female="F", male='M')
+```
+
+```{r}
+clinical_small$fixed_gender = clinical_small$demographic.gender |> recode(female="F", male='M')
+```
+
+`recode()` has been superseded in favor of `recode_values()` or `replace_values()` .
+
+-   **recode_values()** creates a new vector and non-matching values are changed to NA
+
+-   **replace_values()** changes values in the vector. If you're repalcing just a few values in the column - this is the best.
+
+```{r}
+clinical_small$demographic.gender |> replace_values("female" ~ 'F')
+```
+
+You can also replace multiple items or codings.
+
+```{r}
+clinical_small$demographic.gender |> recode_values(c("female", "FEMALE") ~ 'F')
+```
+
+```{r}
+clinical_small$demographic.gender |> recode_values(c("female", "FEMALE") ~ 'F',
+                                                   'male' ~ 'M')
+```
+
+Optional method uses `str_replace_all`, which replaces all the matching string in the vector. Issue: male is a substring of female. This means that we need to use the REGEX `^` to denote the start of the word begins with. This prevents female being changed to feM.
+
+```{r}
+str_replace_all(clinical_small$demographic.gender, c("^male"='M', "^female"='F'))
+```
+
+#### 
+
+### Using mutate() to standardize a Stage Labels)
+
+```{r}
+(counts = clinical_small |> count(diagnoses.ajcc_pathologic_stage))
+```
+
+We see that there are multiple compound stages. Let's use mutate to create a new column, that has the simplified stages (Stage I, Stage II , Stage III, and Stage IV).
+
+```{r}
+clinical_clean <- clinical_small |> mutate(
+  simplified_stage = case_when(
+    str_detect(diagnoses.ajcc_pathologic_stage, "Stage 0") ~ "Stage 0",
+    str_detect(diagnoses.ajcc_pathologic_stage, "Stage I") ~ "Stage I",
+    str_detect(diagnoses.ajcc_pathologic_stage, "Stage II") ~ "Stage II",
+    str_detect(diagnoses.ajcc_pathologic_stage, "Stage III") ~ "Stage III",
+    str_detect(diagnoses.ajcc_pathologic_stage, "Stage IV") ~ "Stage IV",
+    TRUE ~ "Unknown"     
+    )   
+  )
+```
+
+```{r}
+clinical_clean |> count(simplified_stage)
+```
+
+**Evaluation:**
+
+-   Does this work?
+
+-   How can we fix this?
+
+    ```{r}
+    clinical_clean <- clinical_small |> mutate(
+      simplified_stage = recode_values(diagnoses.ajcc_pathologic_stage,
+        c('Stage 0', 'Stage 0is') ~ 'Stage 0',
+        c('Stage I', 'Stage IA', 'Stage IB') ~ 'Stage I',
+        c('Stage II', 'Stage IIA', 'Stage IIB') ~ 'Stage II',
+        c('Stage III', 'Stage IIIA', 'Stage IIIB', 'Stage IIIC') ~ 'Stage III',
+        c('Stage IV') ~ 'Stage IV'
+        )   
+      )
+    ```
+
+```{r}
+clinical_clean %>% count(simplified_stage)
+```
+
+------------------------------------------------------------------------
+
+------------------------------------------------------------------------
+
+### Group Functions
+
+#### group_by() - divide your dataset into meaningful groups
+
+`group_by()` doesn't changed the data, but will add a **Groups** attribute which shows how the data is now grouped. The power of grouping comes in downstream functions - because you can now summarize or analyze them by the grouping.
+
+```{r}
+clinical_uniq |> group_by(demographic.gender)
+```
+
+#### summarize(...) - Calculates a single summary statistic for each group.
+
+Resulting in a row of summary statistic for every grouping.
+
+```{r}
+clinical_uniq |> group_by(demographic.gender) |> summarize(avg_age = mean(demographic.age_at_index))
+```
+
+NA's in the data may cause issues when performing analysis. If you need to remove NA values, you can add the options `na.rm=TRUE` in `mean()` and other summary statistic function to remove NA values before calculating.
+
+Finally, `summarize()` can take multiple arguments, so you can have multiple descriptive statistics. Along with the `mean()`, we might want to additional information.
+
++--------------------------+-------------------------------------------------------------------------------+
+| R Function               | Description                                                                   |
++==========================+===============================================================================+
+| min()                    | Minimum value                                                                 |
++--------------------------+-------------------------------------------------------------------------------+
+| max()                    | Maximum value                                                                 |
++--------------------------+-------------------------------------------------------------------------------+
+| mean()                   | Mean value                                                                    |
++--------------------------+-------------------------------------------------------------------------------+
+| median()                 | Median value                                                                  |
++--------------------------+-------------------------------------------------------------------------------+
+| quartile(data, fraction) | Quartile value for fraction of data: 0.25 = 1st Quartile, 0.75 = 3rd Quartile |
++--------------------------+-------------------------------------------------------------------------------+
+| IQR()                    | Interquartile Range                                                           |
++--------------------------+-------------------------------------------------------------------------------+
+| sd()                     | Standard Deviation                                                            |
++--------------------------+-------------------------------------------------------------------------------+
+| var()                    | Variance                                                                      |
++--------------------------+-------------------------------------------------------------------------------+
+| n()                      | Number of entries or rows                                                     |
++--------------------------+-------------------------------------------------------------------------------+
+
+```{r}
+clinical_uniq |> group_by(demographic.gender) |> summarize(avg_age = mean(demographic.age_at_index), std_age=sd(demographic.age_at_index))
+```
+
+You may get an warning message, when more than one group is being used. This is because function behaviour peels off the last grouping. See <https://r4ds.hadley.nz/data-transform#grouping-by-multiple-variables> for more information.
+
+```{r}
+clinical_uniq |> group_by(demographic.gender, demographic.race) |> summarize(avg_age = mean(demographic.age_at_index))
+```
+
+------------------------------------------------------------------------
+
+# Exercise: Find the average age by Simplified Tumor Stage
+
+Get the `mean()` and age of index for the clinical data grouping by country of residence and gender.
+
+```{r}
+clinical_clean |> group_by(simplified_stage) |> summarize(average_age = mean(demographic.age_at_index, na.rm=TRUE), patient_count=n())
+```
+
+# Exercise: Find the Survival Status By Simplified Stage
+
+```{r}
+clinical_clean |> group_by(simplified_stage, demographic.vital_status) |> summarize(count =n())
+```
+
+------------------------------------------------------------------------
+
+#### ungroup() - removes the grouping from the Tibble data frame
+
+If you need to remove the grouping from a data set, you can pass it to `ungroup()`. The changes will be visible by the **Groups** attribute being removed from the dataset.
+
+Notice that the **Groups** attribute will be removed by `ungroup()`
+
+Now that we've seen some examples of how to modify, and mutate, summarize, and group datasets. Let's move onto plotting the dataset.
+
+------------------------------------------------------------------------
+
+#### Introduction to ggplot2 Visualization
 
 # R Tidyverse - ggplot2
 
@@ -35,18 +670,12 @@ We start with data and build your way up to a plot.
 
 ## Level 1 (Data): Linking our Dataset to the Empty Plot
 
-We first need to do is import our dataset and pass it to the `ggplot()` function.
-
-```{r}
-library(tidyverse)
-penguins = read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv")
-head(penguins)
-```
+We first need to pass the dataset to the `ggplot()` function.
 
 By passing our data set to the `ggplot()` function, we generate a plot area that is now ready to start plotting our coordinate system and our data points.
 
 ```{r}
-gg = ggplot(penguins)
+gg = ggplot(clinical_clean)
 ```
 
 ## Level 2 (Aesthetics): Mapping Variables to the Axes of the Plot
@@ -58,25 +687,25 @@ If we want *flipper_length_mm* mapped to the X axes and *body_mass_g* mapped to 
 **1D Categorical:**
 
 ```{r}
-ggplot(penguins, aes(x=sex))
+ggplot(clinical_clean, aes(x=demographic.race))
 ```
 
 **1D (Numerical):**
 
 ```{r}
-ggplot(penguins, aes(x=flipper_length_mm))
+ggplot(clinical_clean, aes(x=demographic.age_at_index))
 ```
 
 **2D (Numerical vs Numerical):**
 
 ```{r}
-ggplot(penguins, aes(x=flipper_length_mm, y=body_mass_g))
+ggplot(clinical_clean, aes(x=demographic.age_at_index, y=diagnoses.age_at_diagnosis))
 ```
 
 **2D (Categorical vs Numerical):**
 
 ```{r}
-ggplot(penguins, aes(x=sex, y=body_mass_g))
+ggplot(clinical_clean, aes(x=demographic.race, y=demographic.age_at_index))
 ```
 
 In addition to just defining which variables we want to plot, **aes()** also allows us to define:
@@ -97,19 +726,25 @@ In addition to just defining which variables we want to plot, **aes()** also all
 
 In this example, we're going to link the following values to the specific aesthetics:
 
--   Color: species
+-   **Color:** demographic.gender
 
--   Shape: island
+-   **Shape:** simplified_stage
 
--   Size: bill_depth_mm
+-   **Size:** bill_depth_mm
 
 ggplot2 will then automatically group_by the categorical you assign for colors, shape, and size.
 
 ```{r}
-ggplot(penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g, color=species, shape=island, size=bill_depth_mm)) + geom_point()
+ggplot(clinical_clean, mapping=aes(x=demographic.age_at_index, y=diagnoses.age_at_diagnosis, color=demographic.gender, shape=simplified_stage, size=demographic.age_at_index)) 
 ```
 
 But we still have a blank plot, we need to not tell ggplot2 how we want to represent our data is it a scatterplot, or something else.
+
+`geom_point()` - Scatter Plot
+
+```{r}
+ggplot(clinical_clean, mapping=aes(x=demographic.age_at_index, y=diagnoses.age_at_diagnosis, color=demographic.gender, shape=simplified_stage, size=demographic.age_at_index)) + geom_point()
+```
 
 ------------------------------------------------------------------------
 
@@ -151,7 +786,11 @@ There are 6 basic chart types that we'll cover here. While there are many more, 
 |                  | 1xDiscrete and 1xContinuous |                                                                                                                                                          |
 +------------------+-----------------------------+----------------------------------------------------------------------------------------------------------------------------------------------------------+
 
-## 
+## ggplot2 Cheatsheets
+
+Spanish: <https://opensource.posit.co/resources/cheatsheets/data-visualization/data-visualization_es.pdf>
+
+English: <https://opensource.posit.co/resources/cheatsheets/data-visualization/data-visualization.pdf>
 
 ## Level 3 (Geoms): Geometric Objects- Plotting the data points
 
@@ -349,23 +988,25 @@ Note: many of the **geoms** can also be passed an **aes()** type, to further cus
 
 ### Bar Chart: geom_bar()
 
-If we wanted a bar plot of the numbers of individuals in the penguins dataset by sex.
+If we wanted a bar plot of the numbers of individuals and stages in the dataset by gender.
 
 ```{r}
-ggplot(penguins, aes(sex, fill=island))+geom_bar()
+ggplot(clinical_clean, aes(demographic.gender, fill=simplified_stage))+geom_bar()
 ```
 
-However, we want them grouped by species and then plot the sex. We need to adjust what we're plotting on the x axis. We actually want to plot the species and then fill the bars proportionally by the sex. This give a stacked bar plot of sex by species.
+We can plot the number of individuals for each stage
 
 ```{r}
-ggplot(penguins, aes(x=island, fill=sex))+geom_bar()
+ggplot(clinical_clean, aes(x=simplified_stage))+geom_bar()
 ```
 
-If you want them separated out by sex, we need to pass an argument to the `geom_bar(position='dodge')` or `geom_bar(position='dodge2')`
+If you want them separated out by gender, we need to pass an argument to the `geom_bar(position='dodge')` or `geom_bar(position='dodge2')`
 
 ```{r}
-ggplot(penguins, aes(x=species, fill=sex))+geom_bar(position='dodge')
+ggplot(clinical_clean, aes(x=simplified_stage, fill=demographic.gender))+geom_bar(position='dodge')
 ```
+
+Because the Clinical dataset isn't the greatest for many different plot types, we'll use a few different datasets to demonstrate some of the other plot types.
 
 ------------------------------------------------------------------------
 
@@ -377,6 +1018,11 @@ economics
 
 ```{r}
 ggplot(economics, aes(date, unemploy))+geom_line()
+```
+
+```{r}
+penguins = read_csv("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv")
+head(penguins)
 ```
 
 ```{r}

@@ -11,12 +11,95 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## \# Week 5 Review
+# Week 5 Review
+
+## Matrices:
+
+### Accessing Elements of Matrix
+
+Accessing the elements of the matrix are similar to Python Pandas, where you can access the value by using `[row, column]`.
+
+### Building Matrices using rbind() or cbind()
+
+We can bind columns or rows from multiple matrices to form new matrices. This topic is also applicable to data.frames which we'll discuss next.
+
+#### Merging Rows with rbind()
+
+`rbind` or **row bind** is a function used to binde or combined multiple groups of rows together. Number of columns must match between datasets.
+
+**Example**: `rbind(data1, data2)`
+
+![](images/rbind-min.png)
+
+```{r}
+x = matrix(1:20, 4, 5)
+print(x)
+
+y = matrix(1:20, 5, 4, byrow=TRUE)
+print(y)
+```
+
+```{r}
+rbind(y,z)
+```
+
+#### Merging Columns with cbind()
+
+`cbind` or **column bind** is a function used to bind or combined multiple groups of columns together. Number of rows must match between datasets.
+
+**Example**: `cbind(data1, data2)`
+
+![](images/cbind-min.png)
+
+```{r}
+
+cbind(x,z)
+```
+
+------------------------------------------------------------------------
+
+## Exercise Review
 
 ### Exercise 1: Write a function to take integer N less than 1000 and return every number within the range 1 to N that is a multiple of 29.
 
 ```{r}
-1:1000
+
+div_29 = function(number){
+  
+  if (number>=1000){
+    stop("Number is gte 1000")
+  }
+  
+  for(i in 1:number){
+    if (i%%29==0){
+      print(i)
+    }
+  }
+}
+
+div_29(5000)
+```
+
+```{r}
+div_29 = function(number){
+  
+  if (number>=1000){
+    stop("Number is gte 1000")
+  }
+  
+  
+  multiplier = 1
+  while(TRUE){
+    value = 29 * multiplier
+    if (value > number){
+      break
+    }
+    print(value)
+    multiplier = multiplier + 1
+  }
+}
+
+div_29(100)
 ```
 
 ### Optional Exercise: Write a function to translate DNA or RNA into Amino Acid Sequence using the Standard Codon Table.
@@ -55,7 +138,7 @@ Translation Tables: <https://www.ncbi.nlm.nih.gov/Taxonomy/Utils/wprintgc.cgi#SG
 #Base2 = TTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGG
 #Base3 = TCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAG
 
-AAs <- strsplit("FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG","") 
+AAs   <- strsplit("FFLLSSSSYY**CC*WLLLLPPPPHHQQRRRRIIIMTTTTNNKKSSRRVVVVAAAADDEEGGGG","") 
 Base1 <- strsplit("TTTTTTTTTTTTTTTTCCCCCCCCCCCCCCCCAAAAAAAAAAAAAAAAGGGGGGGGGGGGGGGG","") 
 Base2 <- strsplit("TTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGGTTTTCCCCAAAAGGGG","") 
 Base3 <- strsplit("TCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAGTCAG","")
@@ -64,7 +147,7 @@ codon = paste(Base1[[1]], Base2[[1]], Base3[[1]], sep="")
 aa = AAs[[1]]
 names(aa) = codon
 
-aa[['AuG']]
+aa[['ATG']]
 ```
 
 ```{r}
@@ -75,7 +158,8 @@ aa
 dna ="ATCCTCACTCGGATGGAGGCAAACGCAGAACAATGGTTACTTTTTCGATACGTGAAACATGTCCCACGGTAGCCCAAAGACTTGAGAGTCTATCACCCCTAGGGCCCTTTCCCGGATATAAACGCCAGGTTGAATCCGCATTTGGAGGTACGATGGATCAGTCTGGGTGGGGCGCGCCCCATTTATACCGTGAGTAGGGTCGACCAAGAACCGCAAGATGCGACGGTGTACAAGTAATTGTCAACAGACCATCGTGTTTTCATAATGGTACCAGGATCTTCAAGCCGTGTCAATCAAGC"
 
 for (i in seq(1, to=nchar(dna), by=3)){
-  print(substr(dna,i, i+2))
+  codon = (substr(dna,i, i+2))
+  print(aa[[codon]])
 }
 ```
 
@@ -83,7 +167,7 @@ for (i in seq(1, to=nchar(dna), by=3)){
 
 # R Dataframes
 
-Data Frames are similar to Python Pandas Dataframes, where each column can contain a different type of data. R Data Frames are a mix between a matrix and a list. They are one of the fundamental data structures used by most R software.
+DataFrames in R are tables where each column can contain a different type of data. R DataFrames are a mix between a matrix (more than one dimension) and a list (different datatypes are allowed). They are one of the fundamental data structures used by most R software.
 
 ## Creating Data Frames
 
@@ -127,13 +211,13 @@ write.csv2(...)
 ```
 
 ```{r}
-x = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
-#head(x)
-tail(x)
+df = read.table("https://raw.githubusercontent.com/mwaskom/seaborn-data/master/penguins.csv", header=TRUE, sep=',')
+head(x, n=10)
+#tail(x)
 ```
 
 ```{r}
-write.csv(x, file="Penguins.csv", row.names=FALSE)
+write.csv(df, file="Penguins.csv", row.names=FALSE)
 ```
 
 ## Summarize Dataframe
@@ -141,7 +225,7 @@ write.csv(x, file="Penguins.csv", row.names=FALSE)
 `summary()` gives a summary of the dataframe, similar to Pandas .describe() function. If the columns values are numeric, it'll provide the Min, Max, Quartiles, Mean and Median values.
 
 ```{r}
-summary(x)
+summary(df)
 ```
 
 ## Accessing Items
@@ -183,13 +267,13 @@ df
 2.  **Double Brackets `[[]]` :** Access the corresponding column by name
 
     ```{r}
-    df[['Age']]
+    df[['sex']]
     ```
 
 3.  **Dollar Sign: `$`** To access column by columns Name
 
 ```{r}
-print(df$Age)
+print(df$sex)
 
 ```
 
@@ -203,6 +287,15 @@ Finally, we'll use `cbind()` to add our new columns called `Case_Control` to the
 
 ```{r}
 df
+```
+
+```{r}
+df$sex <- as.factor(df$sex)
+df
+```
+
+```{r}
+ df$sex
 ```
 
 ```{r}
@@ -298,6 +391,10 @@ which(df$'Age'>22)
 Then we just need to plug that into the where we access rows in the `[]` operator and we get the subsetted table filtered on `Age>22`.
 
 ```{r}
+df
+```
+
+```{r}
 df[which(df$'Age'>22),]
 ```
 
@@ -306,7 +403,7 @@ Another methods is `subset(x, comparison, optional(select=c(column names))`
 Notice that in subset, we don't need to wrap the column names in quotes.
 
 ```{r}
-subset(df, Age>22 & Include, select=c(FirstName, LastNames))
+subset(df, Age>20 & Include, select=c(FirstName, LastNames))
 ```
 
 ## Removing Rows or Columns
@@ -318,7 +415,7 @@ df[-1,]
 ```
 
 ```{r}
-df[,-2]
+df[,c(-2,-3)]
 ```
 
 ```{r}
@@ -397,7 +494,7 @@ for (i in seq_len(nrow(penguins))) {
 penguins
 ```
 
-### Exercise 1: For-Loop Palmers Penguins
+### Optional Exercise 1: For-Loop Palmers Penguins
 
 Using the Palmers Penguins dataset, import the dataframe and use a for loop to count the number of Males and Females. If the `sex` is not available (`NA`) then proceed to the next element.
 
