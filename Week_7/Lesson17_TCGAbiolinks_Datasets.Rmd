@@ -1,0 +1,155 @@
+---
+title: "Accessing TCGA Genomic Data with TCGAbiolinks"
+output:
+  html_document: default
+  pdf_document: default
+---
+
+# Accessing TCGA Genomic Data with TCGAbiolinks
+
+In this lesson students will learn how to directly access cancer genomics data from the NCI Genomic Data Commons (GDC) using the Bioconductor package `TCGAbiolinks`.
+
+This lesson introduces:
+
+-   Bioconductor
+
+-   Genomic data portals
+
+-   Querying TCGA datasets
+
+-   Downloading molecular data
+
+-   Preparing expression matrices
+
+-   Integrating genomic and clinical data
+
+```         
+------------------------------------------------------------------------
+```
+
+## Learning Objectives
+
+By the end of this lesson students should be able to:
+
+1.  Understand what Bioconductor is
+
+2.  Install and load TCGAbiolinks
+
+3.  Query TCGA projects from the GDC portal
+
+4.  Download RNA-seq expression data
+
+5.  Prepare expression matrices for analysis
+
+6.  Explore sample metadata
+
+7.  Merge molecular and clinical data
+
+8.  Create simple genomic visualizations
+
+------------------------------------------------------------------------
+
+## Part 1: Installing Libraries
+
+------------------------------------------------------------------------
+
+### Installing Dependencies
+
+#### 1. [Bioconductor](https://www.bioconductor.org/?utm_source=chatgpt.com)
+
+The mission of the Bioconductor project is to develop, support, and disseminate free open source software that facilitates rigorous and reproducible analysis of data from current and emerging biological assays. We are dedicated to building a diverse, collaborative, and welcoming community of developers and data scientists.
+
+Bioconductor is widely used in bioinformatics because it provides standardized genomic data structures, reproducible workflows, integration with R, and a local ecosystems of packages.
+
+```{r}
+if (!require("BiocManager", quietly = TRUE))
+  install.packages("BiocManager")
+```
+
+#### [2. SummarizedExperiment](https://bioconductor.org/packages/release/bioc/html/SummarizedExperiment.html)
+
+The `SummarizedExperiment` class is used to store rectangular matrices of experimental results, which are commonly produced by sequencing and microarray experiments. Note that `SummarizedExperiment` can simultaneously manage several experimental results or `assays` as long as they be of the same dimensions.
+
+Each object stores observations of one or more samples, along with additional meta-data describing both the observations (features) and samples (phenotypes).
+
+```{r}
+if (!require("SummarizedExperiment", quietly = TRUE))
+  BiocManager::install("SummarizedExperiment")
+
+```
+
+------------------------------------------------------------------------
+
+### Installing TCGAbiolinks
+
+The aim of TCGAbiolinks is : i) facilitate the GDC open-access data retrieval, ii) prepare the data using the appropriate pre-processing strategies, iii) provide the means to carry out different standard analyses and iv) to easily reproduce earlier research results. In more detail, the package provides multiple methods for analysis (e.g., differential expression analysis, identifying differentially methylated regions) and methods for visualization (e.g., survival plots, volcano plots, starburst plots) in order to easily develop complete analysis pipelines.
+
+```{r}
+BiocManager::install("TCGAbiolinks")
+```
+
+------------------------------------------------------------------------
+
+#### Loading TCGAbiolinks
+
+```{r}
+library(TCGAbiolinks)
+library(SummarizedExperiment)
+library(tidyverse)
+```
+
+## Part 2: Finding TCGA Projects
+
+`getGDCproject()` searches the GDC API to get a list of all available projects
+
+```{r}
+projects <- getGDCprojects()
+projects
+```
+
+You can then use dplyr to filter the dataframe of projects
+
+```{r}
+projects |> filter(str_detect(project_id, "TCGA"))
+```
+
+Or find a single project
+
+```{r}
+projects |>  filter(project_id == "TCGA-STAD")
+```
+
+You can get summary information about the project using `getProjectSummary(project)`
+
+```{r}
+getProjectSummary("TCGA-STAD")
+```
+
+#### Getting Clinical Information
+
+```{r}
+clinical <- GDCquery_clinic(
+  project = "TCGA-STAD",
+  type = "clinical"
+)
+```
+
+#### Querying TCGA Data
+
+```{r}
+query <- GDCquery(
+  project = "TCGA-STAD",
+  data.category = "Transcriptome Profiling",
+  data.type = "Gene Expression Quantification",
+  workflow.type = "STAR - Counts"
+)
+query = head(query)
+```
+
+```{r}
+getResults(query)
+```
+
+```{r}
+GDCdownload(query)
+```

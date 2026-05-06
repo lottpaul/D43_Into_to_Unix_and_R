@@ -24,8 +24,6 @@ Objectives:
 
 -   Create publication style visualizations using `ggplot2`
 
--   Interpret biological and clinical trends from breast cancer clinical metadata
-
 ## Getting your Dataset for the following sections
 
 We are going to work with some real datasets for the following Lessons. We'll be importing, cleaning, exploring, and plotting variables from the dataset.
@@ -337,23 +335,15 @@ clinical_small |> pull(diagnoses.ajcc_pathologic_stage) |> unique()
 
 #### filter(df, conditions ...)
 
-+----------------------+-----------------------------------------------------------+
 | Operator             | Description                                               |
-+======================+===========================================================+
+|----------------------|-----------------------------------------------------------|
 | \<, \<=, \>, \>=, == | Mathematical comparison operators                         |
-+----------------------+-----------------------------------------------------------+
 | \|                   | OR                                                        |
-+----------------------+-----------------------------------------------------------+
 | &                    | AND                                                       |
-+----------------------+-----------------------------------------------------------+
 | xor()                | Exclusive OR (Excludes things in both)                    |
-+----------------------+-----------------------------------------------------------+
 | %in%                 | Checks left value/argument is in the right value/argument |
-+----------------------+-----------------------------------------------------------+
 | is.na(), !is.na()    | Is NA or is not NA()                                      |
-+----------------------+-----------------------------------------------------------+
 | !                    | Negates expression                                        |
-+----------------------+-----------------------------------------------------------+
 
 The `condition...` can be one or more conditional statements that evaluate the values in one or more columns. The output from `filter()` is a new `tibble` data frame.
 
@@ -584,27 +574,17 @@ NA's in the data may cause issues when performing analysis. If you need to remov
 
 Finally, `summarize()` can take multiple arguments, so you can have multiple descriptive statistics. Along with the `mean()`, we might want to additional information.
 
-+--------------------------+-------------------------------------------------------------------------------+
 | R Function               | Description                                                                   |
-+==========================+===============================================================================+
+|--------------------------|-------------------------------------------------------------------------------|
 | min()                    | Minimum value                                                                 |
-+--------------------------+-------------------------------------------------------------------------------+
 | max()                    | Maximum value                                                                 |
-+--------------------------+-------------------------------------------------------------------------------+
 | mean()                   | Mean value                                                                    |
-+--------------------------+-------------------------------------------------------------------------------+
 | median()                 | Median value                                                                  |
-+--------------------------+-------------------------------------------------------------------------------+
 | quartile(data, fraction) | Quartile value for fraction of data: 0.25 = 1st Quartile, 0.75 = 3rd Quartile |
-+--------------------------+-------------------------------------------------------------------------------+
 | IQR()                    | Interquartile Range                                                           |
-+--------------------------+-------------------------------------------------------------------------------+
 | sd()                     | Standard Deviation                                                            |
-+--------------------------+-------------------------------------------------------------------------------+
 | var()                    | Variance                                                                      |
-+--------------------------+-------------------------------------------------------------------------------+
 | n()                      | Number of entries or rows                                                     |
-+--------------------------+-------------------------------------------------------------------------------+
 
 ```{r}
 clinical_uniq |> group_by(demographic.gender) |> summarize(avg_age = mean(demographic.age_at_index), std_age=sd(demographic.age_at_index))
@@ -710,19 +690,19 @@ ggplot(clinical_clean, aes(x=demographic.race, y=demographic.age_at_index))
 
 In addition to just defining which variables we want to plot, **aes()** also allows us to define:
 
-+-----------+--------------------------------------------------------------------------------------------------------------+
-| Argument  | Description                                                                                                  |
-+===========+==============================================================================================================+
-| color     | Define the color of the points.                                                                              |
-|           |                                                                                                              |
-|           | You can define the color either as a string: 'red', or RGB value: #RRGGBB.                                   |
-|           |                                                                                                              |
-|           | If you supply color with a categorical value column name, then each category will be assigned a unique value |
-+-----------+--------------------------------------------------------------------------------------------------------------+
-| shape     | Shape of points on the plot.                                                                                 |
-+-----------+--------------------------------------------------------------------------------------------------------------+
-| size      | Size of point                                                                                                |
-+-----------+--------------------------------------------------------------------------------------------------------------+
++----------+--------------------------------------------------------------------------------------------------------------+
+| Argument | Description                                                                                                  |
++==========+==============================================================================================================+
+| color    | Define the color of the points.                                                                              |
+|          |                                                                                                              |
+|          | You can define the color either as a string: 'red', or RGB value: #RRGGBB.                                   |
+|          |                                                                                                              |
+|          | If you supply color with a categorical value column name, then each category will be assigned a unique value |
++----------+--------------------------------------------------------------------------------------------------------------+
+| shape    | Shape of points on the plot.                                                                                 |
++----------+--------------------------------------------------------------------------------------------------------------+
+| size     | Size of point                                                                                                |
++----------+--------------------------------------------------------------------------------------------------------------+
 
 In this example, we're going to link the following values to the specific aesthetics:
 
@@ -1169,21 +1149,14 @@ ggplot(penguins, mapping=aes(x=flipper_length_mm, y=body_mass_g)) + geom_point()
 
 You can adjust the labels of your plot using `labs()`
 
-+-----------------+-------------------------------+----------------------------------------------+
 | Label Arguments | Description                   | Example                                      |
-+=================+===============================+==============================================+
+|-----------------|-------------------------------|----------------------------------------------|
 | x               | x-axis label                  | labs(x="Flipper Length (mm)")                |
-+-----------------+-------------------------------+----------------------------------------------+
 | y               | y-axis label                  | labs(y="Body Mass (g)")                      |
-+-----------------+-------------------------------+----------------------------------------------+
 | title           | Plot Title above the plot     | labs(title="Palmer Penguins")                |
-+-----------------+-------------------------------+----------------------------------------------+
 | subtitle        | Plot subtitle below the title | labs(subtitle="Flipper Length vs Body Mass") |
-+-----------------+-------------------------------+----------------------------------------------+
 | caption         | Caption below the plot        | labs(caption="Figure 1")                     |
-+-----------------+-------------------------------+----------------------------------------------+
 | alt             | Alternative text              | labs(alt="Alternative Text")                 |
-+-----------------+-------------------------------+----------------------------------------------+
 
 ```{r}
 (gg = ggplot(penguins,aes(species,body_mass_g, color=species)) + geom_boxplot())
@@ -1224,3 +1197,23 @@ ggscatterstats(
   title = "Relationship between Flipper Length and Body Mass"
 )
 ```
+
+------------------------------------------------------------------------
+
+## Additional Questions or Discussion
+
+Discussion Questions:
+
+1.  Which tumor stages appear most common?
+
+2.  What limitations exist in the dataset?
+
+3.  How could missing data bias analyses?
+
+4.  Why might demographic distributions matter?
+
+5.  What additional genomic data could be integrated?
+
+# TCGA Library for R
+
+<https://www.bioconductor.org/packages/release/bioc/html/TCGAbiolinks.html>
